@@ -9,10 +9,10 @@ const vp9Options = { mimeType: vp9Codec };
 const recordedChunks = [];
 
 const config = {
-  bucketName: 'webrtc1-test',
-  region: 'ap-south-1',
-  accessKeyId: 'AKIAWCZGQPORD2FM3B4H',
-  secretAccessKey: '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',
+  bucketName: '',
+  region: '',
+  accessKeyId: '',
+  secretAccessKey: '',
 };
 const ReactS3Client = new S3(config);
 
