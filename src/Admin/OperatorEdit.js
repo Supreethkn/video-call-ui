@@ -90,10 +90,14 @@ const OperatorEdit = () => {
       isAdmin: userAdmin
     }
     console.log("handle calleddddd");
-    console.log(opratorData);
+    if(userName == '' || userEmail == '' || userPwd == '' ||  userAdmin == ''){
+      toast.warning("Please Fill Details");
+    }else{
+    console.log('create data',opratorData);
     Service.fetchPostData('createUser',opratorData).then(res => {
       history.push('/operatorlist');
     });
+  }
   };
 
   const handleDelete = () => {

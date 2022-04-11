@@ -1,0 +1,10 @@
+.navbar-bg{
+    background-color:#e7e7fa;
+}
+.navbar-light .navbar-brand {
+    color: rgba(0,0,0,.9);
+    cursor: pointer;
+}
+.current-user {
+    margin-top: 1%;
+}

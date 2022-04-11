@@ -10,60 +10,65 @@ import { userreasonmc } from '../../../store/actions/dashboardActions';
 
 
 
-const GroupCall = (props,{ username}) => {
-  const { callState, localStream, groupCallActive, groupCallStreams } = props;
-  
-  const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
-  // const Client_SERVER = 'http://localhost:3000';
+const GroupCall = (props, { username }) => {
+    const { callState, localStream, groupCallActive, groupCallStreams } = props;
+
+    // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
+    const Client_SERVER = 'https://10.10.2.7:3000';
 
 
-  useEffect(() => {
-    console.log("group call initia ####3 $$$$$");
-    console.log(props);
-  }, []);
+    useEffect(() => {
+        console.log("group call initia ####3 $$$$$");
+        console.log(props);
+    }, []);
 
 
-  const createRoom = () => {
-    webRTCGroupCallHandler.createNewGroupCall();
-  };
+    const createRoom = () => {
+        webRTCGroupCallHandler.createNewGroupCall();
+    };
 
-  const leaveRoom = () => {
-    webRTCGroupCallHandler.leaveGroupCall();
-  };
+    const leaveRoom = () => {
+        webRTCGroupCallHandler.leaveGroupCall();
+    };
 
-  const leaveRoomMachine = () => {
-    common.removeUserSession();
-    let userReason ;
-        for(const key in userreasonmc){
-          if(props.username.userreason == userreasonmc[key]){
-            userReason = key;
-          }
+    const leaveRoomMachine = () => {
+        common.removeUserSession();
+        let userReason;
+        for (const key in userreasonmc) {
+            if (props.username.userreason == userreasonmc[key]) {
+                userReason = key;
+            }
         }
-        let path = Client_SERVER+'/main/'+props.username.username+'/'+userReason;
+        let path = Client_SERVER + '/main/' + props.username.username + '/' + userReason;
         console.log(path);
         window.location.href = path;
-  }
+    }
 
-  return (
-    <>
-      {/* {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS &&
-        <GroupCallButton onClickHandler={createRoom} label='Create room' />} */}
-      {groupCallActive && <GroupCallRoom {...props} />}
-      {props.username.usertype === "OPERATOR" && groupCallActive && <GroupCallButton onClickHandler={leaveRoom} label='Disconnect' />}
-      {props.username.usertype === "MACHINE" && groupCallActive && <GroupCallButton onClickHandler={leaveRoomMachine} label='Disconnect' />}
-    </>
-  );
+    return ( <
+        >
+        {
+            /* {!groupCallActive && localStream && callState !== callStates.CALL_IN_PROGRESS &&
+                    <GroupCallButton onClickHandler={createRoom} label='Create room' />} */
+        } {
+            groupCallActive && < GroupCallRoom {...props }
+            />} { props.username.usertype === "OPERATOR" && groupCallActive && < GroupCallButton onClickHandler = { leaveRoom }
+            label = 'Disconnect' / >
+        } 
+         
+        <
+        />
+    );
 };
 
 const mapStoreStateToProps = ({ call }) => ({
-  ...call
+    ...call
 });
 
 const mapActionsToProps = (dispatch) => {
-  return {
-    setCameraEnabled: enabled => dispatch(setLocalCameraEnabled(enabled)),
-    setMicrophoneEnabled: enabled => dispatch(setLocalMicrophoneEnabled(enabled))
-  };
+    return {
+        setCameraEnabled: enabled => dispatch(setLocalCameraEnabled(enabled)),
+        setMicrophoneEnabled: enabled => dispatch(setLocalMicrophoneEnabled(enabled))
+    };
 };
 
 export default connect(mapStoreStateToProps, mapActionsToProps)(GroupCall);

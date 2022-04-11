@@ -29,6 +29,7 @@ const NavbarLocal = () => {
   const history = useHistory();
 
   const userName = common.getUser();
+  console.log('user data', userName);
 
   const  handleonLogout = () => {
     if(webRTCGroupCallHandler.checkActiveGroupCall()) {
@@ -53,7 +54,7 @@ const NavbarLocal = () => {
   return (
     <>
     <ToastContainer />
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light navbar-bg">
         {/* <img className='login-page_logo_image' src={logo} alt='' onClick={() => history.push('/dashboard')} /> */}
         <a className="navbar-brand px-3 font_weight_500" onClick={() => history.push('/dashboard') }>VIRTUAL ASSISTANCE</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,6 +83,11 @@ const NavbarLocal = () => {
                     <a className="nav-link font_weight_bold" onClick={handleonLogout}>
                     <span><FontAwesomeIcon icon={faPowerOff} /> Logout</span>
                       <span className="sr-only">({userName})</span></a>
+                </li>
+                <li className="nav-item active">
+                  <button className='btn btn current-user' style={{textTransform: 'capitalize'}}>
+                  Current User: {userName}
+                  </button>
                 </li>
             </ul>
         </div>

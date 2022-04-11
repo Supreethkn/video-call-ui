@@ -47,7 +47,7 @@ const OperatorList = () => {
               <div className=''>
                 <span className='text-light font_weight_500 font_size_large'>Operators List</span>
               </div>
-              <div className='px-2'>
+              <div className='px-2 add-operator'>
               <button type="button" className="btn btn-secondary p-1" onClick={handlecreatePressed}>
               <span><FontAwesomeIcon icon={faPlus} /> Add New Operator</span>
               </button>

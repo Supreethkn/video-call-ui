@@ -32,7 +32,7 @@ export const setGroupCalls = (groupCallRooms) => {
 export const usertypeop = 'OPERATOR';
 export const usertypemc = 'MACHINE';
 export const userreasonmc = {
-  a:'Not Able To Find Lauguage',
+  a:'Not Able To Find Language',
   b:'Not Able To Find Terminal'
 };
 

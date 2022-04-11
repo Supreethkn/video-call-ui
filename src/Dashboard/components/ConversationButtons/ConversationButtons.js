@@ -8,8 +8,10 @@ const styles = {
   buttonContainer: {
     display: 'flex',
     position: 'absolute',
-    bottom: '10%',
-    left: '45%'
+    // bottom: '10%',
+    // left: '45%'
+    bottom: '22%',
+    left: '42%'
   },
   icon: {
     width: '25px',
