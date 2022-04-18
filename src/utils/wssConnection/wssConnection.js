@@ -80,37 +80,27 @@ socket.on('group-call-user-left', (data) => {
 });
 
 socket.on('machine-call-user-left', (data) => {
-    console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5');
-    console.log(data);
-    console.log(store.getState());
     let activeUser = store.getState().call.groupCallStreams;
     for(let key in activeUser){
-      console.log(activeUser[key].id);
       if(activeUser[key].id == data.streamId) {
-        console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5 Inside');
         webRTCGroupCallHandler.leaveGroupCall();
       }
     }
   });
   
   socket.on('machine-call-user-end', (data) => {
-    console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5 ENDDDDD');
-    console.log(data);
-    console.log(store.getState());
-    // call operator function
-    let activeUser = store.getState().dashboard.groupCallRooms;
     let startTime = store.getState().call.callStateStartTime === undefined ? false : true ;
-    console.log(activeUser);
-    console.log(startTime);
-    for(let key in activeUser){
-      console.log(activeUser[key].socketId);
-      if(startTime && activeUser[key].socketId == data.machineSocket && activeUser[key].hostName.usertype == "MACHINE") {
-        console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5 Inside');
-        // webRTCGroupCallHandler.leaveGroupCallEnd();
+    var operatorId ;
+    var peers = data.peerId;
+    for(var key in peers) {
+      if(peers[key].roomId === data.roomId && peers[key].usertype === "OPERATOR" && startTime) {
+        operatorId = peers[key].socketId
       }
     }
+    if(operatorId === socket.id) {
+      webRTCGroupCallHandler.leaveGroupCallEnd();
+    }
   });
-
 };
 
 
