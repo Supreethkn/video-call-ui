@@ -32,17 +32,19 @@ const GroupCall = (props, { username }) => {
     };
 
     const leaveRoomMachine = () => {
-        common.removeUserSession();
-        let userReason;
-        for (const key in userreasonmc) {
-            if (props.username.userreason == userreasonmc[key]) {
-                userReason = key;
-            }
-        }
-        let path = Client_SERVER + '/main/' + props.username.username + '/' + userReason;
-        console.log(path);
-        window.location.href = path;
-    }
+        // call a event machine disconnecting
+        webRTCGroupCallHandler.MachineleaveGroupCall();
+        //    common.removeUserSession();
+        // let userReason ;
+        //     for(const key in userreasonmc){
+        //       if(props.username.userreason == userreasonmc[key]){
+        //         userReason = key;
+        //       }
+        //     }
+        //     let path = Client_SERVER+'/main/'+props.username.username+'/'+userReason;
+        //     console.log(path);
+        //     window.location.href = path;
+      }
 
     return ( <
         >

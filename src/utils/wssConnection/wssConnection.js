@@ -78,7 +78,41 @@ socket.on('group-call-user-left', (data) => {
 
     webRTCGroupCallHandler.clearGroupData();
 });
+
+socket.on('machine-call-user-left', (data) => {
+    console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5');
+    console.log(data);
+    console.log(store.getState());
+    let activeUser = store.getState().call.groupCallStreams;
+    for(let key in activeUser){
+      console.log(activeUser[key].id);
+      if(activeUser[key].id == data.streamId) {
+        console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5 Inside');
+        webRTCGroupCallHandler.leaveGroupCall();
+      }
+    }
+  });
+  
+  socket.on('machine-call-user-end', (data) => {
+    console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5 ENDDDDD');
+    console.log(data);
+    console.log(store.getState());
+    // call operator function
+    let activeUser = store.getState().dashboard.groupCallRooms;
+    let startTime = store.getState().call.callStateStartTime === undefined ? false : true ;
+    console.log(activeUser);
+    console.log(startTime);
+    for(let key in activeUser){
+      console.log(activeUser[key].socketId);
+      if(startTime && activeUser[key].socketId == data.machineSocket && activeUser[key].hostName.usertype == "MACHINE") {
+        console.log('back from server machine  left $$$$$$ %%%%%%%%%%%%%%%%%%%%%%5 Inside');
+        // webRTCGroupCallHandler.leaveGroupCallEnd();
+      }
+    }
+  });
+
 };
+
 
 export const registerNewUser = (username, usertype) => {
     socket.emit('register-new-user', {
@@ -130,6 +164,12 @@ export const userLeftGroupCall = (data) => {
     console.log(data);
     socket.emit('group-call-user-left', data);
 };
+
+export const machineLeftGroupCall = (data) => {
+    console.log(" ^^^^^ machine to server emit &&&&&&");
+    console.log(data);
+    socket.emit('machine-call-user-left', data);
+  };
 
 export const machineReRoute = (data) => {
     console.log("wss re-route");

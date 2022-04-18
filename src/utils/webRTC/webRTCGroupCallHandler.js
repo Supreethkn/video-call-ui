@@ -140,6 +140,24 @@ export const auditfunction = (groupCallRoomId) => {
   store.dispatch(setCallStateStartTime(null));
 }
 
+export const MachineleaveGroupCall = () =>  {
+  // emit event
+  console.log("call event web rtc"); 
+  wss.machineLeftGroupCall({
+    streamId: store.getState().call.localStream.id,
+    peerId: myPeerId,
+    machineSocket: store.getState().dashboard.activeUsers[0].socketId,
+  });
+
+}
+
+export const leaveGroupCallEnd = () => {
+  console.log("webRTCCALL HAndler $$$$$$$$$$$$$$$$$$");
+  auditfunction(groupCallRoomId);
+  stopRecording();
+  clearGroupData();
+}
+
 //changing this logic to all time host
 export const leaveGroupCall = () => {
   // who ever leave the call audit shoud be triggered
