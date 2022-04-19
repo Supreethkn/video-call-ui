@@ -33,6 +33,7 @@ const GroupCall = (props, { username }) => {
 
     const leaveRoomMachine = () => {
         // call a event machine disconnecting
+        console.log('clicked disconnect');
         webRTCGroupCallHandler.MachineleaveGroupCall();
         //    common.removeUserSession();
         // let userReason ;
@@ -55,8 +56,7 @@ const GroupCall = (props, { username }) => {
             groupCallActive && < GroupCallRoom {...props }
             />} { props.username.usertype === "OPERATOR" && groupCallActive && < GroupCallButton onClickHandler = { leaveRoom }
             label = 'Disconnect' / >
-        } 
-         
+        }
         <
         />
     );

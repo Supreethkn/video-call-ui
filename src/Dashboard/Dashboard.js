@@ -12,13 +12,13 @@ import GroupCall from './components/GroupCall/GroupCall';
 import NavbarLocal from '../Navbar/Navbar';
 import NavbarMachine from '../Navbar/NavbarMachine';
 import AnswerInfo from './components/GroupCallRoomsList/AnswerInfo';
-
+import OnGoingCall from './components/OngoingCallMessage/OnGoingCall';
 
 
 
 import './Dashboard.css';
 
-const Dashboard = ({ username, callState }) => {
+const Dashboard = ({ username, callState, groupCallStreams }) => {
   useEffect(() => {
     console.log("Dashboard $$$$$");
     console.log(username);
@@ -26,6 +26,16 @@ const Dashboard = ({ username, callState }) => {
     webRTCGroupHandler.connectWithMyPeer();
   }, []);
   
+  const renderConnectionMessage = () => {
+    if(username.usertype == "OPERATOR"){
+      return
+    }
+    else if (groupCallStreams.length === 0) {
+      return <OnGoingCall />;
+    }
+    
+    
+  }
 
   return (
     // old start
@@ -63,6 +73,7 @@ const Dashboard = ({ username, callState }) => {
         {/* // video section */}
         <div className='col-6'>
           {/* <span>Video</span> */}
+          {renderConnectionMessage()}
           <DirectCall />
           <GroupCall username={username} />
         </div>
