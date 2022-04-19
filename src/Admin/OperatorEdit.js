@@ -40,6 +40,7 @@ const OperatorEdit = () => {
   let  [userAdmin, setuserAdmin] = useState(null);
   
   let  [isUpdate, setisUpdate] = useState(null);
+  let [userConfirmPwd, setuserConfirmPwd] = useState(null);
 
 
   useEffect(() => {
@@ -68,9 +69,11 @@ const OperatorEdit = () => {
       setuserName(userName);
       userEmail = operators.emailAddress;
       setuserEmail(userEmail);
-      userPwd = operators.password;
+      // userPwd = operators.password;
+      userPwd = '';
       setuserPwd(userPwd);
       userAdmin = operators.isAdmin;
+      // userAdmin = '';
       setuserAdmin(userAdmin);
       setisUpdate(true);
     });
@@ -126,16 +129,28 @@ const OperatorEdit = () => {
       name: userName,
       email: userEmail,
       password: userPwd,
-      isAdmin: userAdmin
+      isAdmin: userAdmin,
+      confirmPassword: userConfirmPwd
+
     }
     console.log("handle calleddddd");
+    if (userName == '' || userEmail == '' || userPwd == '') {
+      toast.warning("Please Fill Details");
+      console.log(opratorData);
+    }
+    else if (isChecked == true && userPwd != userConfirmPwd) {
+      toast.warning("Password and Confirm Password does not match");
+    }
+    else {
     console.log(opratorData);
     Service.fetchPostData('updateUser',opratorData).then(res => {
       toast.success("Updated successful");
     });
   }
+  }
   
-  
+  const [isChecked, setIsChecked] = React.useState(false)
+  console.log('cccclllicked', isChecked);
   
     return (
       <div>
@@ -171,17 +186,7 @@ const OperatorEdit = () => {
               /> }
           </div>
         </div>
-        <div className='bg-light p-2 m-1 rounded '>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-            <span className="form-control"><FontAwesomeIcon icon={faKey} /></span>
-            </div>
-             { <input type="text" className="form-control" placeholder="Enter User Password" aria-label="User Password" aria-describedby="basic-addon1"
-             value={userPwd} 
-             onChange={(event) => { setuserPwd(event.target.value);}}
-              /> }
-          </div>
-        </div>
+        
         <div className='bg-light p-2 m-1 rounded '>
           <div className="input-group mb-3">
             <div className="input-group-prepend">
@@ -196,14 +201,40 @@ const OperatorEdit = () => {
         <div className='bg-light p-2 m-1 rounded '>
           <div className="input-group mb-3">
             <div className="input-group-prepend">
+            <span className="form-control"><FontAwesomeIcon icon={faKey} /></span>
             </div>
-            {isUpdate && <button type="button" className="btn btn-secondary p-1 m-1 border_radius_btn" onClick={ handleDelete }>
+             { <input type="text" className="form-control" placeholder="Enter User Password" aria-label="User Password" aria-describedby="basic-addon1"
+             value={userPwd} 
+             onChange={(event) => { setuserPwd(event.target.value);}}
+              /> }
+          </div>
+        </div>
+        <div>
+              {isUpdate && <input type="checkbox" id="mpCheckbox" className='checkbox' onChange={(e) => setIsChecked(e.target.checked)} />}
+              {isUpdate && <label className='change-pwd-title'>Change Password</label>}
+            </div>
+            {isUpdate && <div className='bg-light p-2 m-1 rounded '>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="form-control"><FontAwesomeIcon icon={faKey} /></span>
+                </div>
+                {<input type="password" className="form-control" placeholder="Confirm Password" aria-label="User Password" aria-describedby="basic-addon1"
+                  value={userConfirmPwd} disabled={!isChecked}
+                  onChange={(event) => { setuserConfirmPwd(event.target.value); }}
+                />}
+              </div>
+            </div> }
+        <div className='bg-light p-2 m-1 rounded '>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+            </div>
+            {isUpdate && <button type="button" className="btn btn-danger p-1 m-1 border_radius_btn " onClick={ handleDelete }>
             <span><FontAwesomeIcon icon={faTrash} /> Delete</span>
               </button>}
-            {isUpdate && <button type="button" className="btn btn-secondary p-1 m-1 border_radius_btn" onClick={ handleUpdate }>
+            {isUpdate && <button type="button" className="btn btn-success p-1 m-1 border_radius_btn" onClick={ handleUpdate }>
             <span><FontAwesomeIcon icon={faSave} /> Update</span>
             </button>}
-            {!isUpdate && <button type="button" className="btn btn-secondary p-1 m-1 border_radius_btn" onClick={handleSubmitButtonPressed}>
+            {!isUpdate && <button type="button" className="btn btn-primary p-1 m-1 border_radius_btn" onClick={handleSubmitButtonPressed}>
             <span><FontAwesomeIcon icon={faSave} /> Create Operator</span>
               </button>}
             <button type="button" className="btn btn-secondary p-1 m-1 border_radius_btn"  onClick={() => history.push('/operatorlist') }>
