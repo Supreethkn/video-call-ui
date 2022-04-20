@@ -33,7 +33,11 @@ export const usertypeop = 'OPERATOR';
 export const usertypemc = 'MACHINE';
 export const userreasonmc = {
   a:'Not Able To Find Language',
-  b:'Not Able To Find Terminal'
+  b:'Not Able To Find Terminal',
+  BUGGY: 'BUGGY',
+  LOSTPROPERTY: "LOST PROPERTY",
+  WHEELCHAIRSERVICES: "WHEELCHAIR SERVICES",
+  OTHERS: "OTHERS"
 };
 
 

@@ -180,7 +180,7 @@ const OperatorEdit = () => {
             <div className="input-group-prepend">
               <span className="form-control"><FontAwesomeIcon icon={faEnvelopeOpen} /></span>
             </div>
-             { <input type="text" className="form-control" placeholder="Enter User Email" aria-label="User Email" aria-describedby="basic-addon1"
+             { <input type="email" className="form-control" placeholder="Enter User Email" aria-label="User Email" aria-describedby="basic-addon1"
              value={userEmail} 
              onChange={(event) => { setuserEmail(event.target.value);}}
               /> }
@@ -203,7 +203,7 @@ const OperatorEdit = () => {
             <div className="input-group-prepend">
             <span className="form-control"><FontAwesomeIcon icon={faKey} /></span>
             </div>
-             { <input type="text" className="form-control" placeholder="Enter User Password" aria-label="User Password" aria-describedby="basic-addon1"
+             { <input type="password" className="form-control" placeholder="Enter User Password" aria-label="User Password" aria-describedby="basic-addon1"
              value={userPwd} 
              onChange={(event) => { setuserPwd(event.target.value);}}
               /> }
