@@ -5,7 +5,7 @@ import './OnGoingCall.css';
 const OnGoingCall = () => {
   return (
     <div className='connecting-message'>
-        <h5>PLEASE WAIT WE ARE CONNECTING....</h5>
+        <p>PLEASE WAIT WE ARE CONNECTING....</p>
     </div>
   );
 };
