@@ -12,11 +12,25 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setUserSession } from '../utils/Service/Common';
 
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const LoginPage = ({ saveUsername }) => {
   const [username, setUsername, userPwd] = useState('');
 
   const history = useHistory();
+
+  const submitMessage = (val) => {
+    confirmAlert({
+      // title: 'Message',
+      message: val,
+      buttons: [
+        {
+          label: 'OK',
+        }
+      ]
+    });
+  };
 
   let passwordEnter='';
 
@@ -53,7 +67,9 @@ const LoginPage = ({ saveUsername }) => {
         .then( data => {
           console.log(data);
           // toast.error(data.result);
-          toast.error("Please Fill Details");
+          // toast.error("Please Fill Details");
+      submitMessage("Please Fill Details");
+
         } );
       } else {
         // const json =  res.json()
