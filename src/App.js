@@ -67,8 +67,8 @@ function App () {
         <Route exact path="/" component={LoginPage} />
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/forgot" component={ForgotPage} />
+        <PublicRoute path="/thankyou" component={Thankyou} />
         <PublicRoute path="/main/:userid/:userreason" component={MainDashboard} />
-        <PrivateRoute path="/thankyou" component={Thankyou} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/operatorlist" component={OperatorList} />
         <PrivateRoute path="/Auditlist" component={AuditList} />

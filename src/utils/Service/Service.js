@@ -1,5 +1,5 @@
 // const SERVER = 'https://web-rtc-backend-test.herokuapp.com';
-const SERVER = 'https://10.10.2.7:5000'
+const SERVER = process.env.REACT_APP_SERVER;
 
 export const getApi = (api) => {
     return {

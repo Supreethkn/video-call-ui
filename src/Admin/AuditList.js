@@ -88,7 +88,7 @@ const columns = [
   var name = {
     url : data.recording
   }
-  fetch('http://localhost:5000/download', {
+  fetch(process.env.REACT_APP_SERVER +'/download', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(name)

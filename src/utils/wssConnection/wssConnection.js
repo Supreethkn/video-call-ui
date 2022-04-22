@@ -11,9 +11,9 @@ import { userreasonmc } from '../../store/actions/dashboardActions';
 
 
 // const SERVER = 'https://web-rtc-backend-test.herokuapp.com';
-const SERVER = 'https://10.10.2.7:5000';
+const SERVER = process.env.REACT_APP_SERVER;
 // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
-const Client_SERVER = 'https://10.10.2.7:3000';
+const Client_SERVER = process.env.REACT_APP_CLIENT;
 
 
 const broadcastEventTypes = {
@@ -69,7 +69,9 @@ socket.on('group-call-join-request', (data) => {
     webRTCGroupCallHandler.connectToNewUser(data);
 });
 
+
 socket.on('group-call-user-left', (data) => {
+    // history.push('/thankyou');
     console.log('back from server user left');
     console.log(data);
     webRTCGroupCallHandler.removeInactiveStream(data);
@@ -209,7 +211,10 @@ const handleBroadcastEvents = (data) => {
                         userReason = key;
                     }
                 }
-                let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
+                // let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
+                // window.location.href = path;
+
+                let path = '/thankyou';
                 window.location.href = path;
             }
             break;

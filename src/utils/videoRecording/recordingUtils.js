@@ -70,7 +70,7 @@ const downloadRecordedVideo = () => {
     var fileName = videoFileName+'.mp4';
     var fd = new FormData();
     fd.append('my_file', myBlob, fileName);
-        fetch('http://localhost:5000/upload', {
+        fetch(process.env.REACT_APP_SERVER +'/upload', {
         method: 'post',
         body: fd
     });

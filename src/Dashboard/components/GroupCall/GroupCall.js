@@ -13,10 +13,9 @@ import { useHistory } from 'react-router-dom';
 const GroupCall = (props, { username }) => {
     const { callState, localStream, groupCallActive, groupCallStreams } = props;
 
-    const history = useHistory();
 
     // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
-    const Client_SERVER = 'https://10.10.2.7:3000';
+    const Client_SERVER = process.env.REACT_APP_CLIENT;
 
 
     useEffect(() => {
@@ -30,7 +29,6 @@ const GroupCall = (props, { username }) => {
     };
 
     const leaveRoom = () => {
-        history.push('/thankyou');
         webRTCGroupCallHandler.leaveGroupCall();
 
     };
