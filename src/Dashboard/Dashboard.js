@@ -14,8 +14,6 @@ import NavbarMachine from '../Navbar/NavbarMachine';
 import AnswerInfo from './components/GroupCallRoomsList/AnswerInfo';
 import OnGoingCall from './components/OngoingCallMessage/OnGoingCall';
 
-
-
 import './Dashboard.css';
 
 const Dashboard = ({ username, callState, groupCallStreams }) => {
@@ -33,8 +31,6 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
     else if (groupCallStreams.length === 0) {
       return <OnGoingCall />;
     }
-    
-    
   }
 
   return (
@@ -60,7 +56,7 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
     //   </div>
     // </div>
     // old end
-    <div>
+  <div>
   {username.usertype == 'OPERATOR' && <NavbarLocal /> }
     <div className='bg_color_theme'>
       <div className='col-12 row height_90'>
