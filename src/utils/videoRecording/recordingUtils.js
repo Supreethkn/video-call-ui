@@ -52,18 +52,27 @@ const downloadRecordedVideo = () => {
   // a.click();
   // window.URL.revokeObjectURL(url);
   
-    ReactS3Client.uploadFile(blob, videoFileName).then(
-      (data) => {
-      console.log(data);
-      if (data.status === 204) {
-        console.log("success");
-      } else {
-        console.log("fail");
-      }
-    },
-    (err)=>{
-      console.log("errrrrrrr");
-      console.log(err);
+    // ReactS3Client.uploadFile(blob, videoFileName).then(
+    //   (data) => {
+    //   console.log(data);
+    //   if (data.status === 204) {
+    //     console.log("success");
+    //   } else {
+    //     console.log("fail");
+    //   }
+    // },
+    // (err)=>{
+    //   console.log("errrrrrrr");
+    //   console.log(err);
+    // });
+    var myBlob = blob;
+    console.log(myBlob);
+    var fileName = videoFileName+'.mp4';
+    var fd = new FormData();
+    fd.append('my_file', myBlob, fileName);
+        fetch('http://localhost:5000/upload', {
+        method: 'post',
+        body: fd
     });
 };
 

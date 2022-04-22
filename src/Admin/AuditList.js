@@ -6,6 +6,7 @@ import { AuditTableList } from './component/AuditTableList'
 import NavbarLocal from '../Navbar/Navbar';
 import Moment from 'moment';
 import GridTable from '@nadavshaar/react-grid-table';
+import { saveAs } from "file-saver";
 
 
 
@@ -78,12 +79,25 @@ const columns = [
 ];
 
  const downloadVideo = (data) => {
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none;";
-  a.href = 'https://webrtc1-test.s3.ap-south-1.amazonaws.com/'+data.recording+'.webm';
-  a.target='_blank'
-  a.click();
+  // const a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none;";
+  // a.href = 'https://webrtc1-test.s3.ap-south-1.amazonaws.com/'+data.recording+'.webm';
+  // a.target='_blank'
+  // a.click();
+  var name = {
+    url : data.recording
+  }
+  fetch('http://localhost:5000/download', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(name)
+    })
+    .then(response => response.blob())
+    .then((res) => {
+      const resp = new Blob([res], {type: "video/mp4"});
+      saveAs(resp, "video.mp4");
+  });
  }
 
     useEffect(() => {
