@@ -1,23 +1,13 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import './Thankyou.css';
 
 const ThankyouMessage = () => {
-  const history = useHistory();
-
-  const goback = () => {
-    history.push('/dashboard');
-  };
 
   return (
-    <div className='message'>
+    <div className='message' id='call'>
         <p>Thanks For Calling...</p>
-        <div>
-      <button className='btn btn-light' onClick={() => history.push('/dashboard')}>Go Back</button>
     </div>
-    </div>
-   
   );
 };
 
