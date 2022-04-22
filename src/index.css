@@ -80,6 +80,8 @@ code {
 .Group_call_video_fit {
   width: auto;
   height: 100%;
+  margin-left: -68%;
+
 }
 
 .hand_cursor {

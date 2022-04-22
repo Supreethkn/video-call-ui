@@ -7,11 +7,13 @@ import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
 import * as common from '../../../utils/Service/Common';
 
 import { userreasonmc } from '../../../store/actions/dashboardActions';
-
+import { useHistory } from 'react-router-dom';
 
 
 const GroupCall = (props, { username }) => {
     const { callState, localStream, groupCallActive, groupCallStreams } = props;
+
+    const history = useHistory();
 
     // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
     const Client_SERVER = 'https://10.10.2.7:3000';
@@ -28,7 +30,9 @@ const GroupCall = (props, { username }) => {
     };
 
     const leaveRoom = () => {
+        history.push('/thankyou');
         webRTCGroupCallHandler.leaveGroupCall();
+
     };
 
     const leaveRoomMachine = () => {

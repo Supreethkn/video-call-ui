@@ -22,18 +22,33 @@ import * as webRTCGroupCallHandler from '../utils/webRTC/webRTCGroupCallHandler'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const NavbarLocal = () => {
 
   const history = useHistory();
+
+  const submitMessage = (val) => {
+    confirmAlert({
+      // title: 'Message',
+      message: val,
+      buttons: [
+        {
+          label: 'OK',
+        }
+      ]
+    });
+  };
 
   const userName = common.getUser();
   console.log('user data', userName);
 
   const  handleonLogout = () => {
     if(webRTCGroupCallHandler.checkActiveGroupCall()) {
-      toast.warning("Please disconnect the active call");
+      // toast.warning("Please disconnect the active call");
+      submitMessage("Please disconnect the active call");
+
     } else {
       common.removeUserSession();
       history.push('/login');
@@ -44,7 +59,8 @@ const NavbarLocal = () => {
   const navigateMenu = (path) => {
     // check if in a call
     if(webRTCGroupCallHandler.checkActiveGroupCall()) {
-      toast.warning("Please disconnect the active call");
+      // toast.warning("Please disconnect the active call");
+      submitMessage("Please disconnect the active call");
     } else {
       history.push(path);
     }

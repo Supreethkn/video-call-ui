@@ -38,15 +38,16 @@ const MainDashboard = ({ saveUsername }) => {
     history.push('/dashboard');
   };
 
-  // on initialization on module call this
-  useEffect(() => {
-    // handleSubmitButtonPressed();
-  });
+  useEffect(() =>{
+    setTimeout(() => handleSubmitButtonPressed(), -1000);
+  })
 
 
   return (
-    <div className='login-page_container bg_color_theme'>
-      <div className='login-page_login_box background_secondary_color'>
+    // <div className='login-page_container bg_color_theme'>
+    //   <div className='login-page_login_box background_secondary_color'>
+        <div className='login-page_container bg_color_theme'>
+      <div className=''>
         {/* <div className='login-page_logo_container'>
           <img className='login-page_logo_image' src={logo} alt='VideoTalker' />
         </div> */}
@@ -54,7 +55,7 @@ const MainDashboard = ({ saveUsername }) => {
           <h2>Click Here to Talk to Operator</h2>
         </div> */}
         {/* <UsernameInput username={username} setUsername={setUsername} /> */}
-        <SubmitButton handleSubmitButtonPressed={handleSubmitButtonPressed} />
+        {/* <SubmitButton handleSubmitButtonPressed={handleSubmitButtonPressed} /> */}
       </div>
     </div>
   );

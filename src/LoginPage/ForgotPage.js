@@ -10,7 +10,8 @@ import './LoginPage.css';
 import * as Service from '../utils/Service/Service';
 import { ToastContainer, toast } from 'react-toastify';
 
-
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
 const ForgotPage = () => {
@@ -21,6 +22,18 @@ const ForgotPage = () => {
 
 
 const history = useHistory();
+
+const submitMessage = (val) => {
+  confirmAlert({
+    // title: 'Message',
+    message: val,
+    buttons: [
+      {
+        label: 'OK',
+      }
+    ]
+  });
+};
 
 const routeToLogin = () => {
     history.push('/login');
@@ -38,11 +51,14 @@ const handleForgot = () => {
           const json =  res.json()
           .then( data => {
             console.log(data);
-            toast.error(data.result);
+            // toast.error(data.result);
+      submitMessage(data.result);
+
           } );
         } else {
           // write logic to enable
-          toast.success("Email Sent Successful");
+      submitMessage("Email Sent Successful");
+      // toast.success("Email Sent Successful");
         }
       });
 }

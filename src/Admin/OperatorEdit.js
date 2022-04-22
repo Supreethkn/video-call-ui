@@ -14,14 +14,8 @@ import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faUserCog } from '@fortawesome/free-solid-svg-icons'
 
-
-
-
-
-
-
-
-
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import './Operator.css';
 import {
@@ -85,6 +79,18 @@ const OperatorEdit = () => {
 
   const history = useHistory();
 
+  const submitMessage = (val) => {
+    confirmAlert({
+      // title: 'Message',
+      message: val,
+      buttons: [
+        {
+          label: 'OK',
+        }
+      ]
+    });
+  };
+
   const handleSubmitButtonPressed = () => {
     const opratorData = {
       name: userName,
@@ -94,11 +100,18 @@ const OperatorEdit = () => {
     }
     console.log("handle calleddddd");
     if(userName == '' || userEmail == '' || userPwd == '' ||  userAdmin == ''){
-      toast.warning("Please Fill Details");
+      // toast.warning("Please Fill Details");
+      submitMessage('Please Fill Details');
     }else{
     console.log('create data',opratorData);
     Service.fetchPostData('createUser',opratorData).then(res => {
+      if (res.status == 409) {
+        // toast.warning("User Already Exists");
+        submitMessage('User Already Exists');
+      }else{
+        submitMessage('Created successful');
       history.push('/operatorlist');
+      }
     });
   }
   };
@@ -111,14 +124,22 @@ const OperatorEdit = () => {
     console.log("handle calleddddd");
     console.log(opratorData);
     Service.fetchLoginPostData('deleteUser',opratorData).then(res => {
+      console.log("res",res);
+      if (res.status == 409) {
+        // toast.warning("Cannot Delete Admin");
+        submitMessage('Cannot Delete Admin');
+
+      }
       if(res.status >= 400) {
         const json =  res.json()
         .then( data => {
           console.log(data);
-          toast.error(data.result);
+          submitMessage(data.result);
+          // toast.error(data.result);
         } );
       } else {
-        toast.success("deleted successful");
+        // toast.success("deleted successful");
+        submitMessage("Deleted successful");
         history.push('/operatorlist');
       }
     });
@@ -135,16 +156,19 @@ const OperatorEdit = () => {
     }
     console.log("handle calleddddd");
     if (userName == '' || userEmail == '' || userPwd == '') {
-      toast.warning("Please Fill Details");
+      // toast.warning("Please Fill Details");
+      submitMessage("Please Fill Details");
       console.log(opratorData);
     }
     else if (isChecked == true && userPwd != userConfirmPwd) {
-      toast.warning("Password and Confirm Password does not match");
+      // toast.warning("Password and Confirm Password does not match");
+      submitMessage("Password and Confirm Password does not match");
     }
     else {
     console.log(opratorData);
     Service.fetchPostData('updateUser',opratorData).then(res => {
-      toast.success("Updated successful");
+      // toast.success("Updated successful");
+      submitMessage("Updated successful");
     });
   }
   }
@@ -180,7 +204,7 @@ const OperatorEdit = () => {
             <div className="input-group-prepend">
               <span className="form-control"><FontAwesomeIcon icon={faEnvelopeOpen} /></span>
             </div>
-             { <input type="text" className="form-control" placeholder="Enter User Email" aria-label="User Email" aria-describedby="basic-addon1"
+             { <input type="email" className="form-control" placeholder="Enter User Email" aria-label="User Email" aria-describedby="basic-addon1"
              value={userEmail} 
              onChange={(event) => { setuserEmail(event.target.value);}}
               /> }
@@ -203,7 +227,7 @@ const OperatorEdit = () => {
             <div className="input-group-prepend">
             <span className="form-control"><FontAwesomeIcon icon={faKey} /></span>
             </div>
-             { <input type="text" className="form-control" placeholder="Enter User Password" aria-label="User Password" aria-describedby="basic-addon1"
+             { <input type="password" className="form-control" placeholder="Enter User Password" aria-label="User Password" aria-describedby="basic-addon1"
              value={userPwd} 
              onChange={(event) => { setuserPwd(event.target.value);}}
               /> }

@@ -65,7 +65,7 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
     <div className='bg_color_theme'>
       <div className='col-12 row height_90'>
         {/* // Call Pending */}
-        <div className='col-3 pt-1 px-0 scroll_group_list'>
+        <div className='col-4 pt-1 px-0 scroll_group_list'>
           {/* <span>Active</span> */}
           {/* <GroupCallRoomsList /> */}
           {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
@@ -77,7 +77,7 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
           <DirectCall />
           <GroupCall username={username} />
         </div>
-        <div className='col-3 pt-1 px-0'>
+        <div className='col-2 pt-1 px-0'>
           {username.usertype === "OPERATOR" && <AnswerInfo />}
           
         </div>

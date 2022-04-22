@@ -12,11 +12,25 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setUserSession } from '../utils/Service/Common';
 
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const LoginPage = ({ saveUsername }) => {
   const [username, setUsername, userPwd] = useState('');
 
   const history = useHistory();
+
+  const submitMessage = (val) => {
+    confirmAlert({
+      // title: 'Message',
+      message: val,
+      buttons: [
+        {
+          label: 'OK',
+        }
+      ]
+    });
+  };
 
   let passwordEnter='';
 
@@ -52,7 +66,10 @@ const LoginPage = ({ saveUsername }) => {
         const json =  res.json()
         .then( data => {
           console.log(data);
-          toast.error(data.result);
+          // toast.error(data.result);
+          // toast.error("Please Fill Details");
+      submitMessage("Please Fill Details");
+
         } );
       } else {
         // const json =  res.json()
@@ -96,10 +113,10 @@ const LoginPage = ({ saveUsername }) => {
     <ToastContainer />
     <div className='col-12 row '>
       
-      <div className='col-8 login-page_container'>
+      <div className='col-8 login-page_containers'>
         <img className='login-page_logo_image' src={logo} alt='VideoTalker' />
       </div>
-      <div className='col-4 bg_color_theme login-page_container'>
+      <div className='col-4 bg_color_theme login-page_containers'>
         <div className='row'>
           <UsernameInput 
           username={username} 

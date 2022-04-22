@@ -10,8 +10,8 @@ const styles = {
     position: 'absolute',
     // bottom: '10%',
     // left: '45%'
-    bottom: '22%',
-    left: '42%'
+    bottom: '15%',
+    left: '32%'
   },
   icon: {
     width: '25px',

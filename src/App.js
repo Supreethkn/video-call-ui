@@ -21,7 +21,7 @@ import AuditListInit from './Admin/AuditListInit';
 import PrivateRoute from './utils/routing/PrivateRoute';
 import PublicRoute from './utils/routing/PublicRoute';
 
-
+import Thankyou from './Dashboard/components/ThankyouScreen/Thankyou'
 
 function App () {
   useEffect(() => {
@@ -68,6 +68,7 @@ function App () {
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/forgot" component={ForgotPage} />
         <PublicRoute path="/main/:userid/:userreason" component={MainDashboard} />
+        <PrivateRoute path="/thankyou" component={Thankyou} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/operatorlist" component={OperatorList} />
         <PrivateRoute path="/Auditlist" component={AuditList} />

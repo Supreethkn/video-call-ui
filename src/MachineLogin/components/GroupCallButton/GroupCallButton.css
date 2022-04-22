@@ -7,8 +7,10 @@
   width: 170px;
   transition: 0.3s;
   position: absolute;
-  left: 55%;
-  bottom: 10%;
+  /* left: 55%;
+  bottom: 10%; */
+  left: 42%;
+  bottom: 15%;
   background-color: #282C34;
   color: #e6e5e8;
   margin-left: 10px;
