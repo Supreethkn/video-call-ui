@@ -109,14 +109,14 @@ const LoginPage = ({ saveUsername }) => {
     //     <SubmitButton handleSubmitButtonPressed={handleSubmitButtonPressed} />
     //   </div>
     // </div>
-    <div>
+    <div className="align">
     <ToastContainer />
     <div className='col-12 row '>
       
       <div className='col-8 login-page_containers'>
         <img className='login-page_logo_image' src={logo} alt='VideoTalker' />
       </div>
-      <div className='col-4 bg_color_theme login-page_containers'>
+      <div className='col-4 bg_color login-page_containers'>
         <div className='row'>
           <UsernameInput 
           username={username} 

@@ -5,8 +5,8 @@ import './Thankyou.css';
 const ThankyouMessage = () => {
 
   return (
-    <div className='message' id='call'>
-        <p>Thanks For Calling...</p>
+    <div className='message'>
+        {/* <p>Thanks For Calling...</p> */}
     </div>
   );
 };

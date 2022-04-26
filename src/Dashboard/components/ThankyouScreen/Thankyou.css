@@ -6,5 +6,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #224192;
+    /* background-color: #224192; */
+    background-image: url('../../../resources/Background.png');
 }

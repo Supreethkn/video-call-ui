@@ -25,6 +25,13 @@ code {
 
 .background_secondary_color {
   background-color: #282C34;
+  width: 300px !important;
+  height: 300px !important;
+  border-radius: 8px !important;
+  position: absolute !important;
+  top: 10% !important;
+  right: 11% !important;
+  z-index: 5 !important;
 }
 
 .text_main_color {
@@ -59,7 +66,16 @@ code {
 }
 
 .bg_color_theme {
-  background-color: #224192 !important;
+  /* background-color: #224192 !important; */
+  background-image: url('./resources/Background.png') !important;
+}
+
+body {
+  background-image: url('./resources/Background.png') !important;
+}
+
+video {
+  object-fit: cover;
 }
 
 .color_theme {
@@ -78,9 +94,14 @@ code {
 }
 
 .Group_call_video_fit {
-  width: auto;
+  /* width: auto;
   height: 100%;
-  margin-left: -68%;
+  margin-left: -68%; */
+
+  width: 1920px;
+  height: 965px;
+  position: absolute;
+  z-index: 1;
 
 }
 

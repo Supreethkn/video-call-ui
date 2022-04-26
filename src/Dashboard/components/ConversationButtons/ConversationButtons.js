@@ -3,6 +3,8 @@ import { MdCallEnd, MdMic, MdMicOff, MdVideocam, MdVideocamOff, MdVideoLabel, Md
 import ConversationButton from './ConversationButton';
 import { switchForScreenSharingStream, hangUp } from '../../../utils/webRTC/webRTCHandler';
 import store from '../../../store/store';
+import Conversation from './Conversation.css';
+
 
 const styles = {
   buttonContainer: {
@@ -64,7 +66,7 @@ const ConversationButtons = (props) => {
   };
 
   return (
-    <div style={styles.buttonContainer}>
+    <div style={styles.buttonContainer} className="disconnect-btn-align">
       <ConversationButton onClickHandler={handleMicButtonPressed}>
         {localMicrophoneEnabled ? <MdMic style={styles.icon} /> : <MdMicOff style={styles.icon} />}
       </ConversationButton>

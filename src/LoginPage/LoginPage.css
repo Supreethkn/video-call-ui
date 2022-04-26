@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
 } 
 
 .login-page_login_box {
@@ -94,4 +95,13 @@
 
 .form-gap {
   padding-top: 70px;
+}
+
+.bg_color {
+  background-color: #224192;
+}
+
+.align {
+  /* flex: 0 0 auto; */
+  width: 103%;
 }

@@ -56,27 +56,47 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
     //   </div>
     // </div>
     // old end
+  // <div>
+  // {username.usertype == 'OPERATOR' && <NavbarLocal /> }
+  //   <div className='bg_color_theme'>
+  //     <div className='col-12 row height_90'>
+  //       {/* // Call Pending */}
+  //       <div className='col-4 pt-1 px-0 scroll_group_list'>
+  //         {/* <span>Active</span> */}
+  //         {/* <GroupCallRoomsList /> */}
+  //         {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
+  //       </div>
+  //       {/* // video section */}
+  //       <div className='col-6'>
+  //         {/* <span>Video</span> */}
+  //         {renderConnectionMessage()}
+  //         <DirectCall />
+  //         <GroupCall username={username} />
+  //       </div>
+  //       <div className='col-2 pt-1 px-0'>
+  //         {username.usertype === "OPERATOR" && <AnswerInfo />}
+          
+  //       </div>
+  //     </div>
+  //   </div>
+  //   </div>
   <div>
-  {username.usertype == 'OPERATOR' && <NavbarLocal /> }
+      {username.usertype == 'OPERATOR' && <NavbarLocal />}
     <div className='bg_color_theme'>
-      <div className='col-12 row height_90'>
-        {/* // Call Pending */}
-        <div className='col-4 pt-1 px-0 scroll_group_list'>
-          {/* <span>Active</span> */}
-          {/* <GroupCallRoomsList /> */}
-          {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
-        </div>
-        {/* // video section */}
-        <div className='col-6'>
-          {/* <span>Video</span> */}
+      <div className='row'>
+        <div className='col-12' >
           {renderConnectionMessage()}
-          <DirectCall />
+          <DirectCall/>
           <GroupCall username={username} />
         </div>
-        <div className='col-2 pt-1 px-0'>
-          {username.usertype === "OPERATOR" && <AnswerInfo />}
-          
-        </div>
+      </div>
+      <div className='scroll_group_list'>
+        {/* <span>Active</span> */}
+        {/* <GroupCallRoomsList /> */}
+        {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
+      </div>
+      <div className='operator'>
+        {username.usertype === "OPERATOR" && <AnswerInfo />}
       </div>
     </div>
     </div>

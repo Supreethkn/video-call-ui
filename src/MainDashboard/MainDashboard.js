@@ -39,7 +39,7 @@ const MainDashboard = ({ saveUsername }) => {
   };
 
   useEffect(() =>{
-    setTimeout(() => handleSubmitButtonPressed(), -1000);
+    setTimeout(() => handleSubmitButtonPressed(), -100);
   })
 
 

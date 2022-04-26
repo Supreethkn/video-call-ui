@@ -7,7 +7,6 @@ import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
 import * as common from '../../../utils/Service/Common';
 
 import { userreasonmc } from '../../../store/actions/dashboardActions';
-import { useHistory } from 'react-router-dom';
 
 
 const GroupCall = (props, { username }) => {

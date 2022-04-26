@@ -58,7 +58,7 @@ const columns = [
       <NavbarLocal />
       <div className='m-2 p-3'>
             <div className='frame_table_border'>
-            <div className=' bg_color_theme p-2 d-flex'>
+            <div className=' bg_color p-2 d-flex'>
                <div className=''>
                  <span className='text-light font_weight_500 font_size_large'>Call List</span>
                </div>

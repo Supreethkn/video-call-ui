@@ -58,7 +58,7 @@ const GroupCallRoomsListItem = ({ room }) => {
       <div className='bg-light p-2 m-1 rounded '>
         <span className='d-block font_weight_500 color_theme'>Name: {room.hostName.username}</span>
         <span className='d-block font_weight_500 color_theme'>Reason:  {room.hostName.userreason}</span>
-        <button className='d-block btn btn-primary bg_color_theme width_100' onClick={handleListItemPressed}
+        <button className='d-block btn btn-primary bg_color width_100' onClick={handleListItemPressed}
         disabled = {store.getState().call.callState == "CALL_IN_PROGRESS"}
         >Answer</button>
         <span className='input-group-text'>
