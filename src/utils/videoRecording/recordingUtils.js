@@ -6,7 +6,7 @@ let videoFileName;
 
 const vp9Codec = "video/webm; codecs=vp=9";
 const vp9Options = { mimeType: vp9Codec };
-const recordedChunks = [];
+var recordedChunks = [];
 
 const config = {
   bucketName: '',
@@ -74,6 +74,8 @@ const downloadRecordedVideo = () => {
         method: 'post',
         body: fd
     });
+
+    recordedChunks = [];
 };
 
 const handleDataAvailable = (event) => {
