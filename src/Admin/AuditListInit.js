@@ -29,7 +29,7 @@ const columns = [
       sortable: false
   },
   {
-    id: 2, 
+    id: 3, 
     field: 'callStatus', 
     label: 'Call Status',
     sortable: false
