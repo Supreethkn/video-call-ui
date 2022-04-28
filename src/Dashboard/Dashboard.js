@@ -12,7 +12,7 @@ import GroupCall from './components/GroupCall/GroupCall';
 import NavbarLocal from '../Navbar/Navbar';
 import NavbarMachine from '../Navbar/NavbarMachine';
 import AnswerInfo from './components/GroupCallRoomsList/AnswerInfo';
-import OnGoingCall from './components/OngoingCallMessage/OnGoingCall';
+import OnGoingCall from './components/CallingOngoingMessage/OnGoingCall';
 
 import './Dashboard.css';
 
@@ -32,6 +32,11 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
       return <OnGoingCall />;
     }
   }
+
+  window.onunload = function () {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+}
 
   return (
     // old start
