@@ -4,7 +4,7 @@ import S3 from "react-aws-s3";
 let mediaRecorder;
 let videoFileName;
 
-const vp9Codec = "video/webm; codecs=vp=9";
+const vp9Codec = "video/mp4; codecs=h264";
 const vp9Options = { mimeType: vp9Codec };
 var recordedChunks = [];
 
@@ -40,7 +40,7 @@ export const stopRecording = () => {
 
 const downloadRecordedVideo = () => {
   const blob = new Blob(recordedChunks, {
-    type: "video/webm",
+    type: "video/mp4",
   });
 
   // const url = URL.createObjectURL(blob);
