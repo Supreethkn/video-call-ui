@@ -13,10 +13,20 @@ import NavbarLocal from '../Navbar/Navbar';
 import NavbarMachine from '../Navbar/NavbarMachine';
 import AnswerInfo from './components/GroupCallRoomsList/AnswerInfo';
 import OnGoingCall from './components/CallingOngoingMessage/OnGoingCall';
+import store from '../store/store';
+import {  setCallState } from '../store/actions/callActions';
+import * as webRTCGroupCallHandler from '../utils/webRTC/webRTCGroupCallHandler';
+// import * as wssConnection from '../utils/wssConnection/wssConnection';
+// import Thankyou from './components/ThankyouScreen/Thankyou';
+// import { useHistory } from 'react-router-dom';
+import $ from 'jquery'
 
 import './Dashboard.css';
 
 const Dashboard = ({ username, callState, groupCallStreams }) => {
+
+  // const history = useHistory();
+
   useEffect(() => {
     console.log("Dashboard $$$$$");
     console.log(username);
@@ -36,7 +46,36 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
   window.onunload = function () {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
+    // wssConnection.handleBroadcastEvents()
+    // store.dispatch(setCallState(callStates.CALL_DISCONNECT));
+
 }
+
+
+// window.onbeforeunload = function (e) {
+//   e = e || window.event;
+
+
+window.onbeforeunload = function() {
+ console.log('closed');
+webRTCGroupCallHandler.leaveGroupCall();
+return "Please disconnect call before leaving" 
+}
+
+
+const groupCall = () => {
+  // console.log('dashboard--------', val);
+  if(store.getState().call.callState == 'CALL_IN_PROGRESS' || store.getState().call.callState == 'CALL_AVAILABLE'){
+    return <GroupCall username={username}/> 
+  }
+  else if(store.getState().call.callState == 'CALL_DISCONNECT'){
+    console.log('cccccchhhhhhheeeeeeecccccccckkkkkkeeeeeddddd');
+    return 
+
+  }
+  
+}
+
 
   return (
     // old start
@@ -92,7 +131,8 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
         <div className='col-12' >
           {renderConnectionMessage()}
           <DirectCall/>
-          <GroupCall username={username} />
+          {/* <GroupCall username={username} /> */}
+          {groupCall() }
         </div>
       </div>
       <div className='scroll_group_list'>

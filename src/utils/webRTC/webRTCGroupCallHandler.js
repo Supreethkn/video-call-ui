@@ -232,11 +232,14 @@ const addVideoStream = (incomingStream) => {
 // if group call is active return roomId if not return false
 export const checkActiveGroupCall = () => {
   console.log("check active group call");
+  if(store.getState().call.groupCallStreams.length == 0 || store.getState().call.groupCallStreams.length == 1){
+    store.dispatch(setCallState(callStates.CALL_DISCONNECT));
+  }
   console.log(store.getState().call);
   if (store.getState().call.groupCallActive) {
+    store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
     return groupCallRoomId;
   } else {
     return false;
   }
-}
-;
+};

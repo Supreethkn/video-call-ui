@@ -29,7 +29,6 @@ const GroupCall = (props, { username }) => {
 
     const leaveRoom = () => {
         webRTCGroupCallHandler.leaveGroupCall();
-
     };
 
     const leaveRoomMachine = () => {
