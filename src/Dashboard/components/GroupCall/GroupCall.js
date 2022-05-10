@@ -15,8 +15,7 @@ const GroupCall = (props, { username }) => {
 
     // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
     const Client_SERVER = process.env.REACT_APP_CLIENT;
-
-
+    
     useEffect(() => {
         console.log("group call initia ####3 $$$$$");
         console.log(props);

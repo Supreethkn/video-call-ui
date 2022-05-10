@@ -7,6 +7,8 @@ import * as common from '../../utils/Service/Common';
 import * as Service from '../../utils/Service/Service';
 
 import { userreasonmc } from '../../store/actions/dashboardActions';
+import {startRecording} from '../videoRecording/recordingUtils';
+import { stopRecording } from '../videoRecording/recordingUtils';
 
 
 
@@ -69,6 +71,16 @@ socket.on('group-call-join-request', (data) => {
     webRTCGroupCallHandler.connectToNewUser(data);
 });
 
+socket.on('start-video', (data) => {
+    console.log('start video', data);
+    console.log('user side socked id', socket.id);
+    // if(data.hostSocketId == socket.id){
+        let videoName = 'sai'
+        startRecording(videoName);
+    // }
+    // webRTCGroupCallHandler.connectToNewUser(data);
+});
+
 
 socket.on('group-call-user-left', (data) => {
     // history.push('/thankyou');
@@ -82,6 +94,7 @@ socket.on('group-call-user-left', (data) => {
 });
 
 socket.on('machine-call-user-left', (data) => {
+    alert('close')
     let activeUser = store.getState().call.groupCallStreams;
     for(let key in activeUser){
       if(activeUser[key].id == data.streamId) {
@@ -91,14 +104,23 @@ socket.on('machine-call-user-left', (data) => {
   });
   
   socket.on('machine-call-user-end', (data) => {
+    console.log('data',data);
     let startTime = store.getState().call.callStateStartTime === undefined ? false : true ;
+    console.log('ssss',startTime);
     var operatorId ;
     var peers = data.peerId;
+    console.log('peers', peers);
     for(var key in peers) {
       if(peers[key].roomId === data.roomId && peers[key].usertype === "OPERATOR" && startTime) {
         operatorId = peers[key].socketId
+        console.log('key',peers[key].roomId);
+        console.log('room',data.roomId);
       }
     }
+    console.log('op',operatorId);
+    console.log('soc',socket);
+    console.log('soc',socket.id);
+    
     if(operatorId === socket.id) {
       webRTCGroupCallHandler.leaveGroupCallEnd();
     }
@@ -143,11 +165,19 @@ export const sendUserHangedUp = (data) => {
 // emitting events related with group calls
 
 export const registerGroupCall = (data) => {
+    console.log('register',data);
     socket.emit('group-call-register', data);
 };
 
 export const userWantsToJoinGroupCall = (data) => {
+    console.log('want to join');
     socket.emit('group-call-join-request', data);
+
+};
+
+export const  startVideoCall = (data) => {
+    console.log('user calls', data);
+    socket.emit('start-video', data);
 
 };
 
@@ -214,8 +244,9 @@ const handleBroadcastEvents = (data) => {
                 // let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
                 // window.location.href = path;
 
-                let path = '/thankyou';
-                window.location.href = path;
+                // let path = '/thankyou';
+                // window.location.href = path;
+                stopRecording();
             }
             break;
         default:

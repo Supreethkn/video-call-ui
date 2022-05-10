@@ -17,15 +17,16 @@ import store from '../store/store';
 import {  setCallState } from '../store/actions/callActions';
 import * as webRTCGroupCallHandler from '../utils/webRTC/webRTCGroupCallHandler';
 // import * as wssConnection from '../utils/wssConnection/wssConnection';
-// import Thankyou from './components/ThankyouScreen/Thankyou';
-// import { useHistory } from 'react-router-dom';
+import Thankyou from './components/ThankyouScreen/Thankyou';
+import { useHistory } from 'react-router-dom';
 import $ from 'jquery'
 
 import './Dashboard.css';
 
 const Dashboard = ({ username, callState, groupCallStreams }) => {
 
-  // const history = useHistory();
+  
+  const history = useHistory();
 
   useEffect(() => {
     console.log("Dashboard $$$$$");
@@ -46,35 +47,24 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
   window.onunload = function () {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
-    // wssConnection.handleBroadcastEvents()
-    // store.dispatch(setCallState(callStates.CALL_DISCONNECT));
-
 }
 
+// const groupCall = () => {
+//   // console.log('dashboard--------', val);
+//   if(store.getState().call.callState == 'CALL_IN_PROGRESS' || store.getState().call.callState == 'CALL_AVAILABLE'){
+    
+//     return<GroupCall username={username} /> 
+    
+//   }
+//   else if(store.getState().call.callState == 'CALL_DISCONNECT'){
+//     console.log('checked');
+//     return 
 
-// window.onbeforeunload = function (e) {
-//   e = e || window.event;
-
-
-window.onbeforeunload = function() {
- console.log('closed');
-webRTCGroupCallHandler.leaveGroupCall();
-return "Please disconnect call before leaving" 
-}
-
-
-const groupCall = () => {
-  // console.log('dashboard--------', val);
-  if(store.getState().call.callState == 'CALL_IN_PROGRESS' || store.getState().call.callState == 'CALL_AVAILABLE'){
-    return <GroupCall username={username}/> 
-  }
-  else if(store.getState().call.callState == 'CALL_DISCONNECT'){
-    console.log('cccccchhhhhhheeeeeeecccccccckkkkkkeeeeeddddd');
-    return 
-
-  }
+//   }
   
-}
+// }
+
+
 
 
   return (
@@ -129,10 +119,13 @@ const groupCall = () => {
     <div className='bg_color_theme'>
       <div className='row'>
         <div className='col-12' >
+      {/* <div><button className='btn btn-primary test' onClick={leaveRoom}>close</button></div> */}
+
           {renderConnectionMessage()}
           <DirectCall/>
-          {/* <GroupCall username={username} /> */}
-          {groupCall() }
+          <GroupCall username={username} />
+          {/* {groupCall() } */}
+          
         </div>
       </div>
       <div className='scroll_group_list'>

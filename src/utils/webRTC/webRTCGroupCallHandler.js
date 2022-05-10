@@ -2,11 +2,12 @@ import * as wss from '../wssConnection/wssConnection';
 import store from '../../store/store';
 import { setGroupCallActive, setCallState, callStates, setGroupCallIncomingStreams, clearGroupCallData, setCallStateStartTime } from '../../store/actions/callActions';
 import { startRecording } from '../videoRecording/recordingUtils';
+import { startRecording1 } from '../videoRecording/recordingUtils';
 import { stopRecording } from '../videoRecording/recordingUtils';
-
 import { pushAuditsData } from '../../utils/Service/Service'
 import * as Service from '../../utils/Service/Service';
 
+import { stopRecording1 } from '../videoRecording/recordingUtils';
 
  
 let myPeer;
@@ -44,25 +45,32 @@ export const connectWithMyPeer = () => {
       }
     });
   });
+  
 };
 
-export const createNewGroupCall = () => {
+export const createNewGroupCall = (operatorName, operatorReason) => {
+  console.log('user connected call');
   console.log("new group created from direct login");
   console.log("issue with peer $$$$$$$$");
+
   console.log(myPeerId);
   groupCallHost = true;
+
   wss.registerGroupCall({
     username: store.getState().dashboard.username,
-    peerId: myPeerId
+    peerId: myPeerId,
   });
 
+  console.log('uuser',myPeerId);
   store.dispatch(setGroupCallActive(true));
   store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
-}
-;
+  // let videoName = 'sai'
+  // startRecording1(videoName);
 
+};
 export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason) => {
   const localStream = store.getState().call.localStream;
+  console.log('localstream',localStream);
   groupCallRoomId = roomId;
 
   wss.userWantsToJoinGroupCall({
@@ -71,6 +79,8 @@ export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason
     roomId,
     localStreamId: localStream.id
   });
+
+  
 
   //logic to start the call time
   console.log("joins the calls");
@@ -84,9 +94,11 @@ export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason
     name: operatorName,
     reason: operatorReason
   }
+ console.log('data1',store.dispatch(setCallStateStartTime(operatorDetal)));
+  
   store.dispatch(setCallStateStartTime(operatorDetal));
 
-  console.log(store.getState());
+  console.log('test',store.getState());
 
   // logic to record the video once accepted
   let videoName = operatorName+'_'+(operatorDetal.start_date).getDate()+'_'+(operatorDetal.start_date).getHours()+'_'+(operatorDetal.start_date).getMinutes()+'_'+(operatorDetal.start_date).getSeconds();
@@ -97,6 +109,13 @@ export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason
   // logic to remove the notification from all others
   wss.groupCallRemoveNotification({
     roomId: roomId
+  });
+
+  wss.startVideoCall({
+    peerId: myPeerId,
+    hostSocketId,
+    roomId,
+    localStreamId: localStream.id
   });
   
 };
@@ -112,7 +131,10 @@ export const connectToNewUser = (data) => {
 
     if (!stream) {
       addVideoStream(incomingStream);
+      
     }
+
+    
   
   });
 };
@@ -142,6 +164,7 @@ export const auditfunction = (groupCallRoomId) => {
 
 export const MachineleaveGroupCall = () =>  {
   // emit event
+  alert('group1')
   console.log("call event web rtc"); 
   wss.machineLeftGroupCall({
     streamId: store.getState().call.localStream.id,
@@ -155,6 +178,7 @@ export const leaveGroupCallEnd = () => {
   console.log("webRTCCALL HAndler $$$$$$$$$$$$$$$$$$");
   auditfunction(groupCallRoomId);
   stopRecording();
+  // stopRecording1();
   clearGroupData();
 }
 
@@ -164,6 +188,7 @@ export const leaveGroupCall = () => {
   auditfunction(groupCallRoomId);
     // logic to stop recording
   stopRecording();
+  // stopRecording1();
   if (groupCallHost) {
   console.log("groupCallHost");
     wss.groupCallClosedByHost({
@@ -232,12 +257,13 @@ const addVideoStream = (incomingStream) => {
 // if group call is active return roomId if not return false
 export const checkActiveGroupCall = () => {
   console.log("check active group call");
-  if(store.getState().call.groupCallStreams.length == 0 || store.getState().call.groupCallStreams.length == 1){
-    store.dispatch(setCallState(callStates.CALL_DISCONNECT));
-  }
+  // if(store.getState().call.groupCallStreams.length == 0 || store.getState().call.groupCallStreams.length == 1){
+  //   store.dispatch(setCallState(callStates.CALL_DISCONNECT));
+    
+  // }
   console.log(store.getState().call);
   if (store.getState().call.groupCallActive) {
-    store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
+    // store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
     return groupCallRoomId;
   } else {
     return false;
