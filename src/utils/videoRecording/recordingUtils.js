@@ -4,6 +4,7 @@ import S3 from "react-aws-s3";
 let mediaRecorder;
 let videoFileName;
 
+let userVideoFileName;
 
 
 let mediaRecorder2;
@@ -44,8 +45,8 @@ export const startRecording = (videoName) => {
 export const startRecording1 = (videoName) => {
   console.log('method called');
 
-  videoFileName = videoName;
-  console.log('name',videoFileName);
+  userVideoFileName = videoName;
+  console.log('name',userVideoFileName);
   const remoteStream = store.getState().call.localStream;
 
   console.log('local stream user', remoteStream);
@@ -56,8 +57,8 @@ export const startRecording1 = (videoName) => {
     mediaRecorder2 = new MediaRecorder(remoteStream);
   }
 
-  mediaRecorder2.ondataavailable = handleDataAvailable;
-  console.log("Start Recording ");
+  mediaRecorder2.ondataavailable = handleDataAvailable1;
+  console.log("Start Recording user");
   // alert("Start Recording user");
 
   mediaRecorder2.start();
@@ -74,7 +75,7 @@ export const stopRecording = () => {
 };
 
 export const stopRecording1 = () => {
-  console.log("Stop Recording user");
+  alert("Stop Recording user");
   // alert('user stop')
   mediaRecorder2.stop();
 };
@@ -85,14 +86,14 @@ const downloadRecordedVideo = () => {
     type: "video/mp4",
   });
 
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none;";
-  a.href = url;
-  a.download = "recording.webm";
-  a.click();
-  window.URL.revokeObjectURL(url);
+  // const url = URL.createObjectURL(blob);
+  // const a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none;";
+  // a.href = url;
+  // a.download = "recording.webm";
+  // a.click();
+  // window.URL.revokeObjectURL(url);
   
   //   ReactS3Client.uploadFile(blob, videoFileName).then(
   //     (data) => {
@@ -107,15 +108,45 @@ const downloadRecordedVideo = () => {
   //     console.log("errrrrrrr");
   //     console.log(err);
   //   });
-    // var myBlob = blob;
-    // console.log(myBlob);
-    // var fileName = videoFileName+'.mp4';
-    // var fd = new FormData();
-    // fd.append('my_file', myBlob, fileName);
-    //     fetch(process.env.REACT_APP_SERVER +'/upload', {
-    //     method: 'post',
-    //     body: fd
-    // });
+    var myBlob = blob;
+    console.log(myBlob);
+    var fileName = videoFileName+'.mp4';
+    console.log('operatorfile',fileName);
+    var fd = new FormData();
+    fd.append('my_file', myBlob, fileName);
+        fetch(process.env.REACT_APP_SERVER +'/upload', {
+        method: 'post',
+        body: fd
+    });
+
+    recordedChunks = [];
+};
+
+const downloadRecordedVideo1 = () => {
+  alert('hihihihi')
+  const blob = new Blob(recordedChunks, {
+    type: "video/mp4",
+  });
+
+  // const url = URL.createObjectURL(blob);
+  // const a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none;";
+  // a.href = url;
+  // a.download = "recordinguser.webm";
+  // a.click();
+  // window.URL.revokeObjectURL(url);
+
+    var myBlob = blob;
+    console.log(myBlob);
+    var fileName = userVideoFileName+'.mp4';
+    console.log('userfile',fileName);
+    var fd = new FormData();
+    fd.append('my_file', myBlob, fileName);
+        fetch(process.env.REACT_APP_SERVER +'/upload', {
+        method: 'post',
+        body: fd
+    });
 
     recordedChunks = [];
 };
@@ -125,5 +156,15 @@ const handleDataAvailable = (event) => {
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
     downloadRecordedVideo();
+    // downloadRecordedVideo1();
+  }
+};
+
+const handleDataAvailable1 = (event) => {
+  console.log("download ??????");
+  if (event.data.size > 0) {
+    recordedChunks.push(event.data);
+    // downloadRecordedVideo();
+    downloadRecordedVideo1();
   }
 };

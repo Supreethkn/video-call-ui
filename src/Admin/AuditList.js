@@ -65,15 +65,37 @@ const columns = [
     label: 'Call Duration',
     sortable: false
   },
+  // {
+  //   id: 7, 
+  //   field: 'recording', 
+  //   label: 'Recording Path',
+  //   sortable: false,
+  //   cellRenderer: ({ tableManager, value, data, column, colIndex, rowIndex }) => (
+  //     <a className='hand_cursor link_blue'
+  //         onClick={e => downloadVideo(data)}
+  //     ><span>{data.recording}</span></a>
+  // ),
+  // },
   {
     id: 7, 
     field: 'recording', 
-    label: 'Recording Path',
+    label: 'Operator Recording',
     sortable: false,
     cellRenderer: ({ tableManager, value, data, column, colIndex, rowIndex }) => (
       <a className='hand_cursor link_blue'
           onClick={e => downloadVideo(data)}
-      ><span>{data.recording}</span></a>
+      ><span>{data.operator_recording	}</span></a>
+  ),
+  },
+  {
+    id: 8, 
+    field: 'recording', 
+    label: 'User Recording',
+    sortable: false,
+    cellRenderer: ({ tableManager, value, data, column, colIndex, rowIndex }) => (
+      <a className='hand_cursor link_blue'
+          onClick={e => downloadVideo1(data)}
+      ><span>{data.user_recording	}</span></a>
   ),
   },
 ];
@@ -86,12 +108,32 @@ const columns = [
   // a.target='_blank'
   // a.click();
   var name = {
-    url : data.recording
+    url : data.operator_recording
   }
+  // var name1 = {
+  //   url : data.user_recording
+  // }
   fetch(process.env.REACT_APP_SERVER +'/download', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(name)
+    })
+    .then(response => response.blob())
+    .then((res) => {
+      const resp = new Blob([res], {type: "video/mp4"});
+      saveAs(resp, "video.mp4");
+  });
+ }
+
+ const downloadVideo1 = (data) => {
+  console.log('uuuuu',data.user_recording);
+  var name1 = {
+    url : data.user_recording
+  }
+  fetch(process.env.REACT_APP_SERVER +'/download', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(name1)
     })
     .then(response => response.blob())
     .then((res) => {

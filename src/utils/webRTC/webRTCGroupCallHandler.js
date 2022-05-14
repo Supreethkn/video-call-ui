@@ -8,7 +8,6 @@ import { pushAuditsData } from '../../utils/Service/Service'
 import * as Service from '../../utils/Service/Service';
 
 import { stopRecording1 } from '../videoRecording/recordingUtils';
-
  
 let myPeer;
 let myPeerId;
@@ -64,10 +63,8 @@ export const createNewGroupCall = (operatorName, operatorReason) => {
   console.log('uuser',myPeerId);
   store.dispatch(setGroupCallActive(true));
   store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
-  // let videoName = 'sai'
-  // startRecording1(videoName);
-
 };
+
 export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason) => {
   const localStream = store.getState().call.localStream;
   console.log('localstream',localStream);
@@ -79,8 +76,6 @@ export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason
     roomId,
     localStreamId: localStream.id
   });
-
-  
 
   //logic to start the call time
   console.log("joins the calls");
@@ -145,6 +140,13 @@ export const auditfunction = (groupCallRoomId) => {
    console.log(store.getState().call.callStateStartTime.start_date);
    let startDetails = new Date(store.getState().call.callStateStartTime.start_date);
    let videoName = store.getState().call.callStateStartTime.name+'_'+(startDetails).getDate()+'_'+(startDetails).getHours()+'_'+(startDetails).getMinutes()+'_'+(startDetails).getSeconds();
+   //  let videoName1 = 'user';
+  let start_date = new Date();
+
+  let username = 'user';
+  // let videoName1 = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes() + '_' + (start_date).getSeconds();
+  let videoName1 = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes();
+  console.log('videoname1', videoName);
    console.log(new Date(store.getState().call.callStateStartTime.start_date));
    console.log(store.getState());
    const auditObj = {
@@ -154,6 +156,7 @@ export const auditfunction = (groupCallRoomId) => {
      reason: store.getState().call.callStateStartTime.reason,
      callOrigin: store.getState().call.callStateStartTime.name,
      recording: videoName,
+     recording1: videoName1,
      roomId:groupCallRoomId
    };
   console.log(auditObj);
@@ -171,14 +174,13 @@ export const MachineleaveGroupCall = () =>  {
     peerId: myPeerId,
     machineSocket: store.getState().dashboard.activeUsers[0].socketId,
   });
-
 }
 
 export const leaveGroupCallEnd = () => {
   console.log("webRTCCALL HAndler $$$$$$$$$$$$$$$$$$");
   auditfunction(groupCallRoomId);
-  stopRecording();
   // stopRecording1();
+  stopRecording();
   clearGroupData();
 }
 
@@ -187,8 +189,8 @@ export const leaveGroupCall = () => {
   // who ever leave the call audit shoud be triggered
   auditfunction(groupCallRoomId);
     // logic to stop recording
-  stopRecording();
   // stopRecording1();
+  stopRecording();
   if (groupCallHost) {
   console.log("groupCallHost");
     wss.groupCallClosedByHost({

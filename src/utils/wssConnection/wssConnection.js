@@ -7,10 +7,11 @@ import * as common from '../../utils/Service/Common';
 import * as Service from '../../utils/Service/Service';
 
 import { userreasonmc } from '../../store/actions/dashboardActions';
-import {startRecording} from '../videoRecording/recordingUtils';
-import { stopRecording } from '../videoRecording/recordingUtils';
+// import {startRecording} from '../videoRecording/recordingUtils';
+// import { stopRecording } from '../videoRecording/recordingUtils';
 
-
+import { startRecording1} from '../videoRecording/recordingUtils';
+import { stopRecording1 } from '../videoRecording/recordingUtils';
 
 // const SERVER = 'https://web-rtc-backend-test.herokuapp.com';
 const SERVER = process.env.REACT_APP_SERVER;
@@ -75,10 +76,16 @@ socket.on('start-video', (data) => {
     console.log('start video', data);
     console.log('user side socked id', socket.id);
     // if(data.hostSocketId == socket.id){
-        let videoName = 'sai'
-        startRecording(videoName);
+        // let videoName = 'sai'
     // }
     // webRTCGroupCallHandler.connectToNewUser(data);
+    let start_date = new Date();
+
+        let username = 'user';
+        // let videoName = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes() + '_' + (start_date).getSeconds();
+        let videoName = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes();
+        console.log('videoname', videoName);
+        startRecording1(videoName);
 });
 
 
@@ -94,7 +101,6 @@ socket.on('group-call-user-left', (data) => {
 });
 
 socket.on('machine-call-user-left', (data) => {
-    alert('close')
     let activeUser = store.getState().call.groupCallStreams;
     for(let key in activeUser){
       if(activeUser[key].id == data.streamId) {
@@ -243,10 +249,11 @@ const handleBroadcastEvents = (data) => {
                 }
                 // let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
                 // window.location.href = path;
-
-                // let path = '/thankyou';
-                // window.location.href = path;
-                stopRecording();
+                stopRecording1();
+                setTimeout(() =>{
+                    let path = '/thankyou';
+                    window.location.href = path;
+                },1000);
             }
             break;
         default:
