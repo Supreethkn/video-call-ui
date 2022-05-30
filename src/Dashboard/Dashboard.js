@@ -31,6 +31,8 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
   useEffect(() => {
     console.log("Dashboard $$$$$");
     console.log(username);
+    console.log('usertype',username.usertype);
+    localStorage.setItem('usertype',username.usertype )
     webRTCHandler.getLocalStream();
     webRTCGroupHandler.connectWithMyPeer();
   }, []);
@@ -48,7 +50,6 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
 }
-
 
 // const groupCall = () => {
 //   // console.log('dashboard--------', val);

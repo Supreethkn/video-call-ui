@@ -36,7 +36,6 @@ export const startRecording = (videoName) => {
 
   mediaRecorder.ondataavailable = handleDataAvailable;
   console.log("Start Recording");
-  // alert("Start Recording oper");
 
 
   mediaRecorder.start();
@@ -59,7 +58,6 @@ export const startRecording1 = (videoName) => {
 
   mediaRecorder2.ondataavailable = handleDataAvailable1;
   console.log("Start Recording user");
-  // alert("Start Recording user");
 
   mediaRecorder2.start();
   console.log('method end');
@@ -70,18 +68,14 @@ export const startRecording1 = (videoName) => {
 
 export const stopRecording = () => {
   console.log("Stop Recording");
-  // alert('oper stop')
   mediaRecorder.stop();
 };
 
 export const stopRecording1 = () => {
-  alert("Stop Recording user");
-  // alert('user stop')
   mediaRecorder2.stop();
 };
 
 const downloadRecordedVideo = () => {
-  alert('hihihihi')
   const blob = new Blob(recordedChunks, {
     type: "video/mp4",
   });
@@ -123,7 +117,6 @@ const downloadRecordedVideo = () => {
 };
 
 const downloadRecordedVideo1 = () => {
-  alert('hihihihi')
   const blob = new Blob(recordedChunks, {
     type: "video/mp4",
   });
@@ -143,9 +136,10 @@ const downloadRecordedVideo1 = () => {
     console.log('userfile',fileName);
     var fd = new FormData();
     fd.append('my_file', myBlob, fileName);
-        fetch(process.env.REACT_APP_SERVER +'/upload', {
+        fetch(process.env.REACT_APP_SERVER +'/userupload', {
         method: 'post',
         body: fd
+
     });
 
     recordedChunks = [];
@@ -156,15 +150,13 @@ const handleDataAvailable = (event) => {
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
     downloadRecordedVideo();
-    // downloadRecordedVideo1();
   }
 };
 
 const handleDataAvailable1 = (event) => {
-  console.log("download ??????");
+  console.log("download user");
   if (event.data.size > 0) {
     recordedChunks.push(event.data);
-    // downloadRecordedVideo();
     downloadRecordedVideo1();
   }
 };

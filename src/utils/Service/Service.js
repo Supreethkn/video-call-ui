@@ -21,10 +21,9 @@ export const fetchPostData = async(api, bodyParam) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bodyParam)
     };
-    console.log(requestOptions);
     const res = await fetch(SERVER + '/' + api, requestOptions)
     const json = await res.json();
-    console.log(json);
+    console.log("resjson",json);
     return json
 }
 
@@ -34,7 +33,6 @@ export const fetchLoginPostData = async(api, bodyParam) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bodyParam)
     };
-    console.log(requestOptions);
     const res = await fetch(SERVER + '/' + api, requestOptions);
     return res;
 }

@@ -5,7 +5,6 @@ import * as webRTCHandler from '../webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../webRTC/webRTCGroupCallHandler';
 import * as common from '../../utils/Service/Common';
 import * as Service from '../../utils/Service/Service';
-
 import { userreasonmc } from '../../store/actions/dashboardActions';
 // import {startRecording} from '../videoRecording/recordingUtils';
 // import { stopRecording } from '../videoRecording/recordingUtils';
@@ -17,7 +16,6 @@ import { stopRecording1 } from '../videoRecording/recordingUtils';
 const SERVER = process.env.REACT_APP_SERVER;
 // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
 const Client_SERVER = process.env.REACT_APP_CLIENT;
-
 
 const broadcastEventTypes = {
     ACTIVE_USERS: 'ACTIVE_USERS',
@@ -66,6 +64,28 @@ socket.on('user-hanged-up', () => {
     webRTCHandler.handleUserHangedUp();
 });
 
+socket.on('user-clean-up', (data) => {
+    const id = socket.id;
+    console.log('current socket id',id);
+    console.log('usercleanup',data);
+    if(data.id == id){
+        // alert('main')
+        stopRecording1();
+        setTimeout(()=>{
+            let path = '/thankyou';
+            window.location.href = path;
+        },5000)          
+    }
+    // else if(data.id != id)
+    // {
+    //     alert('else')
+    //     setTimeout(()=>{
+    //         let path = '/thankyou';
+    //         window.location.href = path;
+    //     },5000)  
+    // }
+});
+
 // listeners related with group calls
 
 socket.on('group-call-join-request', (data) => {
@@ -75,22 +95,31 @@ socket.on('group-call-join-request', (data) => {
 socket.on('start-video', (data) => {
     console.log('start video', data);
     console.log('user side socked id', socket.id);
-    // if(data.hostSocketId == socket.id){
-        // let videoName = 'sai'
-    // }
+    const id = socket.id;
+    let type = localStorage.getItem('usertype');
+    console.log('iiiddd', id);
+    const userData = {
+        // kiosk: '1',
+        socketid: id,
+        // status: 'true',
+        usertype: type
+    }
+    console.log(userData);
+    Service.fetchPostData('saveuserdata', userData).then(res => {
+        console.log('res',res);
+      });
     // webRTCGroupCallHandler.connectToNewUser(data);
-    let start_date = new Date();
+        let start_date = new Date();
 
         let username = 'user';
         // let videoName = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes() + '_' + (start_date).getSeconds();
-        let videoName = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes();
+        let videoName = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes()+ '_' + (start_date).getSeconds();
         console.log('videoname', videoName);
+        localStorage.setItem('videoname',videoName);
         startRecording1(videoName);
 });
 
-
 socket.on('group-call-user-left', (data) => {
-    // history.push('/thankyou');
     console.log('back from server user left');
     console.log(data);
     webRTCGroupCallHandler.removeInactiveStream(data);
@@ -131,8 +160,7 @@ socket.on('machine-call-user-left', (data) => {
       webRTCGroupCallHandler.leaveGroupCallEnd();
     }
   });
-};
-
+};  
 
 export const registerNewUser = (username, usertype) => {
     socket.emit('register-new-user', {
@@ -253,7 +281,7 @@ const handleBroadcastEvents = (data) => {
                 setTimeout(() =>{
                     let path = '/thankyou';
                     window.location.href = path;
-                },1000);
+                },2000);
             }
             break;
         default:

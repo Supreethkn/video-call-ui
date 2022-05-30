@@ -143,10 +143,14 @@ export const auditfunction = (groupCallRoomId) => {
    //  let videoName1 = 'user';
   let start_date = new Date();
 
-  let username = 'user';
+  let name = localStorage.getItem('videoname');
+  console.log('name',name)
+  // let username = 'user';
   // let videoName1 = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes() + '_' + (start_date).getSeconds();
-  let videoName1 = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes();
+  // let videoName1 = username + '_' + (start_date).getDate() + '_' + (start_date).getHours() + '_' + (start_date).getMinutes();
+  let videoName1 = name;
   console.log('videoname1', videoName);
+  ;
    console.log(new Date(store.getState().call.callStateStartTime.start_date));
    console.log(store.getState());
    const auditObj = {
