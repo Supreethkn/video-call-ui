@@ -7,6 +7,7 @@ import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
 import * as common from '../../../utils/Service/Common';
 
 import { userreasonmc } from '../../../store/actions/dashboardActions';
+// import * as Service from '../../../utils/Service/Service';
 
 
 const GroupCall = (props, { username }) => {
@@ -30,21 +31,21 @@ const GroupCall = (props, { username }) => {
         webRTCGroupCallHandler.leaveGroupCall();
     };
 
-    const leaveRoomMachine = () => {
-        // call a event machine disconnecting
-        console.log('clicked disconnect');
-        webRTCGroupCallHandler.MachineleaveGroupCall();
-        //    common.removeUserSession();
-        // let userReason ;
-        //     for(const key in userreasonmc){
-        //       if(props.username.userreason == userreasonmc[key]){
-        //         userReason = key;
-        //       }
-        //     }
-        //     let path = Client_SERVER+'/main/'+props.username.username+'/'+userReason;
-        //     console.log(path);
-        //     window.location.href = path;
-      }
+    // const leaveRoomMachine = () => {
+    //     // call a event machine disconnecting
+    //     console.log('clicked disconnect');
+    //     webRTCGroupCallHandler.MachineleaveGroupCall();
+    //     //    common.removeUserSession();
+    //     // let userReason ;
+    //     //     for(const key in userreasonmc){
+    //     //       if(props.username.userreason == userreasonmc[key]){
+    //     //         userReason = key;
+    //     //       }
+    //     //     }
+    //     //     let path = Client_SERVER+'/main/'+props.username.username+'/'+userReason;
+    //     //     console.log(path);
+    //     //     window.location.href = path;
+    //   }
 
     return ( <
         >
