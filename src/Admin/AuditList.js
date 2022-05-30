@@ -121,7 +121,7 @@ const columns = [
     .then(response => response.blob())
     .then((res) => {
       const resp = new Blob([res], {type: "video/mp4"});
-      saveAs(resp, "video.mp4");
+      saveAs(resp, "operatorvideo.mp4");
   });
  }
 
@@ -138,7 +138,7 @@ const columns = [
     .then(response => response.blob())
     .then((res) => {
       const resp = new Blob([res], {type: "video/mp4"});
-      saveAs(resp, "video.mp4");
+      saveAs(resp, "uservideo.mp4");
   });
  }
 
@@ -193,92 +193,13 @@ const columns = [
                   totalTime3 = totalTime3 -60;
                   console.log('dec min',totalTime3);
 
-                  // res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ totalTime2 + res[key].callStartTime.slice(16,19);
-                  // res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ totalTime3 + res[key].callEndTime.slice(16,19);
-
               }
-              // else{
-              //     res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ totalTime3 + res[key].callEndTime.slice(16,19);
-              // }
-
-              // if(totalTime2 >= 60 || totalTime3 >=60){
-              //   var z = totalTime - 60;
-              //   res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ z + res[key].callStartTime.slice(16,19);
-              //   res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ z + res[key].callEndTime.slice(16,19);
-
-              // }else{
-              //   res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ totalTime2 + res[key].callStartTime.slice(16,19);
-              //   res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ totalTime3 + res[key].callEndTime.slice(16,19);
-              // }
-              // console.log('dooooo',z);
               res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ totalTime2 + res[key].callStartTime.slice(16,19);
               res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ totalTime3 + res[key].callEndTime.slice(16,19);
 
               res[key].callStartTime = res[key].callStartTime.slice(0,11) + totalTime +':'+ res[key].callStartTime.slice(14,19);
               res[key].callEndTime = res[key].callEndTime.slice(0,11) + totalTime1 +':'+ res[key].callEndTime.slice(14,19)
               console.log('done',res[key].callStartTime);
-
-              // console.log('done',res[key].callEndTime);
-
-
-              // let hr = res[key].callStartTime.slice(10,13);
-              // console.log('hr',hr);
-
-              // let min = res[key].callStartTime.slice(14,16)
-              // console.log('min',min);
-
-
-              // let hr1 = res[key].callEndTime.slice(10,13);
-              // console.log('hr',hr1);
-
-              // let min1 = res[key].callEndTime.slice(14,16)
-              // console.log('min',min);
-
-              // let incrementHour = '5'
-              // let incrementMinute = '30'
-
-              // let totalTime = Number(hr) + Number(incrementHour);
-              // let totalTime1 = Number(hr1) + Number(incrementHour);
-              // // console.log('=========',totalTime);
-              // // console.log('=========',totalTime1);
-
-              // let totalTime2 = Number(min) + Number(incrementMinute);
-              // let totalTime3 = Number(min1) + Number(incrementMinute);
-              // // console.log('+++++++++',totalTime2);
-              // // console.log('+++++++++',totalTime3);
-
-              // if(totalTime2 >= 60 || totalTime3 >= 60){
-              //   var z = totalTime2 - 60;
-              //   res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ z + res[key].callStartTime.slice(16,19);
-              //   res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ z + res[key].callEndTime.slice(16,19);
-
-              // }else{
-              //   res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ totalTime2 + res[key].callStartTime.slice(16,19);
-              //   res[key].callEndTime = res[key].callEndTime.slice(0,13)+':'+ totalTime3 + res[key].callEndTime.slice(16,19);
-              // }
-              // // console.log('dooooo',z);
-              
-
-              // res[key].callStartTime = res[key].callStartTime.slice(0,11) + totalTime +':'+ res[key].callStartTime.slice(14,19);
-              // res[key].callEndTime = res[key].callEndTime.slice(0,11) + totalTime1 +':'+ res[key].callEndTime.slice(14,19)
-
-              // res[key].callStartTime = res[key].callStartTime.slice(0,13)+':'+ z + res[key].callStartTime.slice(16,19); 
-
-              // let endTime = new Date(res[key].callEndTime).toISOString();
-              // console.log('testttt',endTime.slice(13,19));
-
-              // console.log('++++++++',startTime);
-              // console.log('bbbbbbbb',endTime);
-              // let hour = startTime.slice(11,13);
-              // let hour1 = endTime.slice(11,13);
-              // let incrementHour = '1';
-              // let incrementHour1 = '1';
-              // let totalTime = Number(hour) - Number(incrementHour);
-              // let totalTime1 = Number(hour1) - Number(incrementHour1);
-              // console.log('=========',totalTime);
-              // console.log('=========',totalTime1);
-              // res[key].callStartTime = res[key].callStartTime.slice(0,11) + totalTime +startTime.slice(13,19);
-              // res[key].callEndTime = res[key].callEndTime.slice(0,11) + totalTime1 +endTime.slice(13,19);
 
             }
           }
