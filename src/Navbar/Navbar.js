@@ -76,7 +76,7 @@ const NavbarLocal = () => {
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse position-absolute right_0" id="navbarText">
+        <div className="collapse navbar-collapse position-absolute right_0" style={{marginRight: "2%"}} id="navbarText">
             <ul className="navbar-nav mr-auto">
                 <li className="nav-item hand_cursor">
                    { common.getToken().split('?')[1] === 'isAdmin=1' && <a className="nav-link" onClick={ e =>  navigateMenu('/operatorlist') }>
