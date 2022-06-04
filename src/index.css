@@ -71,16 +71,83 @@ code {
     height: 28em;
   }
 
-  /* .rgt-container {
-    display: grid !important;
-    overflow: auto !important;
-    flex: 1 1 0% !important;
-    grid-template-columns: 12% 11% 0% 16% 16% 16% 17% 200px auto !important;
-    grid-template-rows: repeat(9, max-content) !important;
-  } */
-
-
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 34rem;
+    width: 25%;
+    font-size: 25px;
 }
+}
+
+@media screen and (min-width: 1400px) {
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 44rem;
+    width: 25%;
+    font-size: 25px;
+}
+}
+@media screen and (min-width: 1600px) {
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 44rem;
+    width: 25%;
+    font-size: 25px;
+}
+}
+@media screen and (min-width: 1900px) {
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 50rem;
+    width: 25%;
+    font-size: 25px;
+}
+}
+@media screen and (min-width: 1920px) {
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 52rem;
+    width: 25%;
+    font-size: 25px;
+}
+  }
+
+@media screen and (min-width: 1900px){
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 68rem;
+    width: 25%;
+    font-size: 25px;
+}
+}
+
+/* @media screen and (max-width: 1920px){
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 44rem;
+    width: 25%;
+    font-size: 25px;
+}
+} */
+
+
+
+/* @media only screen and (min-device-width: 720px) and (max-device-width: 1280px) {
+  .operator {
+    position: absolute;
+    z-index: 5;
+    margin-top: 44rem;
+    width: 25%;
+    font-size: 25px;
+}
+} */
 
 .bg_color_theme {
   /* background-color: #224192 !important; */

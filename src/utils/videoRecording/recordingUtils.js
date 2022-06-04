@@ -13,6 +13,7 @@ const vp9Codec = "video/mp4; codecs=h264";
 const vp9Options = { mimeType: vp9Codec };
 var recordedChunks = [];
 
+
 const config = {
   bucketName: '',
   region: '',
@@ -45,7 +46,7 @@ export const startRecording1 = (videoName) => {
   console.log('method called');
 
   userVideoFileName = videoName;
-  console.log('name',userVideoFileName);
+  console.log('userrecording name',userVideoFileName);
   const remoteStream = store.getState().call.localStream;
 
   console.log('local stream user', remoteStream);
@@ -74,6 +75,7 @@ export const stopRecording = () => {
 export const stopRecording1 = () => {
   mediaRecorder2.stop();
 };
+
 
 const downloadRecordedVideo = () => {
   const blob = new Blob(recordedChunks, {

@@ -23,13 +23,15 @@ const MainDashboard = ({ saveUsername }) => {
 
     let { userid } = useParams();
     let { userreason } = useParams();
+    // let { userreason } = useParams();
   
   const handleSubmitButtonPressed = () => {
     const userData = {
       username: userid,
       usertype: usertypemc,
-      userreason: userreasonmc[userreason]
+      userreason: userreasonmc[userreason],
     };
+    console.log('oa',userData);
     registerNewUser('default', usertypemc);
     saveUsername(userData);
     webRTCGroupCallHandler.createNewGroupCall();

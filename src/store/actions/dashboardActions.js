@@ -37,7 +37,9 @@ export const userreasonmc = {
   BUGGY: 'BUGGY',
   LOSTPROPERTY: "LOST PROPERTY",
   WHEELCHAIRSERVICES: "WHEELCHAIR SERVICES",
-  OTHERS: "OTHERS"
+  OTHERS: "OTHERS",
+  छोटीगाड़ीसेवा: "छोटी गाड़ी सेवा",
+  व्हीलचेयरसहायता: "व्हील चेयर सहायता",
+  खोयाहुआसामान: "खोया हुआ सामान",
+  अन्य: "अन्य"
 };
-
-
