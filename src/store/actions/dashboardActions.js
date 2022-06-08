@@ -43,3 +43,7 @@ export const userreasonmc = {
   खोयाहुआसामान: "खोया हुआ सामान",
   अन्य: "अन्य"
 };
+export const kiosk = {
+  kiosk1: '114',
+  kiosk2: '115'
+};

@@ -1,6 +1,6 @@
 import './App.css';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   useParams
@@ -69,6 +69,7 @@ function App () {
         <PublicRoute path="/forgot" component={ForgotPage} />
         <PublicRoute path="/thankyou" component={Thankyou} />
         <PublicRoute path="/main/:userid/:userreason" component={MainDashboard} />
+        {/* <PublicRoute path="/main/:userid/:userreason/:kioskID" component={MainDashboard} /> */}
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/operatorlist" component={OperatorList} />
         <PrivateRoute path="/Auditlist" component={AuditList} />

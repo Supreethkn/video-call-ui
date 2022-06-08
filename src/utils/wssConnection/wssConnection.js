@@ -73,70 +73,17 @@ socket.on('user-clean-up', (data) => {
     const id = socket.id;
     console.log('current socket id',id);
     console.log('usercleanup',data);
+    
     if(data.id == undefined || data.id == id || data.type == "OPERATOR"){
         // alert('main')
-        stopRecording1();
-        // setTimeout(()=>{
-
-            // routeToDashboard();
-            // alert('a');
-            // let path = '/thankyou';
-            // window.location.href = path;
-
-            // let paths = '/dashboard';
-            // window.location.href = paths;
-        // },5000)          
+        stopRecording1();         
     }
     else if(data.id != id){
-        // alert('Test')
-        // setTimeout(()=>{/
-            // routeToDashboard();
-
-
-            // let path = '/thankyou';
-            // window.location.href = path;
-
-            // let paths = '/dashboard';
-            // window.location.href = paths;
-        // },5000)          
+        // stopRecording1();         
+                 
             
     }
 });
-
-// socket.on('user-clean-up', (data) => {
-//     const id = socket.id;
-//     console.log('current socket id',id);
-//     console.log('usercleanup',data);
-//     if(data.kiosk == 1)
-//     {
-//         console.log('kisok111111');
-//         if(data.id == id || data.type == "OPERATOR" || data.id == ''){
-//                 // alert('main')
-//                 stopRecording1();
-//                 setTimeout(()=>{
-//                     // alert('a');
-//                     let path = '/thankyou';
-//                     window.location.href = path;
-//                     // let paths = '/dashboard';
-//                     // window.location.href = paths;
-//                 },5000)          
-//             }
-//     }
-//     else if(data.kiosk == 2){
-//         console.log('kisok2222');
-//         if(data.id == id || data.type == "OPERATOR" || data.id == ''){
-//                 // alert('main')
-//                 stopRecording1();
-//                 setTimeout(()=>{
-//                     // alert('a');
-//                     let path = '/thankyou';
-//                     window.location.href = path;
-//                     // let paths = '/dashboard';
-//                     // window.location.href = paths;
-//                 },5000)          
-//             }
-//     }
-// });
 
 // listeners related with group calls
 
@@ -150,13 +97,15 @@ socket.on('start-video', (data) => {
     const id = socket.id;
     let type = localStorage.getItem('usertype');
     console.log('iiiddd', id);
+    // let kioskid = localStorage.getItem('KioskID');
+    // console.log('kioskID',kioskid);
     const userData = {
-        // kiosk: '1',
+        // kiosk: kioskid,
         socketid: id,
         // status: 'true',
         usertype: type
     }
-    console.log(userData);
+    console.log('saveuser',userData);
     Service.fetchPostData('saveuserdata', userData).then(res => {
         console.log('res',res);
       });
@@ -332,11 +281,11 @@ const handleBroadcastEvents = (data) => {
                 // let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
                 // window.location.href = path;
                 stopRecording1();
-                // setTimeout(() =>{
+                setTimeout(() =>{
                     // alert('b');
                     let path = '/thankyou';
                     window.location.href = path;
-                // },5000);
+                },1000);
             }
             break;
         default:

@@ -23,15 +23,19 @@ const MainDashboard = ({ saveUsername }) => {
 
     let { userid } = useParams();
     let { userreason } = useParams();
-    // let { userreason } = useParams();
+    // let { kioskID } = useParams();
+
+    // console.log('up',kioskID);
   
   const handleSubmitButtonPressed = () => {
     const userData = {
       username: userid,
       usertype: usertypemc,
       userreason: userreasonmc[userreason],
+      // kioskID: kiosk[kioskID],
     };
     console.log('oa',userData);
+    // localStorage.setItem('KioskID',userData.kioskID);
     registerNewUser('default', usertypemc);
     saveUsername(userData);
     webRTCGroupCallHandler.createNewGroupCall();
