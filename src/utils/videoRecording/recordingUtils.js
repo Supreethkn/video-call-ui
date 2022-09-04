@@ -65,15 +65,15 @@ export const startRecording1 = (videoName) => {
 };
 
 
-
-
 export const stopRecording = () => {
   console.log("Stop Recording");
   mediaRecorder.stop();
 };
 
 export const stopRecording1 = () => {
-  mediaRecorder2.stop();
+  if(mediaRecorder2.state == 'recording'){
+    mediaRecorder2.stop();
+  }
 };
 
 
