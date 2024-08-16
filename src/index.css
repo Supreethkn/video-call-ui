@@ -60,16 +60,16 @@ code {
 .font_size_large {
   font-size: larger;
 }
-
+/* 
 .frame_table_border {
   border: 1px solid #224192;
-}
+} */
 
-@media screen and (max-width: 1280px) {
+/* @media screen and (max-width: 1280px) {
   .frame_table_border {
     border: 1px solid #224192;
     height: 28em;
-  }
+  } */
 
   .operator {
     position: absolute;
@@ -78,7 +78,7 @@ code {
     width: 25%;
     font-size: 25px;
 }
-}
+
 
 @media screen and (min-width: 1400px) {
   .operator {
@@ -151,13 +151,15 @@ code {
 
 .bg_color_theme {
   /* background-color: #224192 !important; */
-  background-image: url('./resources/Background.png') !important;
+  /* background-image: url('./resources/Background.png') !important; */
+  background-color: white !important;
 }
 
 body {
   width: 101%;
   overflow: hidden;
-  background-image: url('./resources/Background.png') !important;
+  /* background-image: url('./resources/Background.png') !important; */
+  background-color: white !important;
 }
 
 video {

@@ -5,6 +5,8 @@ import './Operator.css';
 import NavbarLocal from '../Navbar/Navbar';
 import Moment from 'moment';
 import GridTable from '@nadavshaar/react-grid-table';
+import LogoImage from '../resources/GMR_delhi_combine_logo.png'; // Update the path
+
 
 
 
@@ -55,7 +57,15 @@ const columns = [
   
     return (
       <>
-      <NavbarLocal />
+      <div className="row">
+        {/* Navbar with a span of 2 columns */}
+        <div className="col-2">
+          <NavbarLocal />
+        </div>
+      <div className="col-10">
+      <div className="top-image-container">
+              <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" />
+            </div>
       <div className='m-2 p-3'>
             <div className='frame_table_border'>
             <div className=' bg_color p-2 d-flex'>
@@ -64,6 +74,8 @@ const columns = [
                </div>
             </div>
      {operators && <GridTable columns={columns} rows={operators} />};
+     </div>
+     </div>
      </div>
      </div>
       </>

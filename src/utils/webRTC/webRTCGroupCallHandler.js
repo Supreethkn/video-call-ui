@@ -24,16 +24,16 @@ export const connectWithMyPeer = () => {
 
   var a_random_id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
 
-  myPeer = new window.Peer(""+a_random_id, {
-    debug: 3,
-    path: '/myapp',
-    host: '10.10.2.7',
-    port: '9000'
-  });
-
-  // myPeer = new window.Peer(undefined, {
-    
+  // myPeer = new window.Peer(""+a_random_id, {
+  //   debug: 3,
+  //   path: '/myapp',
+  //   host: '10.10.2.7',
+  //   port: '9000'
   // });
+
+  myPeer = new window.Peer(undefined, {
+    
+  });
 
   
 

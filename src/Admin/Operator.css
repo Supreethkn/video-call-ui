@@ -18,3 +18,190 @@
 .rgt-container {
     color: black !important;
 }
+
+/* Container for the top image and logo */
+.top-image-container {
+    position: relative;
+    width: 100%;
+    height: 140px; /* Further reduced height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../resources/Top.png');
+    background-size: 40% auto; /* Further reduced size of the top image */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Style for the logo image over the top image */
+.logo-image {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 30%; /* Further reduced width of the logo */
+    height: auto;
+}
+
+/* Additional styles to ensure responsiveness */
+@media screen and (max-width: 768px) {
+    .logo-image {
+        max-width: 40%; /* Adjust logo size for smaller screens */
+    }
+    .top-image-container {
+        height: 100px; /* Further reduced height for smaller screens if necessary */
+        background-size: 40% auto; /* Ensure top image size scales on smaller screens */
+    }
+}
+ 
+.header-section span {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+  
+.font_weight_500 {
+    font-weight: 500;
+}
+  
+.font_size_large {
+    font-size: 1.2rem;
+}
+  
+.table_scroll {
+    overflow-x: auto;
+    max-height: 400px;
+}
+  
+
+.pagination-container {
+    padding: 10px 0;
+}
+  
+.pagination {
+    margin-bottom: 0;
+}
+  
+.pagination-container,
+.download-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+}
+  
+  
+/* Container for the Add User image and text */
+.add-user-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.add-user-image {
+    width: 24px; /* Adjust the size as needed */
+    height: auto;
+    margin-right: 8px;
+}
+
+.add-user-text {
+    font-size: 16px; /* Adjust font size as needed */
+    color: #000; /* Adjust color as needed */
+    text-wrap: nowrap;
+}
+
+/* Container for the search input */
+.search-container {
+    position: relative;
+    width: 100%; /* Adjust width as needed */
+    margin-bottom: 10px;
+}
+
+.search-bar {
+    width: 30% !important;
+    margin-left: auto;
+    /* margin-top: 30px; */
+    border-radius: 30px;
+    /* margin-right: 40px; */
+    border: 1px solid #939598 !important;
+    border-radius: 30px !important;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; /* Adjust size as needed */
+    height: auto;
+}
+
+/* Styles for table headings */
+.table-header {
+    background-color: #003366; /* Background color for the header */
+    color: #ffffff; /* Text color for the header */
+    text-align: center; /* Center-align the text in the header */
+}
+
+.table th {
+    border: none; /* Remove border from table headers */
+    text-align: center; /* Center-align text in headers */
+}
+
+/* Styles for table rows */
+.table td, .table th {
+    border: none; /* Remove border from table cells */
+    text-align: center; /* Center-align text in table cells */
+}
+
+/* Remove alternating row background */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: none; /* No background color */
+}
+
+/* Add rounded corners to the table */
+.frame_table_border {
+    border-radius: 8px; /* Adjust as needed for rounded corners */
+    overflow: hidden; /* Ensure corners are rounded correctly */
+    border: 1px solid #e0e0e0; /* Add border around the table */
+}
+
+/* Remove any default padding or margin on table */
+.table {
+    margin: 0;
+    padding: 0;
+}
+
+/* Hide the scrollbar for WebKit browsers */
+.table_scroll::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
+}
+
+.table_scroll {
+    -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer and Edge */
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Container for the download button */
+.download-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 15px; /* Add some space from the table */
+}
+
+/* Style for the download image */
+.download-image {
+    width: 24px; /* Adjust the size as needed */
+    height: auto;
+    margin-right: 8px; /* Space between image and text */
+}
+
+/* Style for the download text */
+.download-text {
+    font-size: 16px; /* Adjust font size as needed */
+    color: #29417D; /* Adjust color as needed */
+    text-decoration: underline;
+}
+

@@ -7,6 +7,8 @@ import NavbarLocal from '../Navbar/Navbar';
 import Moment from 'moment';
 import GridTable from '@nadavshaar/react-grid-table';
 import { saveAs } from "file-saver";
+import LogoImage from '../resources/GMR_delhi_combine_logo.png'; // Update the path
+
 
 
 
@@ -238,17 +240,26 @@ const columns = [
       // </div>
       // </div>
       <>
-      <NavbarLocal />
-      <div className='m-2 p-3'>
-            <div className='frame_table_border'>
-            <div className=' bg_color p-2 d-flex'>
-               <div className=''>
-                 <span className='text-light font_weight_500 font_size_large'>Audit List</span>
-               </div>
+     <div className="row">
+        <div className="col-md-2">
+          <NavbarLocal />
+        </div>
+        <div className="col-md-10">
+        <div className="top-image-container">
+              <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" />
             </div>
-     {operators && <GridTable columns={columns} rows={operators} />};
-     </div>
-     </div>
+          <div className='m-2 p-3'>
+            <div className='frame_table_border'>
+              <div className='bg_color p-2 d-flex'>
+                <div className=''>
+                  <span className='text-light font_weight_500 font_size_large'>Audit List</span>
+                </div>
+              </div>
+              {operators && <GridTable columns={columns} rows={operators} />}
+            </div>
+          </div>
+        </div>
+      </div>
       </>
     );
   };
