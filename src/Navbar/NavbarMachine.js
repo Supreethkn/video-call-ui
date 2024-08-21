@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from 'react-bootstrap';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import logo from '../resources/STRATACACHE_logo.png';
+import logo from '../resources/GMR_delhi_combine_logo.png';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router';
 

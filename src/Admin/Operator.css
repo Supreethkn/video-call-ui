@@ -11,6 +11,9 @@
 .bg-clr {
     background-color: #fff
 }
+.bg_color {
+    background-color: #003366 !important
+}
 .rgt-header-container {
     color: black !important;
 }

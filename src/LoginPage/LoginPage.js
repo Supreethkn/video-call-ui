@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import logo from '../resources/STRATACACHE_logo.png';
+import logo from '../resources/GMR_delhi_combine_logo.png';
+import loginUsericon from '../resources/loginuserIcon.png';
+import loginPasswordicon from '../resources/loginpasswordIcon.png';
 import UsernameInput from './components/UsernameInput';
 import SubmitButton from './components/SubmitButton';
 import { useHistory } from 'react-router-dom';
@@ -113,20 +115,57 @@ const LoginPage = ({ saveUsername }) => {
     <ToastContainer />
     <div className='col-12 row '>
       
-      <div className='col-8 login-page_containers'>
+      <div className='col-6 login-page_containers'>
         <img className='login-page_logo_image' src={logo} alt='VideoTalker' />
       </div>
-      <div className='col-4 bg_color login-page_containers'>
-        <div className='row'>
-          <UsernameInput 
-          username={username} 
-          setUsername={setUsername}
-          userPwd={userPwd} 
-          getPassword = {getPassword}
-          handleSubmitButtonPressed={handleSubmitButtonPressed}
-          handleForgotButtonPressed={handleForgotButtonPressed}
-          />
-        </div>
+      <div className='col-6 bg_color_login '>
+      <div className='bg_color_login'>
+  <div>
+    <div className='input-wrapper'>
+    {/* <img src="C:/xampp2/htdocs/video-call-ui/src/resources/loginuserIcon.png" alt="User Icon" className='input-icon' /> */}
+    <div className='input-icon'>
+    <img  src={loginUsericon} alt='User Icon' style={{ width: '20px', height: '20px' }} />
+    </div>
+      <input 
+        type='email' 
+        placeholder='Enter your email address'
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className='login-input'
+      />
+    </div>
+    <div className='input-wrapper'>
+      {/* <img src="..resources/loginpasswordIcon.png" alt="Password Icon" className='input-icon' /> */}
+     <div className='input-icon'>
+      <img src={loginPasswordicon} alt='Password Icon' style={{ width: '15px', height: '23px' }}  />
+      </div>
+      <input 
+        type='password' 
+        placeholder='Enter your password'
+        value={userPwd}
+        onChange={(e) => getPassword(e.target.value)}
+        className='login-input'
+      />
+      <span className='toggle-password'></span>
+    </div>
+    <div className='login-btn'>
+    <button 
+      className='login-button'
+      onClick={handleSubmitButtonPressed}
+    >
+      LOGIN
+    </button>
+    </div>
+    <button 
+      className='forgot-password'
+      onClick={handleForgotButtonPressed}
+      style={{ display: 'none' }}
+    >
+      Forgot password?
+    </button>
+  </div>
+</div>
+
         {/* <div className='d-block'>
           <SubmitButton  handleSubmitButtonPressed={handleSubmitButtonPressed} />
         </div> */}

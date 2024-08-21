@@ -84,3 +84,107 @@
   /* background-color: black; */
   font-size: 100px;
 }
+
+
+.dashboard-container {
+  padding: 20px;
+  margin-right: 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.activity-title {
+  font-size: 32px;
+  font-weight: bold;
+  color:  #0d6efd;
+}
+
+.today-button {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 8px 30px;
+  border-radius: 20px;
+  border: 2px solid #ffc107
+}
+
+.section-title {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 35px;
+  color:  #0d6efd;
+}
+
+.agents-status .agent-card {
+  background-color: #eaf0ff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.agents-status .available-agents {
+  background-color: #d4edda;
+}
+
+.agents-status .on-break {
+  background-color: #fff3cd;
+}
+
+.agents-status .busy-in-call {
+  background-color: #f8d7da;
+}
+
+.agents-status .after-call-work {
+  background-color: #d1ecf1;
+}
+
+.agent-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.agent-count {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.icon {
+  color: #666;
+}
+
+.calls-status .calls-card {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.calls-label {
+  display: block;
+  font-size: 16px;
+  color: #555;
+}
+
+.calls-count {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+ul {
+  padding: 0;
+  list-style-type:decimal;
+}
+
+
+ul li span {
+  float: right;
+}
