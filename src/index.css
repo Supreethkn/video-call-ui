@@ -25,13 +25,14 @@ code {
 
 .background_secondary_color {
   background-color: #282C34;
-  width: 300px !important;
-  height: 300px !important;
-  border-radius: 8px !important;
+  width: 250px !important;
+  height: 250px !important;
+  border-radius: 50% !important;
+  border:10px solid #FAA519;
   position: absolute !important;
-  top: 10% !important;
-  right: 11% !important;
-  z-index: 5 !important;
+  top: 53% !important;
+  right: 77% !important;
+  z-index: 999 !important;
 }
 
 .text_main_color {
@@ -53,8 +54,8 @@ code {
   right: 0;
 }
 
-.font_weight_500 {
-  font-weight: 500;
+.font_weight_800 {
+  font-weight: 800;
 }
 
 .font_size_large {
@@ -73,64 +74,107 @@ code {
 
   .operator {
     position: absolute;
-    z-index: 5;
-    margin-top: 34rem;
-    width: 25%;
-    font-size: 25px;
+    z-index: 999;
+    margin-top: 19rem;
+     right: 30px;
+    width: 20%;
+    font-size: 9px;
 }
 
+@media screen and (min-width: 1200px) {
+  .operator {
+    position: absolute;
+    z-index: 999;
+    right: 44px;
+    width: 20%;
+    margin-top: 33.5rem;
+    font-size: 9px;
+  }
+  .background_secondary_color {
+    top: 54% !important;
+    right: 79% !important;
+    
+  }
+}
 
 @media screen and (min-width: 1400px) {
   .operator {
     position: absolute;
-    z-index: 5;
-    margin-top: 44rem;
-    width: 25%;
-    font-size: 25px;
+    z-index: 999;
+    margin-top: 37rem;
+    right: 44px;
+    width: 20%;
+    font-size: 9px;
+  }
+  .background_secondary_color {
+    top: 57% !important;
+    right: 80.5% !important;
+  }
 }
-}
+
 @media screen and (min-width: 1600px) {
   .operator {
     position: absolute;
-    z-index: 5;
-    margin-top: 44rem;
-    width: 25%;
-    font-size: 25px;
+    z-index: 999;
+    right: 44px;
+    margin-top: 41rem;
+    width: 20%;
+    font-size: 9px;
+  }
+  .background_secondary_color {
+    top: 60% !important;
+    right: 82% !important;
+  }
 }
+
+@media screen and (min-width: 1700px) {
+  .operator {
+    position: absolute;
+    z-index: 999;
+    right: 44px;
+    margin-top: 43rem;
+    width: 20%;
+    font-size: 9px;
+  }
+  .background_secondary_color {
+    top: 60% !important;
+    right: 83% !important;
+  }
 }
+
+/* Combined the two duplicate media queries */
 @media screen and (min-width: 1900px) {
   .operator {
     position: absolute;
-    z-index: 5;
-    margin-top: 50rem;
-    width: 25%;
-    font-size: 25px;
-}
+    z-index: 999;
+    right: 44px; /* Updated to the value from the second definition */
+    width: 20%;
+    margin-top: 34rem; /* Updated to the value from the second definition */
+    font-size: 9px;
+  }
+  .background_secondary_color {
+    top: 62% !important;
+    right: 86% !important; /* Updated to the value from the second definition */
+  }
 }
 @media screen and (min-width: 1920px) {
   .operator {
     position: absolute;
-    z-index: 5;
-    margin-top: 52rem;
-    width: 25%;
-    font-size: 25px;
-}
+    z-index: 999;
+    right: 44px; /* Updated to the value from the second definition */
+    width: 20%;
+    margin-top: 48rem; /* Updated to the value from the second definition */
+    font-size: 9px;
   }
-
-@media screen and (min-width: 1900px){
-  .operator {
-    position: absolute;
-    z-index: 5;
-    margin-top: 68rem;
-    width: 25%;
-    font-size: 25px;
+  .background_secondary_color {
+    top: 62% !important;
+    right: 87% !important; /* Updated to the value from the second definition */
+  }
 }
-}
-
 /* @media screen and (max-width: 1920px){
   .operator {
     position: absolute;
-    z-index: 5;
+    z-index: 999;
     margin-top: 44rem;
     width: 25%;
     font-size: 25px;
@@ -142,7 +186,7 @@ code {
 /* @media only screen and (min-device-width: 720px) and (max-device-width: 1280px) {
   .operator {
     position: absolute;
-    z-index: 5;
+    z-index: 999;
     margin-top: 44rem;
     width: 25%;
     font-size: 25px;
@@ -167,7 +211,7 @@ video {
 }
 
 .color_theme {
-  color: #224192 !important;
+  color: #000000 !important;
 }
 
 .height_90 {
@@ -189,11 +233,13 @@ video {
 
   /* width: 1920px; */
   /* height: 965px; */
-  width: 100%;
-  height: 93% !important;
-  position: absolute;
+  position: relative;
+  width: 81%;
+  height: 76% !important;
   z-index: 1;
-
+  top: 30px;
+  left: 109px;
+  border-radius: 21px;
 }
 
 .hand_cursor {

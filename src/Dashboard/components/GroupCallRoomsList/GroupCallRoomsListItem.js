@@ -1,75 +1,94 @@
-import React , { useEffect , useState}  from 'react';
+import React, { useEffect, useState } from 'react';
 import * as webRTCGroupCallHandler from '../../../utils/webRTC/webRTCGroupCallHandler';
 import beep from '../../../resources/beep-05.mp3';
 import store from '../../../store/store';
-import { callStates, setCallStateStartTime, setLocalCameraEnabled, setLocalMicrophoneEnabled } from '../../../store/actions/callActions';
-
+import { setLocalCameraEnabled, setLocalMicrophoneEnabled } from '../../../store/actions/callActions';
+import LocationIcon from '../../../resources/Location.png';
+import VideoIcon from '../../../resources/vedioIconBtn.png';
+import MicIcon from '../../../resources/micIconBtn.png';
+import AnswerIcon from '../../../resources/answercall.png';
+import './GroupCallRoomsList.css';
 
 const GroupCallRoomsListItem = ({ room }) => {
   let audio = new Audio(beep);
-
-  // let [checkBox, setCheckBox] = useState(null);
-  let checkBox = true;
-  let checkBoxVideo = true;
-
-  const handleCheck = () => {
-    checkBox = !checkBox;
-  }
-
-  const handleCheckVideo = () => {
-    checkBoxVideo = !checkBoxVideo;
-  }
+  const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(true);
 
   useEffect(() => {
-    console.log("write logic to audio");
-    if(store.getState().call.callState == "CALL_AVAILABLE"){
+    if (store.getState().call.callState === "CALL_AVAILABLE") {
       audio.play();
     }
   }, []);
 
   const handleListItemPressed = () => {
-    // this is the place where operator joins the call
     handleMicroPhone();
     handleVideoBtn();
     webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId, room.hostName.username, room.hostName.userreason);
   };
 
   const handleMicroPhone = () => {
-    console.log("logic to mute before joining");
-    console.log(store.getState().call);
     const localStream = store.getState().call.localStream;
-    localStream.getAudioTracks()[0].enabled = checkBox;
-    store.dispatch(setLocalMicrophoneEnabled(checkBox));
-    console.log(checkBox);
-    console.log(localStream.getAudioTracks()[0]);
-    console.log(store.getState().call);
+    localStream.getAudioTracks()[0].enabled = isAudioEnabled;
+    store.dispatch(setLocalMicrophoneEnabled(isAudioEnabled));
   }
 
   const handleVideoBtn = () => {
     const localStream = store.getState().call.localStream;
-    localStream.getVideoTracks()[0].enabled = checkBoxVideo;
-    store.dispatch(setLocalCameraEnabled(checkBoxVideo));
+    localStream.getVideoTracks()[0].enabled = isVideoEnabled;
+    store.dispatch(setLocalCameraEnabled(isVideoEnabled));
   }
+
+  const toggleAudio = () => {
+    setIsAudioEnabled(!isAudioEnabled);
+    handleMicroPhone();
+  };
+
+  const toggleVideo = () => {
+    setIsVideoEnabled(!isVideoEnabled);
+    handleVideoBtn();
+  };
 
   return (
     <>
-    { !room.isAns && <div className='mx-4 my-2' >
-      <div className='bg-light p-2 m-1 rounded '>
-        <span className='d-block font_weight_500 color_theme'>Name: {room.hostName.username}</span>
-        <span className='d-block font_weight_500 color_theme'>Reason:  {room.hostName.userreason}</span>
-        <button className='d-block btn btn-primary bg_color width_100' onClick={handleListItemPressed}
-        disabled = {store.getState().call.callState == "CALL_IN_PROGRESS"}
-        >Answer</button>
-        <span className='input-group-text'>
-          <label htmlFor='multiMediaBtn' className='p-2'>Disable Audio </label>
-          <input type="checkbox" name='multiMediaBtn' value={checkBox} onChange={handleCheck}/>
-        </span>
-        <span className='input-group-text'>
-          <label htmlFor='multiMediaBtn' className='p-2'>Disable Video </label>
-          <input type="checkbox" name='multiMediaBtn' value={checkBoxVideo} onChange={handleCheckVideo}/>
-        </span>
-      </div>
-    </div> } 
+      {!room.isAns && (
+        <div className="incoming-call-container">
+          <h2 className="incoming-call-title">Incoming Call</h2>
+          <div className="call-details">
+            <div className="call-info">
+              <div className="icon-with-text">
+                <div className="location-icon-wrapper">
+                  <img src={LocationIcon} alt="Location Icon" className="location-icon" />
+                </div>
+                <span className="call-info-item">{room.hostName.username} - {room.hostName.userreason}</span>
+              </div>
+            </div>
+            <div className="call-actions">
+              <button
+                className="action-button decline-button"
+                onClick={toggleAudio}
+              >
+                <img src={MicIcon} alt="Mic Icon" className="button-icon" />
+                {isAudioEnabled ? 'Disable Audio' : 'Enable Audio'}
+              </button>
+              <button
+                className="action-button decline-button"
+                onClick={toggleVideo}
+              >
+                <img src={VideoIcon} alt="Video Icon" className="button-icon" />
+                {isVideoEnabled ? 'Disable Video' : 'Enable Video'}
+              </button>
+              <button
+                className="action-button answer-button"
+                onClick={handleListItemPressed}
+                disabled={store.getState().call.callState === "CALL_IN_PROGRESS"}
+              >
+                <img src={AnswerIcon} alt="Answer Icon" className="button-icon" />
+                Answer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

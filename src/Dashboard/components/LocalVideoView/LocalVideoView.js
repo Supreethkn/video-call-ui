@@ -4,14 +4,15 @@ const styles = {
   videoContainer: {
     width: '150px',
     height: '150px',
-    borderRadius: '8px',
+    borderRadius: '50%',
     position: 'absolute',
     top: '10%',
     right: '25%'
   },
   videoElement: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    borderRadius:'50%',
   }
 };
 

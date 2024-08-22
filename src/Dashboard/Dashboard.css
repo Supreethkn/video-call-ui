@@ -64,12 +64,21 @@
 .scroll_group_list {
   max-height: 100%;
   overflow-y: auto;
-  width: 25%;
+  width: 100%;
   position: absolute;
   z-index: 5;
   font-size: 25px;
-  margin-top: 1%;
+  display: grid; /* Enable grid layout */
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 16px; /* Space between grid items */
+  height:100%;
+  box-sizing: border-box; /* Include padding in width and height calculations */
+  background: rgba(35, 35, 248, 0.5);
 }
+.scroll_group_list::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar */
+}
+
 
 .operator{
   position: absolute;
@@ -86,10 +95,10 @@
 }
 
 
-.dashboard-container {
+/* .dashboard-container {
   padding: 20px;
   margin-right: 20px;
-}
+} */
 
 .dashboard-header {
   display: flex;

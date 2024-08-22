@@ -19,7 +19,17 @@ const GroupCallVideo = ({ stream }) => {
   }, [stream]);
 
   return (
+    <div style={{ 
+      background: 'white', 
+      zIndex:'99',
+      width: '100%', 
+      height: '100%', 
+      position: 'absolute', 
+      top: '0px', 
+      left: '0px' 
+    }}>
       <video className='Group_call_video_fit' ref={videoRef} autoPlay />
+    </div>
   );
 };
 

@@ -157,14 +157,10 @@
   background-color: #f7f7f7;
   font-size: 14px;
   height: 49px;
+  font-style: italic;
 }
 
-.toggle-password {
-  width: 20px;
-  height: 20px;
-  background-color: transparent;
-  cursor: pointer;
-}
+
 
 .login-button {
   width: 43%;

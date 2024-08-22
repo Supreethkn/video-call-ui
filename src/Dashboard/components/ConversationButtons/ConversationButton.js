@@ -14,6 +14,7 @@ const styles = {
     marginLeft: '10px',
     boxShadow: 'none',
     borderImage: 'none',
+    marginBottom:'40px',
     borderStyle: 'none',
     borderWidth: '0px',
     outline: 'none'

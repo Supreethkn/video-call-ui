@@ -16,10 +16,10 @@ const AnswerInfo = (props) => {
     <>
     { store.getState() && store.getState().call.callStateStartTime &&
      <div className='mx-4 my-2 ' >
-        <div className='bg-light p-2 m-1 rounded answerInfo_placement'>
-            <span className='d-block font_weight_500 '>Answered Call Details Below </span>
-            <span className='d-block font_weight_500 color_theme'>Name: {store.getState().call.callStateStartTime.name} </span>
-            <span className='d-block font_weight_500 color_theme'>Reason: {store.getState().call.callStateStartTime.reason} </span>
+        <div className=' p-2 m-1 rounded answerInfo_placement'>
+            <span className='d-block font_weight_800 '>Answered Call Details Below </span>
+            <span className='d-block font_weight_800 color_theme'>Name: {store.getState().call.callStateStartTime.name} </span>
+            <span className='d-block font_weight_800 color_theme'>Reason: {store.getState().call.callStateStartTime.reason} </span>
         </div>
     </div>}
     </>

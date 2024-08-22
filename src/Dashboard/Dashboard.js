@@ -186,18 +186,14 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("Dashboard $$$$$");
-    console.log(username);
-    console.log('usertype', username.usertype);
+    console.log("Dashboard loaded with user:", username);
     localStorage.setItem('usertype', username.usertype);
     webRTCHandler.getLocalStream();
     webRTCGroupHandler.connectWithMyPeer();
-  }, []);
+  }, [username]);
 
   const renderConnectionMessage = () => {
-    if (username.usertype == "OPERATOR") {
-      return;
-    } else if (groupCallStreams.length === 0) {
+    if (username.usertype !== "OPERATOR" && groupCallStreams.length === 0) {
       return <OnGoingCall />;
     }
   };
@@ -208,136 +204,129 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
   };
 
   return (
-    <div>
-      <div className="row">
-        {/* Navbar Section */}
-        <div className="col-md-2">
-          {username.usertype === 'OPERATOR' && <NavbarLocal />}
-        </div>
-        
-        {/* Main Content Section */}
-        <div className="col-md-10">
-        <div className="top-image-container">
-              <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" />
-            </div>
-          <div className='bg_color_theme'>
-            <div className='row'>
-              <div className='col-12'>
+    <div className="dashboard-container row">
+
+          <div className="bg_color_theme">
+            <div className="row">
+              <div className="col-12">
                 {renderConnectionMessage()}
                 <DirectCall />
                 <GroupCall username={username} />
               </div>
             </div>
-            <div className='scroll_group_list'>
+            <div className="scroll_group_list">
               {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
             </div>
-            <div className='operator'>
+            <div className="operator">
               {username.usertype === "OPERATOR" && <AnswerInfo />}
             </div>
           </div>
 
+   {/*                                               dash board starts from here   above code is for vedio call                                   */}
+      <div className="row">
+        {/* Navbar Section */}
+        <div className="col-md-2">
+          {username.usertype === 'OPERATOR' && <NavbarLocal />}
+        </div>
+        {/* Main Content Section */}
+        <div className="col-md-10">
+          <div className="top-image-container" style={{top:'-12px', zIndex:'99', top:'-35px', left:'-65px'}}>
+            <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image"  />
+          </div>
           {/* New Dashboard Layout */}
-          <div className="dashboard-container">
-            {/* Activity Header */}
-            <div className="dashboard-header">
-              <h2 className="activity-title">Activity</h2>
-              <button className="today-button">Today</button>
-            </div>
-
-            <div className="dashboard-content row">
-              {/* Left Section */}
-              <div className="dashboard-left col-md-8">
-                {/* Agents Section */}
-                <h3 className="section-title">Agents</h3>
-                <div className="row agents-status">
-                  <div className="col-3">
-                    <div className="agent-card available-agents">
-                      <BsPeopleFill size={24} className="icon" />
-                      <span className="agent-label">Available Agents</span>
-                      <span className="agent-count">10</span>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="agent-card on-break">
-                      <BsClockHistory size={24} className="icon" />
-                      <span className="agent-label">On Break</span>
-                      <span className="agent-count">01</span>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="agent-card busy-in-call">
-                      <FaPhoneAlt size={24} className="icon" />
-                      <span className="agent-label">Busy In-Call</span>
-                      <span className="agent-count">03</span>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="agent-card after-call-work">
-                      <BsClipboardCheck size={24} className="icon" />
-                      <span className="agent-label">After Call Work</span>
-                      <span className="agent-count">00</span>
-                    </div>
+          <div className="dashboard-content row">
+            {/* Left Section */}
+            <div className="dashboard-left col-md-8">
+              {/* Agents Section */}
+              <h3 className="section-title">Agents</h3>
+              <div className="row agents-status">
+                <div className="col-3">
+                  <div className="agent-card available-agents">
+                    <BsPeopleFill size={24} className="icon" />
+                    <span className="agent-label">Available Agents</span>
+                    <span className="agent-count">10</span>
                   </div>
                 </div>
-
-                {/* Calls Section */}
-                <h3 className="section-title">Calls</h3>
-                <div className="row calls-status">
-                  <div className="col-3">
-                    <div className="calls-card">
-                      <span className="calls-label">Calls Waiting</span>
-                      <span className="calls-count">0</span>
-                    </div>
+                <div className="col-3">
+                  <div className="agent-card on-break">
+                    <BsClockHistory size={24} className="icon" />
+                    <span className="agent-label">On Break</span>
+                    <span className="agent-count">01</span>
                   </div>
-                  <div className="col-3">
-                    <div className="calls-card">
-                      <span className="calls-label">Calls Received</span>
-                      <span className="calls-count">234</span>
-                    </div>
+                </div>
+                <div className="col-3">
+                  <div className="agent-card busy-in-call">
+                    <FaPhoneAlt size={24} className="icon" />
+                    <span className="agent-label">Busy In-Call</span>
+                    <span className="agent-count">03</span>
                   </div>
-                  <div className="col-3">
-                    <div className="calls-card">
-                      <span className="calls-label">Abandoned Calls</span>
-                      <span className="calls-count">1</span>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="calls-card">
-                      <span className="calls-label">Dropped Calls</span>
-                      <span className="calls-count">5</span>
-                    </div>
+                </div>
+                <div className="col-3">
+                  <div className="agent-card after-call-work">
+                    <BsClipboardCheck size={24} className="icon" />
+                    <span className="agent-label">After Call Work</span>
+                    <span className="agent-count">00</span>
                   </div>
                 </div>
               </div>
 
-              {/* Right Section */}
-              <div className="dashboard-right col-md-4">
-                <div className="top-queries mb-4">
-                  <h3 className="section-title">Top Queries</h3>
-                  <ul>
-                    <li>Location-Dining <span className="float-right">150</span></li>
-                    <li>Flight Info <span className="float-right">75</span></li>
-                    <li>Location - Amenities <span className="float-right">25</span></li>
-                  </ul>
+              {/* Calls Section */}
+              <h3 className="section-title">Calls</h3>
+              <div className="row calls-status">
+                <div className="col-3">
+                  <div className="calls-card">
+                    <span className="calls-label">Calls Waiting</span>
+                    <span className="calls-count">0</span>
+                  </div>
                 </div>
+                <div className="col-3">
+                  <div className="calls-card">
+                    <span className="calls-label">Calls Received</span>
+                    <span className="calls-count">234</span>
+                  </div>
+                </div>
+                <div className="col-3">
+                  <div className="calls-card">
+                    <span className="calls-label">Abandoned Calls</span>
+                    <span className="calls-count">1</span>
+                  </div>
+                </div>
+                <div className="col-3">
+                  <div className="calls-card">
+                    <span className="calls-label">Dropped Calls</span>
+                    <span className="calls-count">5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                <div className="top-kiosk mb-4">
-                  <h3 className="section-title">Top Kiosk</h3>
-                  <ul>
-                    <li>T3-B67 <span className="float-right">89</span></li>
-                    <li>T2-C23 <span className="float-right">55</span></li>
-                    <li>T3-B78 <span className="float-right">35</span></li>
-                  </ul>
-                </div>
+            {/* Right Section */}
+            <div className="dashboard-right col-md-4">
+              <div className="top-queries mb-4">
+                <h3 className="section-title">Top Queries</h3>
+                <ul>
+                  <li>Location-Dining <span className="float-right">150</span></li>
+                  <li>Flight Info <span className="float-right">75</span></li>
+                  <li>Location - Amenities <span className="float-right">25</span></li>
+                </ul>
+              </div>
 
-                <div className="longest-call-duration">
-                  <h3 className="section-title">Longest Call Duration</h3>
-                  <ul>
-                    <li>Session-18903 <span className="float-right">01:00:40</span></li>
-                    <li>Session-17834 <span className="float-right">00:34:03</span></li>
-                    <li>Session-17834 <span className="float-right">00:21:45</span></li>
-                  </ul>
-                </div>
+              <div className="top-kiosk mb-4">
+                <h3 className="section-title">Top Kiosk</h3>
+                <ul>
+                  <li>T3-B67 <span className="float-right">89</span></li>
+                  <li>T2-C23 <span className="float-right">55</span></li>
+                  <li>T3-B78 <span className="float-right">35</span></li>
+                </ul>
+              </div>
+
+              <div className="longest-call-duration">
+                <h3 className="section-title">Longest Call Duration</h3>
+                <ul>
+                  <li>Session-18903 <span className="float-right">01:00:40</span></li>
+                  <li>Session-17834 <span className="float-right">00:34:03</span></li>
+                  <li>Session-17834 <span className="float-right">00:21:45</span></li>
+                </ul>
               </div>
             </div>
           </div>

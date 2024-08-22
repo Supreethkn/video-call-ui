@@ -245,7 +245,7 @@ const columns = [
           <NavbarLocal />
         </div>
         <div className="col-md-10">
-        <div className="top-image-container">
+        <div className="top-image-container" style={{top:'-12px', zIndex:'99', top:'-25px', left:'-65px'}}>
               <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" />
             </div>
           <div className='m-2 p-3'>

@@ -7,9 +7,13 @@
     margin-top: 50%; */
 
     font-size: 45px;
-    color: #fff;
-    margin-left: -9%;
+    position: absolute;
     margin-right: auto;
     text-align: center;
-    margin-top: 26%;
+    color: black;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+
 }
