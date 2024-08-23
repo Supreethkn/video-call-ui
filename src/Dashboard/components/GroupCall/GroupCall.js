@@ -55,7 +55,7 @@ const GroupCall = (props, { username }) => {
         } {
             groupCallActive && < GroupCallRoom {...props }
             />} { props.username.usertype === "OPERATOR" && groupCallActive && < GroupCallButton onClickHandler = { leaveRoom }
-            label = 'Disconnect' / >
+            label = 'End Call' / >
         }
         <
         />

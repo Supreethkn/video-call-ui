@@ -202,6 +202,8 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
   };
+  const isActiveGroupCall = webRTCGroupCallHandler.checkActiveGroupCall();
+  console.log('webRTCGroupCallHandler.checkActiveGroupCall() is active:', isActiveGroupCall);
 
   return (
     <div className="dashboard-container row">
@@ -214,9 +216,11 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
                 <GroupCall username={username} />
               </div>
             </div>
-            <div className="scroll_group_list">
-              {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
-            </div>
+            {/* {isActiveGroupCall && ( */}
+          <div className="scroll_group_list">
+            {username.usertype === "OPERATOR" && <GroupCallRoomsList />}
+          </div>
+        {/* )} */}
             <div className="operator">
               {username.usertype === "OPERATOR" && <AnswerInfo />}
             </div>
@@ -230,7 +234,7 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
         </div>
         {/* Main Content Section */}
         <div className="col-md-10">
-          <div className="top-image-container" style={{top:'-12px', zIndex:'99', top:'-35px', left:'-65px'}}>
+          <div className="top-image-container-dashboard">
             <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image"  />
           </div>
           {/* New Dashboard Layout */}

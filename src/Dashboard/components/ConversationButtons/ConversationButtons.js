@@ -84,43 +84,11 @@
 // };
 
 // export default ConversationButtons;
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useState and useEffect
 import { switchForScreenSharingStream, hangUp } from '../../../utils/webRTC/webRTCHandler';
-import store from '../../../store/store';
 import micIcon from '../../../resources/micIcon.png';
 import videoIcon from '../../../resources/vedioIcon.png';
 import { MdCallEnd, MdCamera, MdVideoLabel } from 'react-icons/md';
-
-const styles = {
-  buttonContainer: {
-    position: 'absolute',
-    bottom: '50%',
-    left: '92%',
-    zIndex:'999',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '77px',
-  },
-  icon: {
-    width: '30px',
-    height: '28px',
-    cursor: 'pointer',
-    
-  },
-  iconContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    cursor: 'pointer',
-  },
-  text: {
-    marginTop: '5px',
-    color: 'black',
-    fontSize: '16px',
-    textAlign: 'center',
-  },
-};
 
 const ConversationButtons = (props) => {
   const {
@@ -133,10 +101,47 @@ const ConversationButtons = (props) => {
     groupCall,
   } = props;
 
+  // State for viewport width
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  // Update viewport width on window resize
   useEffect(() => {
-    setMicrophoneEnabled(store.getState().call.localMicrophoneEnabled);
-    setCameraEnabled(store.getState().call.localCameraEnabled);
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Conditional styles based on viewport width
+  const styles = {
+    buttonContainer: {
+      position: 'absolute',
+      bottom: viewportWidth < 700 ? '4%' : (viewportWidth < 800 ? '4%' : '50%'),
+      left: viewportWidth < 700 ? '52%' : (viewportWidth < 800 ? '52%' : '92%'),
+      zIndex: '999',
+      display: 'flex',
+      flexDirection: viewportWidth < 700 ? 'row' : (viewportWidth < 800 ? 'row' : 'column'),
+      alignItems: 'center',
+      gap: viewportWidth < 700 ? '100px' : (viewportWidth < 800 ? '100px' : '77px'),
+    },
+    icon: {
+      width: viewportWidth < 700 ? '30px' : (viewportWidth < 800 ? '30px' : '30px'),
+      height: viewportWidth < 700 ? '28px' : (viewportWidth < 800 ? '28px' : '28px'),
+      cursor: 'pointer',
+    },
+    iconContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      cursor: 'pointer',
+    },
+    text: {
+      marginTop: '5px',
+      color: 'black',
+      fontSize: viewportWidth < 700 ? '16px' : (viewportWidth < 800 ? '16px' : '16px'),
+      textAlign: 'center',
+       whiteSpace: 'nowrap'
+    },
+  };
 
   const handleMicButtonPressed = () => {
     const micEnabled = localMicrophoneEnabled;

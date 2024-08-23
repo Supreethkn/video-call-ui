@@ -48,7 +48,7 @@
 /* Additional styles to ensure responsiveness */
 @media screen and (max-width: 768px) {
     .logo-image {
-        max-width: 40%; /* Adjust logo size for smaller screens */
+        max-width: 30%; /* Adjust logo size for smaller screens */
     }
     .top-image-container {
         height: 100px; /* Further reduced height for smaller screens if necessary */
