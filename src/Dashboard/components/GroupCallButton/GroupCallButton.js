@@ -7,12 +7,15 @@ const GroupCallButton = ({ onClickHandler, label }) => {
   const [showPopup, setShowPopup] = useState(false);
 
   const handleEndCall = () => {
-    onClickHandler();
-    setShowPopup(true);
+    setShowPopup(true); // Show the popup first
 
     // Add a console log or alert for debugging
     console.log("Popup raised!");
-    alert("Popup raised!");
+    
+    // Delay the actual end call action by 3 seconds
+    setTimeout(() => {
+      onClickHandler();
+    }, 5000);
   };
 
   return (

@@ -6,18 +6,18 @@
   background-color: white;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   width: 300px;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.8); /* Add this line */
-  color: white; /* Add this line */
+  color: rgb(255, 255, 255); /* Add this line */
 }
 
 .popup-content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .call-ended-icon {
@@ -29,12 +29,16 @@
   font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
-  color: #fff; /* Ensure text color contrasts with background */
+  color: #000000; /* Ensure text color contrasts with background */
 }
+
+.call-ended-text-container{
+margin-left: 40px;
+}
+
 
 .session-id,
 .call-duration {
   font-size: 14px;
-  color: #fff; /* Ensure text color contrasts with background */
-  margin-top: 5px;
+  color: #000000; /* Ensure text color contrasts with background */
 }

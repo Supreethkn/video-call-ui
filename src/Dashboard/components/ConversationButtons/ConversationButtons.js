@@ -168,7 +168,7 @@ const ConversationButtons = (props) => {
       <div onClick={handleCameraButtonPressed} style={styles.iconContainer}>
         <img src={videoIcon} alt="Video Icon" style={styles.icon} />
         <div style={styles.text}>
-          {localCameraEnabled ? 'Video On' : 'Video Off'}
+          {localCameraEnabled ? 'Video Off' : 'Video On'}
         </div>
       </div>
       
@@ -180,7 +180,7 @@ const ConversationButtons = (props) => {
       <div onClick={handleMicButtonPressed} style={styles.iconContainer}>
         <img src={micIcon} alt="Mic Icon" style={styles.icon} />
         <div style={styles.text}>
-          {localMicrophoneEnabled ? 'Unmute' : 'Mute'}
+          {localMicrophoneEnabled ? 'Mute' : 'Unmute'}
         </div>
       </div>
       
