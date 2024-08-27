@@ -158,6 +158,8 @@ const NavbarLocal = () => {
 
   const userName = common.getUser();
 
+  const num = 789766;
+
   return (
     <>
       <ToastContainer />
@@ -194,6 +196,12 @@ const NavbarLocal = () => {
             <li className="nav-item">
               <a className="nav-link font_weight_bold" onClick={handleonLogout}>
                 <FontAwesomeIcon icon={faPowerOff} /> Logout
+              </a>
+            </li>
+            <li className="nav-item">
+              {/* <a className="nav-link font_weight_bold" onClick={() => navigateMenu('/calllog/:23')}> */}
+              <a className="nav-link font_weight_bold" onClick={() => navigateMenu(`/calllog/${num}`)}>
+                 CallLog
               </a>
             </li>
             <li className="nav-item">
