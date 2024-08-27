@@ -5,14 +5,14 @@ import { callStates, setLocalCameraEnabled, setLocalMicrophoneEnabled } from '..
 import * as webRTCGroupCallHandler from '../../../utils/webRTC/webRTCGroupCallHandler';
 import GroupCallRoom from '../GroupCallRoom/GroupCallRoom';
 import * as common from '../../../utils/Service/Common';
-
+import { useHistory } from 'react-router-dom';
 import { userreasonmc } from '../../../store/actions/dashboardActions';
 // import * as Service from '../../../utils/Service/Service';
 
 
 const GroupCall = (props, { username }) => {
     const { callState, localStream, groupCallActive, groupCallStreams } = props;
-
+    const history = useHistory();
 
     // const Client_SERVER = 'https://web-rtc-frontend-test.herokuapp.com';
     const Client_SERVER = process.env.REACT_APP_CLIENT;
@@ -28,7 +28,7 @@ const GroupCall = (props, { username }) => {
     };
 
     const leaveRoom = () => {
-        webRTCGroupCallHandler.leaveGroupCall();
+        webRTCGroupCallHandler.leaveGroupCall(history);
     };
 
     // const leaveRoomMachine = () => {

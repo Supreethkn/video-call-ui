@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png';
 import CallLogIcon from '../resources/call-log-icon.png';
 
@@ -9,7 +9,6 @@ const fontStyle = {
 
 const fieldLabelStyle = {
   color: '#29417D',
-  // width: '150px',
   marginRight: '10px',
   fontWeight: 'bold',
   fontSize: '25px',
@@ -66,43 +65,51 @@ function Field({ fieldName, fieldValue }) {
 }
 
 const CallLog = () => {
-  const { sessionId } = useParams(); // Use useParams to get the id from the URL
-  console.log("Call Log ID:", sessionId); // Log the id
-
-  let fieldsData = {
-    'Session': '78962',
+  const { sessionId } = useParams();
+  const [fieldsData, setFieldsData] = useState({
+    'Session': '',
     'First Name': 'Lorem',
-    'Duration': '00:10',
+    'Duration': '',
     'Last Name': 'Ipsum',
-    'Date': '06/06/2024',
+    'Date': '',
     'Flight No.': 'ABCDE',
-    'Time': '10:24 AM',
+    'Time': '',
     'Query': 'Location - Dining, Flight Info, Location - Amenities',
-    'Ended': '10:34 AM',
+    'Ended': '',
     'Notes': 'The customer called to ask for the location of Starbucks, flight information, and sleeping lounge amenities...',
     'Kiosk': 'A67',
     'Customer Rating': 'Resolved',
-    'Agent': 'Maya L.',
-  };
+    'Agent': '',
+  });
+
+  useEffect(() => {
+    const fetchCallData = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER}/getCallData?roomId=${sessionId}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Fetched data:', data); // Log the fetched data
+        setFieldsData(prevState => ({
+          ...prevState,
+          'Session': data.id || '',
+          'Duration': data.callDuration || '',
+          'Date': data.callEndTime ? data.callEndTime.split(' ')[0] : '',
+          'Time': data.callStartTime ? data.callStartTime.split(' ')[1] : '',
+          'Ended': data.callEndTime ? data.callEndTime.split(' ')[1] : '',
+          'Agent': data.operatorName || '',
+        }));
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+      }
+    };
+
+    fetchCallData();
+  }, [sessionId]);
 
   const leftColumnFields = ['Session', 'Duration', 'Date', 'Time', 'Ended', 'Kiosk', 'Customer Rating', 'Agent'];
   const rightColumnFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes'];
-
-  console.log("heyyyyyyyyyy");
-  fetch(process.env.REACT_APP_SERVER + '/testapi', {
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return res.json(); // Parse the JSON response
-  }).then((data) => {
-    fieldsData.Session = data.roomId;
-    console.log('testapi data:', data); // This should log the actual data
-  }).catch((error) => {
-    console.error('There has been a problem with your fetch operation:', error);
-  });
-
-  // fieldsData.Session = res.roomId;
 
   return (
     <div style={{ ...fontStyle, height: '100vh', padding: '20px', overflow: 'hidden' }}>

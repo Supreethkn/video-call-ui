@@ -6,7 +6,7 @@ import { startRecording1 } from '../videoRecording/recordingUtils';
 import { stopRecording } from '../videoRecording/recordingUtils';
 import { pushAuditsData } from '../../utils/Service/Service'
 import * as Service from '../../utils/Service/Service';
-
+import { useHistory } from 'react-router-dom'; // Import this to use the history object
 import { stopRecording1 } from '../videoRecording/recordingUtils';
  
 let myPeer;
@@ -198,7 +198,8 @@ export const leaveGroupCallEnd = () => {
 }
 
 //changing this logic to all time host
-export const leaveGroupCall = () => {
+export const leaveGroupCall = (history) => {
+  
   // who ever leave the call audit shoud be triggered
   auditfunction(groupCallRoomId);
     // logic to stop recording
@@ -234,8 +235,12 @@ export const leaveGroupCall = () => {
       machineName: store.getState().dashboard.groupCallRooms[0].hostName.username,
       reason: store.getState().dashboard.groupCallRooms[0].hostName.userreason,
     });
+   
+
+   const sessionId = groupCallRoomId; // or any other ID you want to use
+   history.push(`/calllog/${sessionId}`);
    clearGroupData();
- }, 40000);
+ }, 4000);
   
 };
 
