@@ -29,11 +29,12 @@
   font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
-  color: #000000; /* Ensure text color contrasts with background */
+  color: #29417D; /* Ensure text color contrasts with background */
 }
 
 .call-ended-text-container{
 margin-left: 40px;
+text-align: left;
 }
 
 
@@ -41,4 +42,8 @@ margin-left: 40px;
 .call-duration {
   font-size: 14px;
   color: #000000; /* Ensure text color contrasts with background */
+}
+.session-id
+{
+  font-weight: 700;
 }

@@ -204,36 +204,38 @@ export const leaveGroupCall = () => {
     // logic to stop recording
   // stopRecording1();
   stopRecording();
+ setTimeout(() => {
   if (groupCallHost) {
-  console.log("groupCallHost");
-    wss.groupCallClosedByHost({
-      peerId: myPeerId
-    });
-  } else {
-  console.log("groupCallHost USER");
-  console.log(myPeerId);
-  console.log(store.getState().call.localStream.id);
-  console.log(groupCallRoomId);
-    wss.userLeftGroupCall({
-      streamId: store.getState().call.localStream.id,
+    console.log("groupCallHost");
+      wss.groupCallClosedByHost({
+        peerId: myPeerId
+      });
+    } else {
+    console.log("groupCallHost USER");
+    console.log(myPeerId);
+    console.log(store.getState().call.localStream.id);
+    console.log(groupCallRoomId);
+      wss.userLeftGroupCall({
+        streamId: store.getState().call.localStream.id,
+        roomId: groupCallRoomId,
+        peerId: myPeerId
+      });
+    }
+    // write logic to re-route
+    console.log("logic wrtc $$$$$$$$$$ send details");
+    console.log(groupCallRoomId);
+    console.log(store.getState().call.localStream.id);
+    console.log(store.getState().dashboard);
+    // console.log(store.getState().dashboard.groupCallRooms[0].socketId);
+    wss.machineReRoute({
       roomId: groupCallRoomId,
-      peerId: myPeerId
+      operatorId: store.getState().call.localStream.id,
+      machineId: store.getState().dashboard.groupCallRooms[0].socketId,
+      machineName: store.getState().dashboard.groupCallRooms[0].hostName.username,
+      reason: store.getState().dashboard.groupCallRooms[0].hostName.userreason,
     });
-  }
-  // write logic to re-route
-  console.log("logic wrtc $$$$$$$$$$ send details");
-  console.log(groupCallRoomId);
-  console.log(store.getState().call.localStream.id);
-  console.log(store.getState().dashboard);
-  // console.log(store.getState().dashboard.groupCallRooms[0].socketId);
-  wss.machineReRoute({
-    roomId: groupCallRoomId,
-    operatorId: store.getState().call.localStream.id,
-    machineId: store.getState().dashboard.groupCallRooms[0].socketId,
-    machineName: store.getState().dashboard.groupCallRooms[0].hostName.username,
-    reason: store.getState().dashboard.groupCallRooms[0].hostName.userreason,
-  });
-  clearGroupData();
+   clearGroupData();
+ }, 40000);
   
 };
 
@@ -279,6 +281,7 @@ export const checkActiveGroupCall = () => {
   console.log(store.getState().call);
   if (store.getState().call.groupCallActive) {
     // store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
+    console.log('fffffffffffffffffff',groupCallRoomId);
     return groupCallRoomId;
   } else {
     return false;
