@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png';
 import CallLogIcon from '../resources/call-log-icon.png';
 
@@ -42,22 +43,24 @@ const buttonStyle = {
   fontWeight: 'bold',
 };
 
-function Field({ fieldName, fieldValue }) {
+function Field({ fieldName, fieldValue, onChange, isEditable }) {
   return (
     <div style={{ flex: '1 0 50%', padding: '10px', display: 'flex', alignItems: 'center' }}>
       <label style={fieldLabelStyle}>{fieldName}</label>
       {fieldName === 'Notes' ? (
         <textarea
           value={fieldValue}
-          readOnly
+          onChange={(e) => onChange(fieldName, e.target.value)}
           style={{ ...inputStyle, height: '250px', resize: 'none' }}
+          disabled={!isEditable}
         />
       ) : (
         <input
           type="text"
           value={fieldValue}
-          readOnly
+          onChange={(e) => onChange(fieldName, e.target.value)}
           style={inputStyle}
+          disabled={!isEditable}
         />
       )}
     </div>
@@ -66,21 +69,29 @@ function Field({ fieldName, fieldValue }) {
 
 const CallLog = () => {
   const { sessionId } = useParams();
+  const history = useHistory();
   const [fieldsData, setFieldsData] = useState({
     'Session': '',
-    'First Name': 'Lorem',
+    'First Name': '',
     'Duration': '',
-    'Last Name': 'Ipsum',
+    'Last Name': '',
     'Date': '',
-    'Flight No.': 'ABCDE',
+    'Flight No.': '',
     'Time': '',
-    'Query': 'Location - Dining, Flight Info, Location - Amenities',
+    'Query': '',
     'Ended': '',
-    'Notes': 'The customer called to ask for the location of Starbucks, flight information, and sleeping lounge amenities...',
-    'Kiosk': 'A67',
-    'Customer Rating': 'Resolved',
+    'Notes': '',
+    'Kiosk': '',
+    'Customer Rating': '',
     'Agent': '',
   });
+
+  const handleInputChange = (fieldName, value) => {
+    setFieldsData(prevState => ({
+      ...prevState,
+      [fieldName]: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchCallData = async () => {
@@ -91,11 +102,11 @@ const CallLog = () => {
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log the fetched data
-  
+
         const formatDateTime = (dateTime) => {
           return dateTime.replace('T', ' | ').split('.')[0];
         };
-  
+
         setFieldsData(prevState => ({
           ...prevState,
           'Session': data.id || '',
@@ -109,10 +120,82 @@ const CallLog = () => {
         console.error('There has been a problem with your fetch operation:', error);
       }
     };
-  
+
     fetchCallData();
   }, [sessionId]);
-  
+
+  const validateFields = () => {
+    const mandatoryFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes', 'Kiosk', 'Customer Rating'];
+    for (const field of mandatoryFields) {
+      if (!fieldsData[field]) {
+        return `${field} is required`;
+      }
+    }
+    return null;
+  };
+
+  const handleSubmit = async () => {
+    const validationError = validateFields();
+    if (validationError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: validationError,
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to submit the form?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#F29E3A',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, submit it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`${process.env.REACT_APP_SERVER}/updateCallDetails`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roomId: sessionId,
+              kiosk: fieldsData['Kiosk'],
+              customerRating: fieldsData['Customer Rating'],
+              firstName: fieldsData['First Name'],
+              lastName: fieldsData['Last Name'],
+              flightNo: fieldsData['Flight No.'],
+              query: fieldsData['Query'],
+              notes: fieldsData['Notes'],
+            }),
+          });
+
+          if (response.ok) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Submitted!',
+              text: 'Your call details have been updated.',
+            }).then(() => {
+              history.push('/dashboard'); // Redirect to dashboard
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Submission Failed',
+              text: 'Failed to update call details.',
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'There was an error with your submission.',
+          });
+        }
+      }
+    });
+  };
 
   const leftColumnFields = ['Session', 'Duration', 'Date', 'Time', 'Ended', 'Kiosk', 'Customer Rating', 'Agent'];
   const rightColumnFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes'];
@@ -140,20 +223,32 @@ const CallLog = () => {
         <div style={{ display: 'flex' }}>
           <div style={{ flex: '0 0 40%', padding: '10px' }}>
             {leftColumnFields.map(fieldName => (
-              <Field key={fieldName} fieldName={fieldName} fieldValue={fieldsData[fieldName]} />
+              <Field
+                key={fieldName}
+                fieldName={fieldName}
+                fieldValue={fieldsData[fieldName]}
+                onChange={handleInputChange}
+                isEditable={fieldName !== 'Session' && fieldName !== 'Duration' && fieldName !== 'Date' && fieldName !== 'Time' && fieldName !== 'Ended' && fieldName !== 'Agent'}
+              />
             ))}
           </div>
           <div style={{ flex: '1', padding: '10px' }}>
             {rightColumnFields.map(fieldName => (
-              <Field key={fieldName} fieldName={fieldName} fieldValue={fieldsData[fieldName]} />
+              <Field
+                key={fieldName}
+                fieldName={fieldName}
+                fieldValue={fieldsData[fieldName]}
+                onChange={handleInputChange}
+                isEditable={true} // Editable fields
+              />
             ))}
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <button style={buttonStyle}>SUBMIT</button>
+              <button style={buttonStyle} onClick={handleSubmit}>SUBMIT</button>
             </div>
           </div>
         </div>
         <div style={{ ...fontStyle, textAlign: 'left', marginTop: '50px', fontSize: '20px' }}>
-          After Call Time <br></br><span style={{ fontWeight: 'bold' }}>00:01:03</span>
+          After Call Time <br /><span style={{ fontWeight: 'bold' }}>00:01:03</span>
         </div>
       </div>
     </div>
