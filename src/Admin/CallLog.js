@@ -91,22 +91,28 @@ const CallLog = () => {
         }
         const data = await response.json();
         console.log('Fetched data:', data); // Log the fetched data
+  
+        const formatDateTime = (dateTime) => {
+          return dateTime.replace('T', ' | ').split('.')[0];
+        };
+  
         setFieldsData(prevState => ({
           ...prevState,
           'Session': data.id || '',
           'Duration': data.callDuration || '',
-          'Date': data.callEndTime ? data.callEndTime.split(' ')[0] : '',
-          'Time': data.callStartTime ? data.callStartTime.split(' ')[1] : '',
-          'Ended': data.callEndTime ? data.callEndTime.split(' ')[1] : '',
+          'Date': data.callEndTime ? formatDateTime(data.callEndTime).split(' | ')[0] : '',
+          'Time': data.callStartTime ? formatDateTime(data.callStartTime).split(' | ')[1] : '',
+          'Ended': data.callEndTime ? formatDateTime(data.callEndTime).split(' | ')[1] : '',
           'Agent': data.operatorName || '',
         }));
       } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
       }
     };
-
+  
     fetchCallData();
   }, [sessionId]);
+  
 
   const leftColumnFields = ['Session', 'Duration', 'Date', 'Time', 'Ended', 'Kiosk', 'Customer Rating', 'Agent'];
   const rightColumnFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes'];

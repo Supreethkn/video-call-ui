@@ -11,29 +11,54 @@ const GroupCallButton = ({ onClickHandler, label }) => {
   const isActiveGroupCall = webRTCGroupCallHandler.checkActiveGroupCall();
   console.log('inside component', isActiveGroupCall);
 
-  const handleEndCall = () => {
-    onClickHandler(); 
-    setShowPopup(true); // Show the popup first
+  const formatDuration = (duration) => {
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
 
-    fetch(`${process.env.REACT_APP_SERVER}/getCallDetails?roomId=${isActiveGroupCall}`, {
-      method: 'GET',
-    })
-      .then((res) => {
-        if (!res.ok) {
-          console.error('Response status:', res.status);
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log('Call details:', data);
-        setCallDetails(data); // Store the fetched call details
-      })
-      .catch((error) => {
-        console.error('There has been a problem with your fetch operation:', error);
+    if (duration.includes('Hour')) {
+      hours = parseInt(duration.split(' Hour')[0]) || 0;
+      duration = duration.split(' Hour')[1].trim();
+    }
+
+    if (duration.includes('Minute')) {
+      minutes = parseInt(duration.split(' Minute')[0]) || 0;
+      duration = duration.split(' Minute')[1].trim();
+    }
+
+    if (duration.includes('Second')) {
+      seconds = parseInt(duration.split(' Second')[0]) || 0;
+    }
+
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  };
+
+  const handleEndCall = async () => {
+    await onClickHandler(); // Execute onClickHandler first
+    setShowPopup(true); // Show the popup after handler execution
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER}/getCallDetails?roomId=${isActiveGroupCall}`, {
+        method: 'GET',
       });
 
-     
+      if (!response.ok) {
+        console.error('Response status:', response.status);
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Call details:', data);
+      const formattedDuration = formatDuration(data.callDuration); // Format the duration
+      setCallDetails({ ...data, callDuration: formattedDuration }); // Store the formatted call details
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
+
     console.log("Popup raised!");
   };
 

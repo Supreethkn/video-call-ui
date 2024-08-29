@@ -198,12 +198,11 @@ const NavbarLocal = () => {
                 <FontAwesomeIcon icon={faPowerOff} /> Logout
               </a>
             </li>
-            <li className="nav-item">
-              {/* <a className="nav-link font_weight_bold" onClick={() => navigateMenu('/calllog/:23')}> */}
+            {/* <li className="nav-item">
               <a className="nav-link font_weight_bold" onClick={() => navigateMenu(`/calllog/${num}`)}>
                  CallLog
               </a>
-            </li>
+            </li> */}
             <li className="nav-item">
               <button className='btn btn current-user' style={{ textTransform: 'capitalize' }}>
                 Current User: {userName}
