@@ -108,7 +108,7 @@ export const joinGroupCall = (hostSocketId, roomId, operatorName, operatorReason
   let videoName = operatorName+'_'+(operatorDetal.start_date).getDate()+'_'+(operatorDetal.start_date).getHours()+'_'+(operatorDetal.start_date).getMinutes()+'_'+(operatorDetal.start_date).getSeconds();
   console.log("video path name $$$$$$$$$$");
   console.log(videoName);
-  startRecording(videoName);
+  // startRecording(videoName);
 
   // logic to remove the notification from all others
   wss.groupCallRemoveNotification({
@@ -192,8 +192,8 @@ export const MachineleaveGroupCall = () =>  {
 export const leaveGroupCallEnd = () => {
   console.log("webRTCCALL HAndler $$$$$$$$$$$$$$$$$$");
   auditfunction(groupCallRoomId);
-  stopRecording1();
-  stopRecording();
+  // stopRecording1();
+  // stopRecording();
   clearGroupData();
 }
 
@@ -204,7 +204,7 @@ export const leaveGroupCall = (history) => {
   auditfunction(groupCallRoomId);
     // logic to stop recording
   // stopRecording1();
-  stopRecording();
+  // stopRecording();
  setTimeout(() => {
   if (groupCallHost) {
     console.log("groupCallHost");

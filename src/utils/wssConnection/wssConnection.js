@@ -76,7 +76,7 @@ socket.on('user-clean-up', (data) => {
     
     if(data.id == undefined || data.id == id || data.type == "OPERATOR"){
         // alert('main')
-        stopRecording1();         
+        // stopRecording1();         
     }
     else if(data.id != id){
         // stopRecording1();         
@@ -118,7 +118,7 @@ socket.on('start-video', (data) => {
         console.log('videoname', videoName);
         // localStorage.setItem('name',videoName);
         localStorage.setItem('videoname',videoName);
-        startRecording1(videoName);
+        // startRecording1(videoName);
 
 });
 
@@ -280,7 +280,7 @@ const handleBroadcastEvents = (data) => {
                 }
                 // let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
                 // window.location.href = path;
-                stopRecording1();
+                // stopRecording1();
                 setTimeout(() =>{
                     // alert('b');
                     let path = '/thankyou';
