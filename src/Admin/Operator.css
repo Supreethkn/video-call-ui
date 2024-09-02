@@ -228,3 +228,6 @@
     opacity: 0.8;
   }
   
+  div:where(.swal2-container) .swal2-html-container {
+  height: 300px !important;
+}

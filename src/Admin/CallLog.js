@@ -50,23 +50,107 @@ const buttonStyle = {
 
 const queryTreeData = [
   {
-    title: 'Location',
-    key: 'location',
+    title: 'Location - Shop',
+    key: 'location-shop',
+    children: [],
+  },
+  {
+    title: 'Location - Dining',
+    key: 'location-dining',
+    children: [],
+  },
+  {
+    title: 'Location - Services',
+    key: 'location-services',
+    children: [],
+  },
+  {
+    title: 'Location - Amenities',
+    key: 'location-amenities',
     children: [
-      { title: 'Dining', key: 'location-dining' },
-      { title: 'Amenities', key: 'location-amenities' },
+      { title: 'Inquiries about restrooms', key: 'location-amenities-restrooms' },
+      { title: 'Inquiries about lounges', key: 'location-amenities-lounges' },
+      { title: 'Inquiries about other amenities', key: 'location-amenities-other' },
     ],
   },
   {
-    title: 'Flight Info',
-    key: 'flight-info',
+    title: 'Flight Information',
+    key: 'flight-information',
     children: [
-      { title: 'Departure', key: 'flight-info-departure' },
-      { title: 'Arrival', key: 'flight-info-arrival' },
+      { title: 'Delays', key: 'flight-information-delays' },
+      { title: 'Cancellations', key: 'flight-information-cancellations' },
+      { title: 'Schedule changes', key: 'flight-information-schedule-changes' },
     ],
   },
-  // Add more main queries and sub-queries here
+  {
+    title: 'Baggage Services',
+    key: 'baggage-services',
+    children: [
+      { title: 'Lost luggage', key: 'baggage-services-lost' },
+      { title: 'Delayed luggage', key: 'baggage-services-delayed' },
+      { title: 'Damaged luggage', key: 'baggage-services-damaged' },
+    ],
+  },
+  {
+    title: 'Check-In Assistance',
+    key: 'check-in-assistance',
+    children: [
+      { title: 'Issues with check-in processes', key: 'check-in-assistance-processes' },
+      { title: 'Issues with self-service kiosks', key: 'check-in-assistance-kiosks' },
+    ],
+  },
+  {
+    title: 'Security Screening',
+    key: 'security-screening',
+    children: [
+      { title: 'Questions about procedures', key: 'security-screening-procedures' },
+      { title: 'Concerns about procedures', key: 'security-screening-concerns' },
+    ],
+  },
+  {
+    title: 'Customer Complaints',
+    key: 'customer-complaints',
+    children: [
+      { title: 'Feedback on service quality', key: 'customer-complaints-feedback' },
+      { title: 'Issues with service quality', key: 'customer-complaints-issues' },
+    ],
+  },
+  {
+    title: 'Lost and Found',
+    key: 'lost-and-found',
+    children: [
+      { title: 'Reporting lost items', key: 'lost-and-found-reporting' },
+      { title: 'Inquiring about lost items', key: 'lost-and-found-inquiring' },
+    ],
+  },
+  {
+    title: 'Transport Services',
+    key: 'transport-services',
+    children: [
+      { title: 'Information on airport shuttles', key: 'transport-services-shuttles' },
+      { title: 'Information on taxis', key: 'transport-services-taxis' },
+      { title: 'Information on car rentals', key: 'transport-services-car-rentals' },
+    ],
+  },
+  {
+    title: 'Accessibility Services',
+    key: 'accessibility-services',
+    children: [
+      { title: 'Assistance for passengers with special needs', key: 'accessibility-services-special-needs' },
+      { title: 'Assistance for passengers with disabilities', key: 'accessibility-services-disabilities' },
+    ],
+  },
+  {
+    title: 'Travel Documentation',
+    key: 'travel-documentation',
+    children: [
+      { title: 'Help with visas', key: 'travel-documentation-visas' },
+      { title: 'Help with passports', key: 'travel-documentation-passports' },
+      { title: 'Help with other travel requirements', key: 'travel-documentation-other' },
+    ],
+  },
 ];
+
 
 function Field({ fieldName, fieldValue, onChange, isEditable }) {
   return (
@@ -320,13 +404,15 @@ const CallLog = () => {
                 <div
                   key={query}
                   style={{
-                    background: '#F29E3A',
-                    color: '#fff',
+                    background: '#E6E7E8',
+                    color: '#000',
                     padding: '5px 10px',
                     borderRadius: '15px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '5px',
+                    boxShadow:'0px 0px 4px 0px',
+                    margin:'2px 0px 0px 2px;'
                   }}
                 >
                   {query}
