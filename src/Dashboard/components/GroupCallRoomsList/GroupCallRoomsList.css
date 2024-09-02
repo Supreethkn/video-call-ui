@@ -58,7 +58,7 @@
 .location-icon-wrapper {
   background-color: #FAA519;
   border-radius: 50%;
-  padding: 0px 7px 2px 9px;
+  padding: 0px 10px 4px 10px;
   margin-right: 11px;
   margin-bottom: -2px;
 }
@@ -68,7 +68,7 @@
 }
 
 .call-info-item {
-  font-size: 16px;
+  font-size: 20px;
   margin-bottom: 5px;
 }
 

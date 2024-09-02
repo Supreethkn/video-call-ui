@@ -208,3 +208,23 @@
     text-decoration: underline;
 }
 
+.rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
+    position: relative;
+    display: inline-block;
+    height: 26px;
+    margin: 2px !important;
+    padding: 2px !important;
+    text-decoration: none;
+    vertical-align: top;
+    cursor: pointer;
+  }
+  
+  .rc-tree-node-selected {
+    background-color: #b8b8b8 !important;
+    box-shadow: 0 0 0 1px #b0afae !important;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin: 20px;
+    opacity: 0.8;
+  }
+  

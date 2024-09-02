@@ -182,18 +182,18 @@ const NavbarLocal = () => {
                 </li>
                 <li className={`nav-item hand_cursor ${location.pathname === '/Auditlist' ? 'active-nav-item' : ''}`}>
                   <a className="nav-link" onClick={() => navigateMenu('/Auditlist')}>
-                    <FontAwesomeIcon icon={faFile} /> Audits
+                    <FontAwesomeIcon icon={faFile} /> Call Logs
                   </a>
                 </li>
-                <li className={`nav-item hand_cursor ${location.pathname === '/Auditlistinit' ? 'active-nav-item' : ''}`}>
+                {/* <li className={`nav-item hand_cursor ${location.pathname === '/Auditlistinit' ? 'active-nav-item' : ''}`}>
                   <a className="nav-link" onClick={() => navigateMenu('/Auditlistinit')}>
                     <FontAwesomeIcon icon={faHeadphones} /> Call Report
                   </a>
-                </li>
+                </li> */}
               </>
             )}
             {/* Logout and User Info */}
-            <li className="nav-item">
+            <li className="nav-item hand_cursor">
               <a className="nav-link font_weight_bold" onClick={handleonLogout}>
                 <FontAwesomeIcon icon={faPowerOff} /> Logout
               </a>

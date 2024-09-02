@@ -3,6 +3,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png';
 import CallLogIcon from '../resources/call-log-icon.png';
+import Tree from 'rc-tree';
+import 'rc-tree/assets/index.css';  // Import the tree component's styles
+import './Operator.css';
+import ReactDOM from 'react-dom';
+
 
 const fontStyle = {
   fontFamily: 'Poppins, sans-serif',
@@ -10,48 +15,68 @@ const fontStyle = {
 
 const fieldLabelStyle = {
   color: '#29417D',
-  marginRight: '10px',
+  marginRight: '15px',
   fontWeight: 'bold',
-  fontSize: '25px',
+  fontSize: '18px',
   whiteSpace: 'nowrap',
-  minWidth: '230px',
+  minWidth: '150px',
 };
 
 const inputStyle = {
-  width: 'calc(100% - 160px)',
-  padding: '10px',
+  width: '100%',
+  padding: '8px',
   fontFamily: 'Poppins, sans-serif',
   border: 'none',
-  fontSize: '20px',
+  fontSize: '16px',
 };
 
 const containerStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'left',
-  padding: '50px 25px 25px',
+  padding: '30px 15px 15px',
 };
 
 const buttonStyle = {
-  padding: '10px 50px',
+  padding: '8px 30px',
   backgroundColor: '#F29E3A',
   color: '#29417D',
   border: 'none',
-  borderRadius: '50px',
-  fontSize: '25px',
+  borderRadius: '30px',
+  fontSize: '18px',
   cursor: 'pointer',
   fontWeight: 'bold',
 };
 
+const queryTreeData = [
+  {
+    title: 'Location',
+    key: 'location',
+    children: [
+      { title: 'Dining', key: 'location-dining' },
+      { title: 'Amenities', key: 'location-amenities' },
+    ],
+  },
+  {
+    title: 'Flight Info',
+    key: 'flight-info',
+    children: [
+      { title: 'Departure', key: 'flight-info-departure' },
+      { title: 'Arrival', key: 'flight-info-arrival' },
+    ],
+  },
+  // Add more main queries and sub-queries here
+];
+
 function Field({ fieldName, fieldValue, onChange, isEditable }) {
   return (
-    <div style={{ flex: '1 0 50%', padding: '10px', display: 'flex', alignItems: 'center' }}>
+    <div style={{ flex: '1 0 50%', padding: '8px', display: 'flex', alignItems: 'center' }}>
       <label style={fieldLabelStyle}>{fieldName}</label>
       {fieldName === 'Notes' ? (
         <textarea
           value={fieldValue}
           onChange={(e) => onChange(fieldName, e.target.value)}
-          style={{ ...inputStyle, height: '250px', resize: 'none' }}
+          style={{ ...inputStyle, height: '150px', resize: 'none' }}
           disabled={!isEditable}
         />
       ) : (
@@ -85,6 +110,7 @@ const CallLog = () => {
     'Customer Rating': '',
     'Agent': '',
   });
+  const [selectedQueries, setSelectedQueries] = useState([]);
 
   const handleInputChange = (fieldName, value) => {
     setFieldsData(prevState => ({
@@ -92,6 +118,53 @@ const CallLog = () => {
       [fieldName]: value,
     }));
   };
+
+  const onSelectQuery = (selectedKeys) => {
+    setSelectedQueries(selectedKeys);
+    setFieldsData(prevState => ({
+      ...prevState,
+      'Query': selectedKeys.join(', '), // Update the Query field with selected queries
+    }));
+  };
+
+
+  const showQueryTreePopup = () => {
+    Swal.fire({
+      title: 'Select Query',
+      html: `<div id="query-tree-container"></div>`,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText: 'Select',
+      preConfirm: () => {
+        return selectedQueries;
+      },
+      didOpen: () => {
+        const treeContainer = Swal.getPopup().querySelector('#query-tree-container');
+        if (treeContainer) {
+          ReactDOM.render(
+            <Tree
+              className="rc-tree"
+              treeData={queryTreeData}
+              selectable
+              selectedKeys={selectedQueries}
+              onSelect={onSelectQuery}
+              multiple
+              defaultExpandAll
+            />,
+            treeContainer
+          );
+        }
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setFieldsData(prevState => ({
+          ...prevState,
+          'Query': selectedQueries.join(', '),
+        }));
+      }
+    });
+  };
+
 
   useEffect(() => {
     const fetchCallData = async () => {
@@ -115,6 +188,7 @@ const CallLog = () => {
           'Time': data.callStartTime ? formatDateTime(data.callStartTime).split(' | ')[1] : '',
           'Ended': data.callEndTime ? formatDateTime(data.callEndTime).split(' | ')[1] : '',
           'Agent': data.operatorName || '',
+          
         }));
       } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -166,7 +240,7 @@ const CallLog = () => {
               firstName: fieldsData['First Name'],
               lastName: fieldsData['Last Name'],
               flightNo: fieldsData['Flight No.'],
-              query: fieldsData['Query'],
+              query: fieldsData['Query'],  // Pass the selected queries
               notes: fieldsData['Notes'],
             }),
           });
@@ -197,62 +271,115 @@ const CallLog = () => {
     });
   };
 
-  const leftColumnFields = ['Session', 'Duration', 'Date', 'Time', 'Ended', 'Kiosk', 'Customer Rating', 'Agent'];
+  const leftColumnFields = ['Session', 'Duration', 'Date', 'Time', 'Ended', 'Agent', 'Kiosk', 'Customer Rating'];
   const rightColumnFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes'];
-
+  
   return (
-    <div style={{ ...fontStyle, height: '100vh', padding: '20px', overflow: 'hidden' }}>
-      <div className="top-image-container" style={{ textAlign: 'center', paddingBottom: '20px' }}>
-        <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" style={{ maxWidth: '100%' }} />
+    <div style={{ ...fontStyle, height: '100vh', padding: '10px', overflow: 'auto' }}>
+      <div className="top-image-container" style={{ textAlign: 'center', paddingBottom: '10px', top: '-30px' }}>
+        <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" style={{ maxWidth: '100%', maxHeight: '58px', top: '43%' }} />
       </div>
-
+  
       <div style={{
         ...fontStyle,
         width: 'auto',
-        height: '814px',
+        height: 'auto',
         backgroundColor: '#E6E7E8',
-        margin: '-40px 50px 0px 50px',
-        padding: '20px',
+        margin: '-85px 20px 0px 20px',
+        padding: '10px',
         borderRadius: '10px',
       }}>
         <div style={containerStyle}>
-          <img src={CallLogIcon} alt="Call Log Icon" />
-          <h2 style={{ color: '#F29E3A', marginBottom: '5px' }}>CALL LOG</h2>
+          <img src={CallLogIcon} alt="Call Log Icon" style={{ maxWidth: '50px', marginRight: '10px' }} />
+          <h2 style={{ color: '#29417D', fontWeight: 'bold', fontSize: '24px' }}>Call Log</h2>
+        </div>
+  
+        <div style={{ display: 'flex', flexWrap: 'wrap', paddingBottom: '15px' }}>
+          <div style={{ flex: '1 0 50%' }}>
+            {leftColumnFields.map(field => (
+              <Field
+                key={field}
+                fieldName={field}
+                fieldValue={fieldsData[field]}
+                onChange={handleInputChange}
+                isEditable={field === 'Kiosk' || field === 'Customer Rating'}  // Keep these fields editable
+              />
+            ))}
+          </div>
+  
+          <div style={{ flex: '1 0 50%' }}>
+            {rightColumnFields.map(field => (
+              field === 'Query' ? (
+                <div style={{ flex: '1 0 50%', padding: '8px' }}>
+          <label style={fieldLabelStyle}>Select Query</label>
+          <div
+            style={{
+              ...inputStyle,
+              minHeight: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '5px',
+              border: '1px solid #ccc',
+              cursor: 'pointer',
+              backgroundColor: '#fff',
+            }}
+            onClick={showQueryTreePopup}
+          >
+            {selectedQueries.length === 0 ? (
+              <span style={{ color: '#888' }}>Click to select a query</span>
+            ) : (
+              selectedQueries.map((query) => (
+                <div
+                  key={query}
+                  style={{
+                    background: '#F29E3A',
+                    color: '#fff',
+                    padding: '5px 10px',
+                    borderRadius: '15px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                  }}
+                >
+                  {query}
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedQueries(selectedQueries.filter((q) => q !== query));
+                    }}
+                  >
+                    &times;
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: '0 0 40%', padding: '10px' }}>
-            {leftColumnFields.map(fieldName => (
-              <Field
-                key={fieldName}
-                fieldName={fieldName}
-                fieldValue={fieldsData[fieldName]}
-                onChange={handleInputChange}
-                isEditable={fieldName !== 'Session' && fieldName !== 'Duration' && fieldName !== 'Date' && fieldName !== 'Time' && fieldName !== 'Ended' && fieldName !== 'Agent'}
-              />
+              ) : (
+                <Field
+                  key={field}
+                  fieldName={field}
+                  fieldValue={fieldsData[field]}
+                  onChange={handleInputChange}
+                  isEditable={field !== 'Query'} 
+                />
+              )
             ))}
-          </div>
-          <div style={{ flex: '1', padding: '10px' }}>
-            {rightColumnFields.map(fieldName => (
-              <Field
-                key={fieldName}
-                fieldName={fieldName}
-                fieldValue={fieldsData[fieldName]}
-                onChange={handleInputChange}
-                isEditable={true} // Editable fields
-              />
-            ))}
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <button style={buttonStyle} onClick={handleSubmit}>SUBMIT</button>
-            </div>
           </div>
         </div>
-        <div style={{ ...fontStyle, textAlign: 'left', marginTop: '50px', fontSize: '20px' }}>
-          After Call Time <br /><span style={{ fontWeight: 'bold' }}>00:01:03</span>
+  
+        <div style={{ textAlign: 'center', paddingBottom: '20px' }}>
+          <button onClick={handleSubmit} style={buttonStyle}>
+            Submit
+          </button>
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default CallLog;

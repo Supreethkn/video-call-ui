@@ -281,11 +281,11 @@ const handleBroadcastEvents = (data) => {
                 // let path = Client_SERVER + '/main/' + data.data.machineName + '/' + userReason;
                 // window.location.href = path;
                 // stopRecording1();
-                setTimeout(() =>{
-                    // alert('b');
-                    let path = '/thankyou';
-                    window.location.href = path;
-                },1000);
+                // setTimeout(() =>{
+                //     // alert('b');
+                //     let path = '/thankyou';
+                //     window.location.href = path;
+                // },1000);
             }
             break;
         default:
