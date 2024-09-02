@@ -156,7 +156,7 @@
 
 
 /////////////////////////////// new dashbord design //////////////////////////////////////
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsPeopleFill, BsClockHistory, BsPhoneFill, BsClipboardCheck } from 'react-icons/bs';
 import { FaPhoneAlt } from 'react-icons/fa';
 import logo from '../resources/logo.png';
@@ -184,6 +184,10 @@ import './Dashboard.css';
 
 const Dashboard = ({ username, callState, groupCallStreams }) => {
   const history = useHistory();
+  const [topKiosks, setTopKiosks] = useState([]);
+  const [longestDurations, setLongestDurations] = useState([]);
+  const [topQueries, setTopQueries] = useState([]);
+
 
   useEffect(() => {
     console.log("Dashboard loaded with user:", username);
@@ -204,6 +208,47 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
   };
   const isActiveGroupCall = webRTCGroupCallHandler.checkActiveGroupCall();
   console.log('webRTCGroupCallHandler.checkActiveGroupCall() is active:', isActiveGroupCall);
+
+
+  useEffect(() => {
+    const fetchTopQueries = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER}/getTopQueries`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Fetched data:', data);
+
+            setTopQueries(data);
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    };
+
+    fetchTopQueries();
+}, []);
+
+
+  useEffect(() => {
+    const fetchKiosksAndDurations = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER}/getTopKiosksAndDurations`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Fetched data:', data);
+
+            setTopKiosks(data.topKiosks);
+            setLongestDurations(data.longestDurations);
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    };
+
+    fetchKiosksAndDurations();
+}, []);
 
   return (
     <div className="dashboard-container row">
@@ -233,7 +278,7 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
           {username.usertype === 'OPERATOR' && <NavbarLocal />}
         </div>
         {/* Main Content Section */}
-        <div className="col-md-10">
+        <div className="col-md-10" style={{padding:' 0px 30px'}}>
           <div className="top-image-container-dashboard">
             <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image"  />
           </div>
@@ -242,6 +287,7 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
             {/* Left Section */}
             <div className="dashboard-left col-md-8">
               {/* Agents Section */}
+              <h2 className="activityTitle" style={{marginBottom:'20px', color:'#29417D'}}>Activity</h2>
               <h3 className="section-title">Agents</h3>
               <div className="row agents-status">
                 <div className="col-3">
@@ -306,33 +352,35 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
 
             {/* Right Section */}
             <div className="dashboard-right col-md-4">
-              <div className="top-queries mb-4">
-                <h3 className="section-title">Top Queries</h3>
-                <ul>
-                  <li>Location-Dining <span className="float-right">150</span></li>
-                  <li>Flight Info <span className="float-right">75</span></li>
-                  <li>Location - Amenities <span className="float-right">25</span></li>
-                </ul>
-              </div>
+            <div className="top-queries mb-4">
+            <h3 className="section-title">Top Queries</h3>
+            <ul>
+                {topQueries.map((query, index) => (
+                    <li key={index}>
+                        {query.query} <span className="float-right">{query.id}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
 
-              <div className="top-kiosk mb-4">
+            <div className="top-kiosk mb-4">
                 <h3 className="section-title">Top Kiosk</h3>
                 <ul>
-                  <li>T3-B67 <span className="float-right">89</span></li>
-                  <li>T2-C23 <span className="float-right">55</span></li>
-                  <li>T3-B78 <span className="float-right">35</span></li>
+                    {topKiosks.map((kiosk, index) => (
+                        <li key={index}>{kiosk.callOrigin} <span className="float-right">{kiosk.id}</span></li>
+                    ))}
                 </ul>
-              </div>
+            </div>
 
-              <div className="longest-call-duration">
+            <div className="longest-call-duration">
                 <h3 className="section-title">Longest Call Duration</h3>
                 <ul>
-                  <li>Session-18903 <span className="float-right">01:00:40</span></li>
-                  <li>Session-17834 <span className="float-right">00:34:03</span></li>
-                  <li>Session-17834 <span className="float-right">00:21:45</span></li>
+                    {longestDurations.map((duration, index) => (
+                        <li key={index}>Session-{duration.id} <span className="float-right">{duration.callDuration}</span></li>
+                    ))}
                 </ul>
-              </div>
             </div>
+        </div>
           </div>
         </div>
       </div>

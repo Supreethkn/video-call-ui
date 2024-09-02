@@ -31,22 +31,22 @@
 }
 
 .dashboard_info_text_container {
-  margin-left: 30px;
+  margin-left: 20px;
   display: flex;
   flex-direction: column;
 }
 
 .dashboard_info_text_title {
-  font-size: 50px;
+  font-size: 30px; /* Reduced font size */
 }
 
 .dashboard_info_text_description {
-  margin-top: 20px;
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 14px; /* Reduced font size */
 }
 
 .dashboard_active_users_list {
-  height: 80%
+  height: 80%;
 }
 
 .dashboard_logo_container {
@@ -54,11 +54,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 50px;
+  font-size: 30px; /* Reduced font size */
 }
 
 .dashboard_logo_image {
-  width: 60%;
+  width: 50%; /* Reduced width */
 }
 
 .scroll_group_list {
@@ -66,74 +66,66 @@
   overflow-y: auto;
   width: 100%;
   position: absolute;
-  font-size: 25px;
+  font-size: 16px; /* Reduced font size */
   display: grid; /* Enable grid layout */
   grid-template-columns: repeat(3, 1fr); /* 3 columns */
-  gap: 16px; /* Space between grid items */
-  height:100%;
+  gap: 8px; /* Reduced gap between grid items */
+  height: 100%;
   box-sizing: border-box; /* Include padding in width and height calculations */
-  /* background: rgba(35, 35, 248, 0.5); */
 }
+
 .scroll_group_list::-webkit-scrollbar {
   display: none; /* Hides the scrollbar */
 }
 
-
-.operator{
+.operator {
   position: absolute;
   z-index: 5;
   margin-top: 50rem;
   width: 25%;
-  font-size: 25px;
+  font-size: 20px; /* Reduced font size */
 }
 
-.test{
+.test {
   z-index: 5;
-  /* background-color: black; */
-  font-size: 100px;
+  font-size: 80px; /* Reduced font size */
 }
-
-
-/* .dashboard-container {
-  padding: 20px;
-  margin-right: 20px;
-} */
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px; /* Reduced margin */
 }
 
 .activity-title {
-  font-size: 32px;
+  font-size: 24px; /* Reduced font size */
   font-weight: bold;
-  color:  #0d6efd;
+  color:  #29417D;
 }
 
 .today-button {
   background-color: #ffffff;
   color: #000000;
   border: none;
-  padding: 8px 30px;
-  border-radius: 20px;
-  border: 2px solid #ffc107
+  padding: 5px 20px; /* Reduced padding */
+  border-radius: 15px; /* Reduced border-radius */
+  border: 2px solid #ffc107;
 }
 
 .section-title {
-  font-size: 25px;
+  font-size: 18px; /* Reduced font size */
   font-weight: 600;
-  margin-bottom: 35px;
-  color:  #0d6efd;
+  margin-bottom: 20px; /* Reduced margin */
+  color:  #29417D;
 }
 
 .agents-status .agent-card {
   background-color: #eaf0ff;
-  padding: 15px;
+  padding: 10px; /* Reduced padding */
   border-radius: 8px;
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Reduced margin */
 }
 
 .agents-status .available-agents {
@@ -154,13 +146,13 @@
 
 .agent-label {
   display: block;
-  margin-top: 10px;
-  font-size: 16px;
+  margin-top: 5px; /* Reduced margin */
+  font-size: 14px; /* Reduced font size */
   color: #555;
 }
 
 .agent-count {
-  font-size: 24px;
+  font-size: 18px; /* Reduced font size */
   font-weight: bold;
   color: #333;
 }
@@ -171,31 +163,31 @@
 
 .calls-status .calls-card {
   text-align: center;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 10px; /* Reduced margin */
 }
 
 .calls-label {
   display: block;
-  font-size: 16px;
+  font-size: 14px; /* Reduced font size */
   color: #555;
 }
 
 .calls-count {
-  font-size: 28px;
+  font-size: 20px; /* Reduced font size */
   font-weight: bold;
   color: #333;
 }
 
 ul {
   padding: 0;
-  list-style-type:decimal;
+  list-style-type: decimal;
 }
-
 
 ul li span {
   float: right;
 }
+
 .top-image-container-dashboard {
   position: relative;
   width: 100%;
@@ -211,33 +203,43 @@ ul li span {
     z-index: 99;
     left: -65px;
 }
+
 @media (max-width: 800px) {
   .top-image-container-dashboard {
-     top: -38px;
-      left: -54px;
-      background-size: 53% auto;
-}}
+     top: -30px;
+      left: -40px;
+      background-size: 40% auto;
+  }
+}
+
 @media (max-width: 750px) {
   .top-image-container-dashboard {
-     top: -34px;
-      left: -37px;
-      background-size: 53% auto;
-}}
+     top: -30px;
+      left: -35px;
+      background-size: 40% auto;
+  }
+}
+
 @media (max-width: 600px) {
   .top-image-container-dashboard {
-     top: -42px;
-      left: -37px;
-      background-size: 53% auto;
-}}
+     top: -35px;
+      left: -35px;
+      background-size: 40% auto;
+  }
+}
+
 @media (max-width: 500px) {
   .top-image-container-dashboard {
-     top: -52px;
+     top: -40px;
       left: -30px;
-      background-size: 53% auto;
-}}
+      background-size: 40% auto;
+  }
+}
+
 @media (max-width: 400px) {
   .top-image-container-dashboard {
-     top: -62px;
+     top: -45px;
       left: -30px;
-      background-size: 53% auto;
-}}
+      background-size: 40% auto;
+  }
+}

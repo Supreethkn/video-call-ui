@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 250px;
+  width: 200px;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,11 +31,16 @@
   width: 100%;
 }
 
+.nav{
+  padding-top: 30px !important;
+}
+
 .nav-link {
   color: #fff;
   padding: 15px 20px;
   font-weight: 500;
   display: flex;
+  color: #29417D !important;
   align-items: center;
 }
 
@@ -111,12 +116,16 @@
 }
 .nav-item.active-nav-item .nav-link {
   background-color: white;
-  color: #0d6efd;
+  color: #29417D;
 }
 
 .nav-item .nav-link {
   transition: background-color 0.3s ease;
 }
 
+.navImage{
+  margin-right: 10px;
+  height: 30px;
+}
 
 

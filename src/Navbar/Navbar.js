@@ -126,6 +126,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import './Navbar.css';
+import DashboardIcon from '../resources/Dashboard.svg';
+import LogsIcon from '../resources/Logs.svg';
+import UsersIcon from '../resources/Users.svg';
+
 
 const NavbarLocal = () => {
   const history = useHistory();
@@ -169,7 +173,7 @@ const NavbarLocal = () => {
             {/* New Dashboard Navigation Item */}
             <li className={`nav-item hand_cursor ${location.pathname === '/dashboard' ? 'active-nav-item' : ''}`}>
               <a className="nav-link" onClick={() => navigateMenu('/dashboard')}>
-                <FontAwesomeIcon icon={faTachometerAlt} /> Dashboard
+              <img className="navImage" src={DashboardIcon} alt="Dashboard" /> Dashboard
               </a>
             </li>
             {/* Conditional Nav Items */}
@@ -177,12 +181,12 @@ const NavbarLocal = () => {
               <>
                 <li className={`nav-item hand_cursor ${location.pathname === '/operatorlist' ? 'active-nav-item' : ''}`}>
                   <a className="nav-link" onClick={() => navigateMenu('/operatorlist')}>
-                    <FontAwesomeIcon icon={faUser} /> Users
+                  <img className="navImage" src={UsersIcon} alt="Users" /> Users
                   </a>
                 </li>
                 <li className={`nav-item hand_cursor ${location.pathname === '/Auditlist' ? 'active-nav-item' : ''}`}>
                   <a className="nav-link" onClick={() => navigateMenu('/Auditlist')}>
-                    <FontAwesomeIcon icon={faFile} /> Call Logs
+                  <img className="navImage"  src={LogsIcon} alt="Call Logs"/> Call Logs
                   </a>
                 </li>
                 {/* <li className={`nav-item hand_cursor ${location.pathname === '/Auditlistinit' ? 'active-nav-item' : ''}`}>
@@ -195,7 +199,7 @@ const NavbarLocal = () => {
             {/* Logout and User Info */}
             <li className="nav-item hand_cursor">
               <a className="nav-link font_weight_bold" onClick={handleonLogout}>
-                <FontAwesomeIcon icon={faPowerOff} /> Logout
+                <FontAwesomeIcon style={{marginRight:'20px'}} icon={faPowerOff} /> Logout
               </a>
             </li>
             {/* <li className="nav-item">
