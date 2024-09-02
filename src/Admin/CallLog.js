@@ -119,15 +119,13 @@ const CallLog = () => {
     }));
   };
 
-  const onSelectQuery = (selectedKeys) => {
-    setSelectedQueries(selectedKeys);
+  const onCheckQuery = (checkedKeys) => {
+    setSelectedQueries(checkedKeys);  // Update the selected queries immediately
     setFieldsData(prevState => ({
       ...prevState,
-      'Query': selectedKeys.join(', '), // Update the Query field with selected queries
+      'Query': checkedKeys.join(', '), // Update the Query field with selected queries
     }));
-  };
-
-
+};
   const showQueryTreePopup = () => {
     Swal.fire({
       title: 'Select Query',
@@ -135,9 +133,6 @@ const CallLog = () => {
       showCancelButton: true,
       focusConfirm: false,
       confirmButtonText: 'Select',
-      preConfirm: () => {
-        return selectedQueries;
-      },
       didOpen: () => {
         const treeContainer = Swal.getPopup().querySelector('#query-tree-container');
         if (treeContainer) {
@@ -145,26 +140,18 @@ const CallLog = () => {
             <Tree
               className="rc-tree"
               treeData={queryTreeData}
-              selectable
-              selectedKeys={selectedQueries}
-              onSelect={onSelectQuery}
-              multiple
+              checkable
+              checkedKeys={selectedQueries}
+              onCheck={onCheckQuery} // Immediately reflect changes when a checkbox is clicked
               defaultExpandAll
             />,
             treeContainer
           );
         }
       },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setFieldsData(prevState => ({
-          ...prevState,
-          'Query': selectedQueries.join(', '),
-        }));
-      }
     });
   };
-
+  
 
   useEffect(() => {
     const fetchCallData = async () => {
@@ -310,8 +297,8 @@ const CallLog = () => {
           <div style={{ flex: '1 0 50%' }}>
             {rightColumnFields.map(field => (
               field === 'Query' ? (
-                <div style={{ flex: '1 0 50%', padding: '8px' }}>
-          <label style={fieldLabelStyle}>Select Query</label>
+                <div style={{ flex: '1 0 50%', padding: '8px' , display:'flex'}}>
+          <label style={fieldLabelStyle}>Query</label>
           <div
             style={{
               ...inputStyle,
