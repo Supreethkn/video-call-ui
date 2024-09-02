@@ -188,6 +188,7 @@ const CallLog = () => {
           'Time': data.callStartTime ? formatDateTime(data.callStartTime).split(' | ')[1] : '',
           'Ended': data.callEndTime ? formatDateTime(data.callEndTime).split(' | ')[1] : '',
           'Agent': data.operatorName || '',
+          'Kiosk': data.callOrigin || '',
           
         }));
       } catch (error) {
@@ -199,7 +200,7 @@ const CallLog = () => {
   }, [sessionId]);
 
   const validateFields = () => {
-    const mandatoryFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes', 'Kiosk', 'Customer Rating'];
+    const mandatoryFields = ['First Name', 'Last Name', 'Flight No.', 'Query', 'Notes',  'Customer Rating'];
     for (const field of mandatoryFields) {
       if (!fieldsData[field]) {
         return `${field} is required`;
@@ -235,7 +236,6 @@ const CallLog = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               roomId: sessionId,
-              kiosk: fieldsData['Kiosk'],
               customerRating: fieldsData['Customer Rating'],
               firstName: fieldsData['First Name'],
               lastName: fieldsData['Last Name'],
@@ -302,7 +302,7 @@ const CallLog = () => {
                 fieldName={field}
                 fieldValue={fieldsData[field]}
                 onChange={handleInputChange}
-                isEditable={field === 'Kiosk' || field === 'Customer Rating'}  // Keep these fields editable
+                isEditable={field === 'Customer Rating'}  // Keep these fields editable
               />
             ))}
           </div>
