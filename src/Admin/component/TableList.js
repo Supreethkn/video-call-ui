@@ -1,30 +1,21 @@
-import React, { useEffect }  from 'react';
+import React from 'react';
 
-import * as Service from '../../utils/Service/Service';
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
-export const TableList = ({ onClickHandler, operator }) => {
-
-  // let operators;
-
-  // useEffect(() => {
-  //   Service.fetchData('getAllUsers').then(res => {
-  //     operators = res;
-  //     console.log(operators);
-  //   });
-  // }, []);
-
-
-  // const { groupCallRooms } = props;
-  // console.log("table $$$$$$$$$");
-  // console.log(operators);
+export const TableList = ({ onClickHandler, operator, index }) => {
   return (
     <tr onClick={() => onClickHandler(operator.userId)}>
-      <td>{operator.userId}</td>
+      <td>{index + 1}</td> {/* "No" column */}
       <td>{operator.userName}</td>
+      <td>{operator.firstName}</td>
+      <td>{operator.lastName}</td>
       <td>{operator.emailAddress}</td>
+      <td>{operator.contactNumber}</td>
+      <td>{capitalizeFirstLetter(operator.status)}</td> {/* Account Status */}
     </tr>
   );
 };
-
 
 export default TableList;

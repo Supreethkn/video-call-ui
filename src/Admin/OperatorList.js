@@ -4,14 +4,21 @@ import { useHistory } from 'react-router-dom';
 import './Operator.css';
 import NavbarLocal from '../Navbar/Navbar';
 import { TableList } from './component/TableList';
-import LogoImage from '../resources/GMR_delhi_combine_logo.png'; // Update the path
-import AddUserImage from '../resources/add_user.png'; // Update the path for add user image
-import SearchImage from '../resources/search.png'; // Update the path for search image
-import DownloadImage from '../resources/download.png'; // Update the path for download image
+import LogoImage from '../resources/GMR_delhi_combine_logo.png';
+import AddUserImage from '../resources/add_user.png';
+import SearchImage from '../resources/search.png';
+import DownloadImage from '../resources/download.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import * as XLSX from 'xlsx';
 
 const OperatorList = () => {
   const [operators, setOperator] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(3);
+  const [sortField, setSortField] = useState('userName');
+  const [sortOrder, setSortOrder] = useState('asc');
   const history = useHistory();
 
   useEffect(() => {
@@ -30,14 +37,43 @@ const OperatorList = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
 
-  const filteredOperators = operators
-    .filter(operator =>
-      operator.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      operator.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      operator.userId.toString().includes(searchTerm)
-    );
+  const handleSort = (field) => {
+    if (field === sortField) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortOrder('asc');
+    }
+  };
+
+  const filteredOperators = operators.filter(operator =>
+    operator.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    operator.emailAddress.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    operator.userId.toString().includes(searchTerm)
+  );
+
+  const sortedOperators = filteredOperators.sort((a, b) => {
+    if (a[sortField] < b[sortField]) return sortOrder === 'asc' ? -1 : 1;
+    if (a[sortField] > b[sortField]) return sortOrder === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentOperators = sortedOperators.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredOperators.length / itemsPerPage);
+  const pageNumbers = [...Array(totalPages).keys()].map(num => num + 1);
+
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(filteredOperators);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Operators');
+    XLSX.writeFile(wb, 'OperatorsData.xlsx');
+  };
 
   return (
     <div className="container-fluid">
@@ -47,7 +83,7 @@ const OperatorList = () => {
         </div>
         <div className="col-md-10">
           <div>
-            <div className="top-image-container" style={{top:'-12px', zIndex:'99', top:'-25px', left:'-65px'}}>
+            <div className="top-image-container" style={{ top: '-25px', left: '-65px' }}>
               <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" />
             </div>
             <div className='m-2 p-3'>
@@ -72,46 +108,90 @@ const OperatorList = () => {
                   <table className='table table-striped'>
                     <thead className='table-header'>
                       <tr>
-                        <th scope="col">User ID</th>
-                        <th scope="col">User Name</th>
-                        <th scope="col">Email Address</th>
+                        <th scope="col">No</th>
+                        <th scope="col">
+                          <div onClick={() => handleSort('userName')} className="sortable">
+                            User Name
+                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'userName' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div onClick={() => handleSort('firstName')} className="sortable">
+                            First Name
+                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'firstName' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div onClick={() => handleSort('lastName')} className="sortable">
+                            Last Name
+                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'lastName' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div onClick={() => handleSort('emailAddress')} className="sortable">
+                            Email Address
+                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'emailAddress' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div onClick={() => handleSort('contactNumber')} className="sortable">
+                            Contact Number
+                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'contactNumber' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div onClick={() => handleSort('status')} className="sortable">
+                            Account Status
+                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'status' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                          </div>
+                        </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {filteredOperators.length > 0 ? (
-                        filteredOperators.map(data => (
-                          <TableList key={data.userId} operator={data} onClickHandler={changeRouteToEdit} />
+                    <tbody style={{fontSize:'12px'}}>
+                      {currentOperators.length > 0 ? (
+                        currentOperators.map((data, index) => (
+                          <TableList
+                            key={data.userId}
+                            operator={data}
+                            index={index + (currentPage - 1) * itemsPerPage} 
+                            onClickHandler={changeRouteToEdit}
+                          />
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="3" className="text-center">No data available</td>
+                          <td colSpan="7" className="text-center">No data available</td>
                         </tr>
                       )}
                     </tbody>
                   </table>
                 </div>
-                <div className='d-flex justify-content-between align-items-center mt-2'>
-                  {filteredOperators.length > 20 && (
+                {totalPages > 1 && (
+                  <div className='d-flex justify-content-end mt-2'>
                     <nav aria-label="Page navigation example">
-                      <ul className="pagination justify-content-end">
-                        {/* Implement pagination controls here */}
-                        <li className="page-item">
-                          <a className="page-link" href="#">1</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">2</a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">3</a>
-                        </li>
+                      <ul className="pagination">
+                        {pageNumbers.map(number => (
+                          <li
+                            key={number}
+                            className={`page-item ${number === currentPage ? 'active' : ''}`}
+                            onClick={() => setCurrentPage(number)}
+                          >
+                            <a className="page-link" href="#!">{number}</a>
+                          </li>
+                        ))}
                       </ul>
                     </nav>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
               <div className='download-container mt-2'>
-                <img src={DownloadImage} alt="Download" className="download-image" />
-                <span className="download-text">Click to export .xsl</span>
+                <img
+                  src={DownloadImage}
+                  alt="Download"
+                  className="download-image"
+                  onClick={exportToExcel} // Add onClick handler
+                  style={{ cursor: 'pointer' }}
+                />
+                <span className="download-text" onClick={exportToExcel}>Click to export .xsl</span> {/* Add onClick handler */}
               </div>
             </div>
           </div>

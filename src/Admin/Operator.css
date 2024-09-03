@@ -145,6 +145,8 @@
     background-color: #003366; /* Background color for the header */
     color: #ffffff; /* Text color for the header */
     text-align: center; /* Center-align the text in the header */
+    font-weight: 300 !important;
+    font-size: 12px;
 }
 
 .table th {
@@ -160,7 +162,7 @@
 
 /* Remove alternating row background */
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: none; /* No background color */
+    background-color: white !important; /* No background color */
 }
 
 /* Add rounded corners to the table */
@@ -228,6 +230,54 @@
     opacity: 0.8;
   }
   
-  div:where(.swal2-container) .swal2-html-container {
+  /* div:where(.swal2-container) .swal2-html-container {
   height: 300px !important;
+} */
+
+
+/* Add pointer cursor to sortable table headers */
+.sortable {
+  cursor: pointer;
+ 
 }
+/* Add pointer cursor to table rows */
+.table-row {
+  cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+
+  
+  .page-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    color: #000;
+  }
+
+
+
+  .page-item.active .page-link {
+    background-color: rgb(255, 255, 255) !important; /* Active page color */
+    color: orange !important;
+    border-color: rgb(255, 255, 255) !important;
+    border: none !important;
+  }
+  
+  /* Hide the default border and background */
+  .page-item .page-link {
+    border: none;
+    background-color: transparent;
+  }
+  
+  .page-item:hover .page-link {
+    background-color: rgba(0, 0, 0, 0.1); /* Optional: Hover effect */
+  }

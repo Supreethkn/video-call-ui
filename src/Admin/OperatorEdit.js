@@ -4,19 +4,20 @@ import * as Service from '../utils/Service/Service';
 import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import LogoImage from '../resources/GMR_delhi_combine_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faPhone } from '@fortawesome/free-solid-svg-icons'
 import { faEnvelopeOpen } from '@fortawesome/free-solid-svg-icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faUserCog } from '@fortawesome/free-solid-svg-icons'
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-
+import Swal from 'sweetalert2';
 import './Operator.css';
 import {
   useParams
@@ -36,26 +37,41 @@ const OperatorEdit = () => {
   let  [isUpdate, setisUpdate] = useState(null);
   let [userConfirmPwd, setuserConfirmPwd] = useState(null);
 
+  let [firstName, setFirstName] = useState(null);
+  let [lastName, setLastName] = useState(null);
+  let [contactNumber, setContactNumber] = useState(null);
+  let [status, setStatus] = useState(null);
+
+  
 
   useEffect(() => {
    loadData();
     
   }, []);
 
-  const  loadData  = () => {
-    userName = "";
-    setuserName(userName);
-    userEmail = "";
-    setuserEmail(userEmail);
-    userPwd = "";
-    setuserPwd(userPwd);
-    userAdmin = "";
-    setuserAdmin(userAdmin);
-  if(userid) {
-    // write logic to update
+const loadData = () => {
+  // Reset fields
+  userName = "";
+  setuserName(userName);
+  userEmail = "";
+  setuserEmail(userEmail);
+  userPwd = "";
+  setuserPwd(userPwd);
+  userAdmin = "";
+  setuserAdmin(userAdmin);
+  firstName = "";
+  setFirstName(firstName);
+  lastName = "";
+  setLastName(lastName);
+  contactNumber = "";
+  setContactNumber(contactNumber);
+  status = "";
+  setStatus(status);
+
+  if (userid) {
     Service.fetchData('getAllUsers').then(res => {
       setOperator(res);
-      operators = res.filter( result => result.userId == userid );
+      operators = res.filter(result => result.userId == userid);
       operators = operators[0];
       console.log(operators);
 
@@ -63,19 +79,26 @@ const OperatorEdit = () => {
       setuserName(userName);
       userEmail = operators.emailAddress;
       setuserEmail(userEmail);
-      // userPwd = operators.password;
       userPwd = '';
       setuserPwd(userPwd);
       userAdmin = operators.isAdmin;
-      // userAdmin = '';
       setuserAdmin(userAdmin);
+      firstName = operators.firstName;
+      setFirstName(firstName);
+      lastName = operators.lastName;
+      setLastName(lastName);
+      contactNumber = operators.contactNumber;
+      setContactNumber(contactNumber);
+      status = operators.status;
+      setStatus(status);
       setisUpdate(true);
     });
   } else {
     setisUpdate(false);
-
   }
-  };
+};
+
+
 
   const history = useHistory();
 
@@ -91,95 +114,188 @@ const OperatorEdit = () => {
     });
   };
 
-  const handleSubmitButtonPressed = () => {
-    const opratorData = {
-      name: userName,
-      email: userEmail,
-      password: userPwd,
-      isAdmin: userAdmin
-    }
-    console.log("handle calleddddd");
-    if(userName == '' || userEmail == '' || userPwd == '' ||  userAdmin == ''){
-      // toast.warning("Please Fill Details");
-      submitMessage('Please Fill Details');
-    }else{
-    console.log('create data',opratorData);
-    Service.fetchPostData('createUser',opratorData).then(res => {
-      if (res.status == 409) {
-        // toast.warning("User Already Exists");
-        submitMessage('User Already Exists');
-      }else{
-        submitMessage('Created successful');
-      history.push('/operatorlist');
-      }
-    });
-  }
+  const validateEmail = (email) => {
+    // Regular expression for email validation
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+  
+  const validateContactNumber = (number) => {
+    // Regular expression for contact number validation (example: 10 digits)
+    const re = /^[0-9]{10}$/;
+    return re.test(number);
   };
 
-  const handleDelete = () => {
-    console.log("delete done ....");
-    const opratorData = {
-      name: userName,
+  const handleSubmitButtonPressed = () => {
+    if (!userName || !userEmail || !userPwd || !userAdmin || !firstName || !lastName || !contactNumber || !status) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Please fill in all fields.',
+      });
+      return;
     }
-    console.log("handle calleddddd");
-    console.log(opratorData);
-    Service.fetchLoginPostData('deleteUser',opratorData).then(res => {
-      console.log("res",res);
-      if (res.status == 409) {
-        // toast.warning("Cannot Delete Admin");
-        submitMessage('Cannot Delete Admin');
-
-      }
-      if(res.status >= 400) {
-        const json =  res.json()
-        .then( data => {
-          console.log(data);
-          submitMessage(data.result);
-          // toast.error(data.result);
-        } );
-      } else {
-        // toast.success("deleted successful");
-        submitMessage("Deleted successful");
-        history.push('/operatorlist');
-      }
-    });
-  }
-
-  const handleUpdate = () => {
+  
+    if (!validateEmail(userEmail)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Email',
+        text: 'Please enter a valid email address.',
+      });
+      return;
+    }
+  
+    if (!validateContactNumber(contactNumber)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Contact Number',
+        text: 'Please enter a valid contact number (10 digits).',
+      });
+      return;
+    }
+  
     const opratorData = {
       name: userName,
       email: userEmail,
       password: userPwd,
       isAdmin: userAdmin,
-      confirmPassword: userConfirmPwd
+      firstName: firstName,
+      lastName: lastName,
+      contactNumber: contactNumber,
+      status: status
+    };
+  
+    Service.fetchPostData('createUser', opratorData).then(res => {
+      if (res.status === 409) {
+        Swal.fire({
+          icon: 'error',
+          title: 'User Exists',
+          text: 'User Already Exists',
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Created Successfully',
+          text: 'User has been created successfully.',
+        });
+        history.push('/operatorlist');
+      }
+    });
+  };
 
+
+  const handleDelete = () => {
+    console.log("delete done ....");
+    const operatorData = {
+      name: userName,
     }
     console.log("handle calleddddd");
-    if (userName == '' || userEmail == '' || userPwd == '') {
-      // toast.warning("Please Fill Details");
-      submitMessage("Please Fill Details");
-      console.log(opratorData);
-    }
-    else if (isChecked == true && userPwd != userConfirmPwd) {
-      // toast.warning("Password and Confirm Password does not match");
-      submitMessage("Password and Confirm Password does not match");
-    }
-    else {
-    console.log(opratorData);
-    Service.fetchPostData('updateUser',opratorData).then(res => {
-      // toast.success("Updated successful");
-      submitMessage("Updated successful");
+    console.log(operatorData);
+    Service.fetchLoginPostData('deleteUser', operatorData).then(res => {
+      console.log("res", res);
+      if (res.status === 409) {
+        // Use SweetAlert2 for error case
+        Swal.fire({
+          icon: 'error',
+          title: 'Deletion Error',
+          text: 'Cannot Delete Admin',
+        });
+      } else if (res.status >= 400) {
+        res.json().then(data => {
+          console.log(data);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: data.result,
+          });
+        });
+      } else {
+        // Use SweetAlert2 for success case
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted Successfully',
+          text: 'User has been deleted successfully.',
+        }).then(() => {
+          history.push('/operatorlist');
+        });
+      }
     });
   }
-  }
+  
+  const handleUpdate = () => {
+    if (userName === '' || userEmail === '' || userPwd === '' || userAdmin === '' || firstName === '' || lastName === '' || contactNumber === '' || status === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Please fill in all fields.',
+      });
+      return;
+    }
+  
+    if (isChecked && userPwd !== userConfirmPwd) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'Password and Confirm Password do not match.',
+      });
+      return;
+    }
+  
+    if (!validateEmail(userEmail)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Email',
+        text: 'Please enter a valid email address.',
+      });
+      return;
+    }
+  
+    if (!validateContactNumber(contactNumber)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Contact Number',
+        text: 'Please enter a valid contact number (10 digits).',
+      });
+      return;
+    }
+  
+    const operatorData = {
+      name: userName,
+      email: userEmail,
+      password: userPwd,
+      isAdmin: userAdmin,
+      confirmPassword: userConfirmPwd,
+      firstName: firstName,
+      lastName: lastName,
+      contactNumber: contactNumber,
+      status: status
+    };
+  
+    Service.fetchPostData('updateUser', operatorData).then(res => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Updated Successfully',
+        text: 'User details have been updated successfully.',
+      });
+      history.push('/operatorlist');
+    });
+  };
+  
   
   const [isChecked, setIsChecked] = React.useState(false)
   console.log('cccclllicked', isChecked);
   
     return (
-      <div>
+      <div className="row">
+        <div className="col-md-2">
         <ToastContainer />
-        <NavbarLocal /> 
+          <NavbarLocal />
+        </div>
+        <div className="col-md-10">
+          <div>
+            <div className="top-image-container" style={{ top: '-25px', left: '-65px' }}>
+              <img src={LogoImage} alt="GMR Delhi Logo" className="logo-image" />
+            </div>
         <div className='m-2 p-3 bg-clr'>
         <div className='frame_table_border'>
         <div className=' bg_color p-2 d-flex'>
@@ -233,6 +349,60 @@ const OperatorEdit = () => {
               /> }
           </div>
         </div>
+        <div className='bg-light p-2 m-1 rounded '>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="form-control"><FontAwesomeIcon icon={faUser} /></span>
+              </div>
+              <input type="text" className="form-control" placeholder="Enter First Name" 
+                value={firstName} 
+                onChange={(event) => { setFirstName(event.target.value); }} 
+              />
+            </div>
+          </div>
+
+          <div className='bg-light p-2 m-1 rounded '>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="form-control"><FontAwesomeIcon icon={faUser} /></span>
+              </div>
+              <input type="text" className="form-control" placeholder="Enter Last Name" 
+                value={lastName} 
+                onChange={(event) => { setLastName(event.target.value); }} 
+              />
+            </div>
+          </div>
+
+          <div className='bg-light p-2 m-1 rounded '>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="form-control"><FontAwesomeIcon icon={faPhone} /></span>
+              </div>
+              <input type="text" className="form-control" placeholder="Enter Contact Number" 
+                value={contactNumber} 
+                onChange={(event) => { setContactNumber(event.target.value); }} 
+              />
+            </div>
+          </div>
+
+          <div className='bg-light p-2 m-1 rounded '>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="form-control"><FontAwesomeIcon icon={faUser} /></span>
+              </div>
+              <select
+                className="form-control"
+                value={status}
+                onChange={(event) => { setStatus(event.target.value); }}
+              >
+                <option value="">Select Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+
         <div>
               {isUpdate && <input type="checkbox" id="mpCheckbox" className='checkbox' onChange={(e) => setIsChecked(e.target.checked)} />}
               {isUpdate && <label className='change-pwd-title'>Change Password</label>}
@@ -266,6 +436,8 @@ const OperatorEdit = () => {
             </button>
           </div>
         </div>
+      </div>
+      </div>
       </div>
       </div>
       </div>
