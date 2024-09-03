@@ -267,14 +267,13 @@
 //   export default AuditList;
 
 
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import NavbarLocal from '../Navbar/Navbar';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png'; // Update the path
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 const AuditList = () => {
   const [auditReports, setAuditReports] = useState([]);
@@ -284,35 +283,22 @@ const AuditList = () => {
   const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
-    fetchAuditReports(startDate, endDate);
-  }, [startDate, endDate]);
+    const fetchAuditReports = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER}/getAuditReports`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        setAuditReports(data); // Set auditReports state
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    };
 
-  const fetchAuditReports = async (startDate, endDate) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER}/getAuditReports`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          startDate: startDate,
-          endDate: endDate
-        }),
-      });
-  
-      // Log the response status and headers
-      console.log("Response status:", response.status);
-      console.log("Response headers:", response.headers);
-  
-      const data = await response.json();
-  
-      // Log the fetched data
-      console.log("Fetched data:", data);
-  
-      setAuditReports(data);
-    } catch (error) {
-      console.error("Error fetching audit reports: ", error);
-    }
-  };
-  
+    fetchAuditReports();
+  }, []);
 
   const handleSort = (field) => {
     if (field === sortField) {
@@ -334,6 +320,18 @@ const AuditList = () => {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Audit Reports');
     XLSX.writeFile(wb, 'AuditReports.xlsx');
+  };
+
+  const formatDuration = (duration) => {
+    const match = duration.match(/(\d+) Minute[s]? (\d+) Second[s]?/);
+    if (!match) return '00:00:00';
+
+    const [, minutes, seconds] = match;
+    const hrs = Math.floor(Number(minutes) / 60);
+    const mins = Number(minutes) % 60;
+    const secs = Number(seconds);
+
+    return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
   return (
@@ -365,26 +363,49 @@ const AuditList = () => {
                 <th scope="col">
                   <div onClick={() => handleSort('agent')} className="sortable">
                     Agent
+                    {sortField === 'agent' && (
+                      <FontAwesomeIcon icon={sortOrder === 'asc' ? faSortUp : faSortDown} />
+                    )}
+                  </div>
+                </th>
+                <th scope="col">
+                  <div onClick={() => handleSort('callDate')} className="sortable">
+                    Call Date
+                    {sortField === 'callDate' && (
+                      <FontAwesomeIcon icon={sortOrder === 'asc' ? faSortUp : faSortDown} />
+                    )}
                   </div>
                 </th>
                 <th scope="col">
                   <div onClick={() => handleSort('callStartTime')} className="sortable">
                     Call Start Time
+                    {sortField === 'callStartTime' && (
+                      <FontAwesomeIcon icon={sortOrder === 'asc' ? faSortUp : faSortDown} />
+                    )}
                   </div>
                 </th>
                 <th scope="col">
                   <div onClick={() => handleSort('duration')} className="sortable">
                     Duration
+                    {sortField === 'duration' && (
+                      <FontAwesomeIcon icon={sortOrder === 'asc' ? faSortUp : faSortDown} />
+                    )}
                   </div>
                 </th>
                 <th scope="col">
                   <div onClick={() => handleSort('query')} className="sortable">
                     Query
+                    {sortField === 'query' && (
+                      <FontAwesomeIcon icon={sortOrder === 'asc' ? faSortUp : faSortDown} />
+                    )}
                   </div>
                 </th>
                 <th scope="col">
                   <div onClick={() => handleSort('kiosk')} className="sortable">
                     Kiosk
+                    {sortField === 'kiosk' && (
+                      <FontAwesomeIcon icon={sortOrder === 'asc' ? faSortUp : faSortDown} />
+                    )}
                   </div>
                 </th>
               </tr>
@@ -395,15 +416,16 @@ const AuditList = () => {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{report.agent}</td>
+                    <td>{new Date(report.callDate).toLocaleDateString()}</td>
                     <td>{report.callStartTime}</td>
-                    <td>{report.duration}</td>
-                    <td>{report.query}</td>
+                    <td>{formatDuration(report.duration)}</td>
+                    <td>{report.query || 'N/A'}</td>
                     <td>{report.kiosk}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center">No data available</td>
+                  <td colSpan="7" className="text-center">No data available</td>
                 </tr>
               )}
             </tbody>

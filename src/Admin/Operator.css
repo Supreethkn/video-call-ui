@@ -170,6 +170,9 @@
     border-radius: 8px; /* Adjust as needed for rounded corners */
     overflow: hidden; /* Ensure corners are rounded correctly */
     border: 1px solid #e0e0e0; /* Add border around the table */
+    margin: 0px 15px 0px 10px;
+    font-size: 12px;
+
 }
 
 /* Remove any default padding or margin on table */
