@@ -90,9 +90,9 @@ const OperatorList = () => {
               <div className='d-flex justify-content-between align-items-center mb-2'>
                 <div className="add-user-container" onClick={handleCreatePressed}>
                   <img src={AddUserImage} alt="Add User" className="add-user-image" />
-                  <span className="add-user-text">Add New Operator</span>
+                  <span className="add-user-text">Add a user</span>
                 </div>
-                <div className="search-container">
+                {/* <div className="search-container">
                   <input
                     type="text"
                     className="form-control search-bar"
@@ -101,7 +101,7 @@ const OperatorList = () => {
                     onChange={handleSearch}
                   />
                   <img src={SearchImage} alt="Search" className="search-icon" />
-                </div>
+                </div> */}
               </div>
               <div className='frame_table_border'>
                 <div className='bg-light p-0 m-0 rounded table_scroll'>
@@ -112,48 +112,78 @@ const OperatorList = () => {
                         <th scope="col">
                           <div onClick={() => handleSort('userName')} className="sortable">
                             User Name
-                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'userName' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                            {sortField === 'userName' && (
+                              <FontAwesomeIcon
+                                style={{ marginLeft: '10px' }}
+                                icon={sortOrder === 'asc' ? faSortUp : faSortDown}
+                              />
+                            )}
                           </div>
                         </th>
                         <th scope="col">
                           <div onClick={() => handleSort('firstName')} className="sortable">
                             First Name
-                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'firstName' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                            {sortField === 'firstName' && (
+                              <FontAwesomeIcon
+                                style={{ marginLeft: '10px' }}
+                                icon={sortOrder === 'asc' ? faSortUp : faSortDown}
+                              />
+                            )}
                           </div>
                         </th>
                         <th scope="col">
                           <div onClick={() => handleSort('lastName')} className="sortable">
                             Last Name
-                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'lastName' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                            {sortField === 'lastName' && (
+                              <FontAwesomeIcon
+                                style={{ marginLeft: '10px' }}
+                                icon={sortOrder === 'asc' ? faSortUp : faSortDown}
+                              />
+                            )}
                           </div>
                         </th>
                         <th scope="col">
                           <div onClick={() => handleSort('emailAddress')} className="sortable">
                             Email Address
-                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'emailAddress' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                            {sortField === 'emailAddress' && (
+                              <FontAwesomeIcon
+                                style={{ marginLeft: '10px' }}
+                                icon={sortOrder === 'asc' ? faSortUp : faSortDown}
+                              />
+                            )}
                           </div>
                         </th>
                         <th scope="col">
                           <div onClick={() => handleSort('contactNumber')} className="sortable">
                             Contact Number
-                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'contactNumber' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                            {sortField === 'contactNumber' && (
+                              <FontAwesomeIcon
+                                style={{ marginLeft: '10px' }}
+                                icon={sortOrder === 'asc' ? faSortUp : faSortDown}
+                              />
+                            )}
                           </div>
                         </th>
                         <th scope="col">
                           <div onClick={() => handleSort('status')} className="sortable">
                             Account Status
-                            <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={sortField === 'status' ? (sortOrder === 'asc' ? faSortUp : faSortDown) : faSort} />
+                            {sortField === 'status' && (
+                              <FontAwesomeIcon
+                                style={{ marginLeft: '10px' }}
+                                icon={sortOrder === 'asc' ? faSortUp : faSortDown}
+                              />
+                            )}
                           </div>
                         </th>
                       </tr>
                     </thead>
-                    <tbody style={{fontSize:'12px'}}>
+                    <tbody style={{ fontSize: '12px' }}>
                       {currentOperators.length > 0 ? (
                         currentOperators.map((data, index) => (
                           <TableList
                             key={data.userId}
                             operator={data}
-                            index={index + (currentPage - 1) * itemsPerPage} 
+                            index={index + (currentPage - 1) * itemsPerPage}
                             onClickHandler={changeRouteToEdit}
                           />
                         ))
@@ -188,10 +218,10 @@ const OperatorList = () => {
                   src={DownloadImage}
                   alt="Download"
                   className="download-image"
-                  onClick={exportToExcel} // Add onClick handler
+                  onClick={exportToExcel}
                   style={{ cursor: 'pointer' }}
                 />
-                <span className="download-text" onClick={exportToExcel}>Click to export .xsl</span> {/* Add onClick handler */}
+                <span className="download-text" onClick={exportToExcel}>Click to export .xsl</span>
               </div>
             </div>
           </div>

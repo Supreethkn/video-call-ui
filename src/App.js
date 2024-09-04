@@ -17,6 +17,7 @@ import AuditList from './Admin/AuditList';
 import OperatorEdit from './Admin/OperatorEdit';
 import AuditListInit from './Admin/AuditListInit';
 import CallLog from './Admin/CallLog';
+import selectedCallLog from './Admin/selectedCallLog';
 
 
 import PrivateRoute from './utils/routing/PrivateRoute';
@@ -78,6 +79,7 @@ function App () {
         <PrivateRoute path="/operatorEdit/:userid" component={OperatorEdit} />
         <PrivateRoute path="/operatorEdit/" component={OperatorEdit} />
         <PrivateRoute path="/calllog/:sessionId" component={CallLog} />
+        <PrivateRoute path="/selectedCalllog/:sessionId" component={selectedCallLog} />
       </Switch>
     </Router>
   );
