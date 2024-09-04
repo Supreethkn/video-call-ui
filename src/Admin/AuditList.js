@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; // Import useHistory
-import axios from 'axios';
 import DownloadImage from '../resources/download.png';
 import * as XLSX from 'xlsx';
 import NavbarLocal from '../Navbar/Navbar';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import {  faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import './Operator.css';
+
 
 const AuditList = () => {
   const [auditReports, setAuditReports] = useState([]);
@@ -118,7 +119,7 @@ const AuditList = () => {
                 </div>
               </div>
               <div className='frame_table_border 'style={{fontSize:'11px'}}>
-                <div className='bg-light p-0 m-0 rounded table_scroll'>
+                <div className='bg-light p-0 m-0 rounded table_scroll' style={{height:'250px'}}>
                   <table className='table table-striped'>
                     <thead className='table-header'>
                       <tr >
@@ -176,13 +177,13 @@ const AuditList = () => {
                     <tbody>
                       {currentReports.length > 0 ? (
                         currentReports.map((report, index) => (
-                          <tr key={index} onClick={() => handleRowClick(report.roomId)}> {/* Add onClick */}
+                          <tr style={{cursor:'pointer'}} key={index} onClick={() => handleRowClick(report.roomId)}> 
                             <td>{index + 1}</td>
                             <td>{report.agent}</td>
                             <td>{new Date(report.callDate).toLocaleDateString()}</td>
                             <td>{report.callStartTime.replace('T', ' | ')}</td>
                             <td>{formatDuration(report.duration)}</td>
-                            <td>{report.query}</td>
+                            <td style={{maxWidth:'90px'}}>{report.query}</td>
                             <td>{report.kiosk}</td>
                           </tr>
                         ))
@@ -194,8 +195,25 @@ const AuditList = () => {
                     </tbody>
                   </table>
                 </div>
+                {totalPages > 1 && (
+                  <div className='d-flex justify-content-end mt-2'>
+                    <nav aria-label="Page navigation example">
+                      <ul className="pagination">
+                        {pageNumbers.map(number => (
+                          <li
+                            key={number}
+                            className={`page-item ${number === currentPage ? 'active' : ''}`}
+                            onClick={() => setCurrentPage(number)}
+                          >
+                            <a className="page-link" href="#!">{number}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </nav>
+                  </div>
+                )}
               </div>
-              <nav>
+              {/* <nav>
                 <ul className="pagination">
                   {pageNumbers.map(number => (
                     <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
@@ -204,8 +222,8 @@ const AuditList = () => {
                       </button>
                     </li>
                   ))}
-                </ul>
-              </nav>
+                </ul> */}
+              {/* </nav> */}
               <div className='download-container mt-2'>
                 <img
                   src={DownloadImage}

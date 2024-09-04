@@ -303,7 +303,7 @@ const loadData = () => {
                 <span className='text-light font_weight_500 font_size_large'>Operators Edit</span>
               </div>
           </div>
-      <div className='container width_50'>
+      <div className='container width_50  mainContainer' style={{overflowY:'scroll' , height:'350px'}}>
         <div className='bg-light p-2 m-1 rounded '>
           <div className="input-group mb-3">
             <div className="input-group-prepend">

@@ -162,9 +162,14 @@
 }
 
 /* Remove alternating row background */
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: white !important; /* No background color */
+/* .table-striped tbody tr:nth-of-type(odd) {
+    background-color: white !important;
+    opacity: 1;
 }
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: white !important; 
+    opacity: 1;
+} */
 
 /* Add rounded corners to the table */
 .frame_table_border {
@@ -284,3 +289,20 @@
   .page-item:hover .page-link {
     background-color: rgba(0, 0, 0, 0.1); /* Optional: Hover effect */
   }
+
+  .calllog-container::-webkit-scrollbar-thumb{
+   background-color:#dbe2eb ;
+  }
+  .calllog-container::-webkit-scrollbar{
+    width:8px;
+   background:transparent ;
+  }
+
+  .mainContainer::-webkit-scrollbar-thumb{
+
+    background-color:#dbe2eb ;
+   }
+   .mainContainer::-webkit-scrollbar{
+    width:8px;
+    background:transparent ;
+   }

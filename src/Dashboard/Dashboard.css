@@ -129,36 +129,47 @@
 }
 
 .agents-status .available-agents {
-  background-color: #d4edda;
+  background-color: #F3F7FF;
+  height: 100%;
 }
 
 .agents-status .on-break {
-  background-color: #fff3cd;
+  background-color: #FEFAF1;
+  height: 100%;
 }
 
 .agents-status .busy-in-call {
-  background-color: #f8d7da;
+  background-color: #FFDADF;
+  height: 100%;
 }
 
 .agents-status .after-call-work {
-  background-color: #d1ecf1;
+  background-color: #F6F6F6;
+  height: 100%;
 }
 
 .agent-label {
   display: block;
+  margin-top: 10px;
+  width:10px;
   margin-top: 5px; /* Reduced margin */
   font-size: 14px; /* Reduced font size */
   color: #555;
 }
 
 .agent-count {
-  font-size: 18px; /* Reduced font size */
+  font-size: 20px; /* Reduced font size */
   font-weight: bold;
-  color: #333;
+  color:  #29417D;
+  display: flex;
+    justify-content: end;
+    /* margin-top: 10px; */
 }
 
 .icon {
   color: #666;
+  display: flex;
+
 }
 
 .calls-status .calls-card {
@@ -170,11 +181,11 @@
 .calls-label {
   display: block;
   font-size: 14px; /* Reduced font size */
-  color: #555;
+  color: #29417D;
 }
 
 .calls-count {
-  font-size: 20px; /* Reduced font size */
+  font-size: 37px; /* Reduced font size */
   font-weight: bold;
   color: #333;
 }

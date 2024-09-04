@@ -180,6 +180,10 @@ import Thankyou from './components/ThankyouScreen/Thankyou';
 import { useHistory } from 'react-router-dom';
 import $ from 'jquery';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png'; // Update the path
+import afterCall from '../resources/afterCall.png'; // Update the path
+import busyInCall from '../resources/busyInCall.png'; // Update the path
+import onBreak from '../resources/onBreak.png'; // Update the path
+import availableAgent from '../resources/availableAgent.png'; // Update the path
 import './Dashboard.css';
 
 const Dashboard = ({ username, callState, groupCallStreams }) => {
@@ -285,35 +289,39 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
           {/* New Dashboard Layout */}
           <div className="dashboard-content row">
             {/* Left Section */}
-            <div className="dashboard-left col-md-8">
+            <div className="dashboard-left col-md-7">
               {/* Agents Section */}
               <h2 className="activityTitle" style={{marginBottom:'20px', color:'#29417D'}}>Activity</h2>
               <h3 className="section-title">Agents</h3>
               <div className="row agents-status">
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="agent-card available-agents">
-                    <BsPeopleFill size={24} className="icon" />
+                    {/* <BsPeopleFill size={24} className="icon" /> */}
+                    <img src={availableAgent} size={24} className="icon"/>
                     <span className="agent-label">Available Agents</span>
                     <span className="agent-count">10</span>
                   </div>
                 </div>
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="agent-card on-break">
-                    <BsClockHistory size={24} className="icon" />
+                    {/* <BsClockHistory size={24} className="icon" /> */}
+                    <img src={onBreak} size={24} className="icon"/>
                     <span className="agent-label">On Break</span>
                     <span className="agent-count">01</span>
                   </div>
                 </div>
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="agent-card busy-in-call">
-                    <FaPhoneAlt size={24} className="icon" />
+                    {/* <FaPhoneAlt size={24} className="icon" /> */}
+                    <img src={busyInCall} size={24} className="icon"/>
                     <span className="agent-label">Busy In-Call</span>
                     <span className="agent-count">03</span>
                   </div>
                 </div>
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="agent-card after-call-work">
-                    <BsClipboardCheck size={24} className="icon" />
+                    {/* <BsClipboardCheck size={24} className="icon" /> */}
+                    <img src={afterCall} size={24} className="icon"/>
                     <span className="agent-label">After Call Work</span>
                     <span className="agent-count">00</span>
                   </div>
@@ -321,30 +329,30 @@ const Dashboard = ({ username, callState, groupCallStreams }) => {
               </div>
 
               {/* Calls Section */}
-              <h3 className="section-title">Calls</h3>
+              <h3 className="section-title"  style={{marginTop:'15px'}} >Calls</h3>
               <div className="row calls-status">
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="calls-card">
                     <span className="calls-label">Calls Waiting</span>
-                    <span className="calls-count">0</span>
+                    <span className="calls-count" style={{color:'#07A44B'}}>0</span>
                   </div>
                 </div>
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="calls-card">
                     <span className="calls-label">Calls Received</span>
-                    <span className="calls-count">234</span>
+                    <span className="calls-count" style={{color:'#29417D'}}>234</span>
                   </div>
                 </div>
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="calls-card">
                     <span className="calls-label">Abandoned Calls</span>
-                    <span className="calls-count">1</span>
+                    <span className="calls-count" style={{color:'#FF0000'}}>1</span>
                   </div>
                 </div>
-                <div className="col-3">
+                <div className="col-3" style={{height:'125px'}}>
                   <div className="calls-card">
                     <span className="calls-label">Dropped Calls</span>
-                    <span className="calls-count">5</span>
+                    <span className="calls-count" style={{color:'#29417D'}}>5</span>
                   </div>
                 </div>
               </div>

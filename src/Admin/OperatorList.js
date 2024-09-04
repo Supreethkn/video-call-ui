@@ -16,7 +16,7 @@ const OperatorList = () => {
   const [operators, setOperator] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(3);
+  const [itemsPerPage] = useState(10);
   const [sortField, setSortField] = useState('userName');
   const [sortOrder, setSortOrder] = useState('asc');
   const history = useHistory();
@@ -177,7 +177,7 @@ const OperatorList = () => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody style={{ fontSize: '12px' }}>
+                    <tbody style={{ fontSize: '12px', cursor:'pointer' }}>
                       {currentOperators.length > 0 ? (
                         currentOperators.map((data, index) => (
                           <TableList
