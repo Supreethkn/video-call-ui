@@ -54,9 +54,6 @@ const QueryTreeModal = ({ isVisible, onClose, queryTreeData, onCheckQuery, selec
             )}
             {node.title}
           </span>
-          <div className='borderA'>
-
-          </div>
           {node.children && node.children.length > 0 && (
             <div className={`tree-children ${collapsedKeys.includes(node.key) ? 'collapsed' : ''}`}>
               {renderTreeNodes(node.children, level + 1)}
@@ -70,6 +67,7 @@ const QueryTreeModal = ({ isVisible, onClose, queryTreeData, onCheckQuery, selec
   if (!isVisible) return null;
 
   return (
+    // <div className='popUpContainer'>
     <div className="query-tree-modal">
       <div className="modal-header">
         <div style={{flex:'column'}}>
@@ -95,6 +93,7 @@ const QueryTreeModal = ({ isVisible, onClose, queryTreeData, onCheckQuery, selec
         <button onClick={onClose} className="close-button">SAVE</button>
       </div>
     </div>
+    // </div>
   );
 };
 
