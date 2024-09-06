@@ -157,10 +157,6 @@
 
 /////////////////////////////// new dashbord design //////////////////////////////////////
 import React, { useEffect, useState } from 'react';
-import { BsPeopleFill, BsClockHistory, BsPhoneFill, BsClipboardCheck } from 'react-icons/bs';
-import { FaPhoneAlt } from 'react-icons/fa';
-import logo from '../resources/logo.png';
-import ActiveUsersList from './components/ActiveUsersList/ActiveUsersList';
 import * as webRTCHandler from '../utils/webRTC/webRTCHandler';
 import * as webRTCGroupHandler from '../utils/webRTC/webRTCGroupCallHandler';
 import DirectCall from './components/DirectCall/DirectCall';
@@ -176,9 +172,7 @@ import OnGoingCall from './components/CallingOngoingMessage/OnGoingCall';
 import store from '../store/store';
 import { setCallState } from '../store/actions/callActions';
 import * as webRTCGroupCallHandler from '../utils/webRTC/webRTCGroupCallHandler';
-import Thankyou from './components/ThankyouScreen/Thankyou';
 import { useHistory } from 'react-router-dom';
-import $ from 'jquery';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png'; // Update the path
 import afterCall from '../resources/afterCall.png'; // Update the path
 import busyInCall from '../resources/busyInCall.png'; // Update the path

@@ -3,11 +3,19 @@ import { useParams, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LogoImage from '../resources/GMR_delhi_combine_logo.png';
 import CallLogIcon from '../resources/call-log-icon.png';
-import Tree from 'rc-tree';
 import 'rc-tree/assets/index.css';  // Import the tree component's styles
 import './Operator.css';
-import ReactDOM from 'react-dom';
-
+import QueryTreeModal from './QueryTreeModal';
+import flightinformation from '../resources/flight-information.png';
+import customercomplaints from '../resources/Customber-Compliants.png';
+import checkinassistance from '../resources/check-in-assistance.png';
+import baggageservices from '../resources/baggage-services.png';
+import location1 from '../resources/location1.png';
+import lostandfound from '../resources/lost-and-found.png';
+import securityscreening from '../resources/security-screening.png';
+import transportservices from '../resources/transport-services.png';
+import traveldocumentation from '../resources/travel-documentation.png';
+import Accesibilityservices from '../resources/Accesibility-services.png';
 
 const fontStyle = {
   fontFamily: 'Poppins, sans-serif',
@@ -50,32 +58,32 @@ const buttonStyle = {
 
 const queryTreeData = [
   {
-    title: 'Location - Shop',
-    key: 'location-shop',
+    title: 'Accesibility services',
+    key: 'Accesibility-services',
+    iconUrl: Accesibilityservices,
     children: [],
   },
   {
-    title: 'Location - Dining',
-    key: 'location-dining',
+    title: 'Customber Compliants',
+    key: 'Customber-Compliants',
+    iconUrl: customercomplaints,
     children: [],
   },
   {
-    title: 'Location - Services',
-    key: 'location-services',
-    children: [],
-  },
-  {
-    title: 'Location - Amenities',
-    key: 'location-amenities',
+    title: 'Location',
+    key: 'location',
+    iconUrl: location1,
     children: [
-      { title: 'Inquiries about restrooms', key: 'location-amenities-restrooms' },
-      { title: 'Inquiries about lounges', key: 'location-amenities-lounges' },
-      { title: 'Inquiries about other amenities', key: 'location-amenities-other' },
+      { title: 'amenities', key: 'location-amenities-amenities' },
+      { title: 'Dining', key: 'location-amenities-Dining' },
+      { title: 'Services', key: 'location-amenities-Services' },
+      { title: 'shops', key: 'location-amenities-shops' },
     ],
   },
   {
     title: 'Flight Information',
     key: 'flight-information',
+    iconUrl: flightinformation,
     children: [
       { title: 'Delays', key: 'flight-information-delays' },
       { title: 'Cancellations', key: 'flight-information-cancellations' },
@@ -85,64 +93,67 @@ const queryTreeData = [
   {
     title: 'Baggage Services',
     key: 'baggage-services',
+    iconUrl: baggageservices,
     children: [
-      { title: 'Lost luggage', key: 'baggage-services-lost' },
-      { title: 'Delayed luggage', key: 'baggage-services-delayed' },
-      { title: 'Damaged luggage', key: 'baggage-services-damaged' },
-    ],
-  },
-  {
-    title: 'Check-In Assistance',
-    key: 'check-in-assistance',
-    children: [
-      { title: 'Issues with check-in processes', key: 'check-in-assistance-processes' },
-      { title: 'Issues with self-service kiosks', key: 'check-in-assistance-kiosks' },
+      { title: 'Lost', key: 'baggage-services-lost' },
+      { title: 'Delayed', key: 'baggage-services-delayed' },
+      { title: 'Damaged', key: 'baggage-services-damaged' },
     ],
   },
   {
     title: 'Security Screening',
     key: 'security-screening',
-    children: [
-      { title: 'Questions about procedures', key: 'security-screening-procedures' },
-      { title: 'Concerns about procedures', key: 'security-screening-concerns' },
-    ],
+    iconUrl: securityscreening,
+    children: [],
   },
   {
-    title: 'Customer Complaints',
-    key: 'customer-complaints',
+    title: 'Check-In Assistance',
+    key: 'check-in-assistance',
+    iconUrl: checkinassistance,
     children: [
-      { title: 'Feedback on service quality', key: 'customer-complaints-feedback' },
-      { title: 'Issues with service quality', key: 'customer-complaints-issues' },
+      { title: 'Lost', key: 'baggage-services-lost' },
+      { title: 'Delayed', key: 'baggage-services-delayed' },
+      { title: 'Damaged', key: 'baggage-services-damaged' },
     ],
   },
+  
+  // {
+  //   title: 'Customer Complaints',
+  //   key: 'customer-complaints',
+  //   iconUrl: customercomplaints,
+  //   children: [],
+  // },
   {
     title: 'Lost and Found',
     key: 'lost-and-found',
+    iconUrl: lostandfound,
     children: [
-      { title: 'Reporting lost items', key: 'lost-and-found-reporting' },
-      { title: 'Inquiring about lost items', key: 'lost-and-found-inquiring' },
+      { title: 'Reporting/Surrender Found Item', key: 'lost-and-found-reporting' },
+      { title: 'Looking For Lost item', key: 'lost-and-found-inquiring' },
     ],
   },
   {
     title: 'Transport Services',
     key: 'transport-services',
+    iconUrl: transportservices,
     children: [
       { title: 'Information on airport shuttles', key: 'transport-services-shuttles' },
       { title: 'Information on taxis', key: 'transport-services-taxis' },
       { title: 'Information on car rentals', key: 'transport-services-car-rentals' },
     ],
   },
-  {
-    title: 'Accessibility Services',
-    key: 'accessibility-services',
-    children: [
-      { title: 'Assistance for passengers with special needs', key: 'accessibility-services-special-needs' },
-      { title: 'Assistance for passengers with disabilities', key: 'accessibility-services-disabilities' },
-    ],
-  },
+  // {
+  //   title: 'Accessibility Services',
+  //   key: 'accessibility-services',
+  //   children: [
+  //     { title: 'Assistance for passengers with special needs', key: 'accessibility-services-special-needs' },
+  //     { title: 'Assistance for passengers with disabilities', key: 'accessibility-services-disabilities' },
+  //   ],
+  // },
   {
     title: 'Travel Documentation',
     key: 'travel-documentation',
+    iconUrl: traveldocumentation,
     children: [
       { title: 'Help with visas', key: 'travel-documentation-visas' },
       { title: 'Help with passports', key: 'travel-documentation-passports' },
@@ -179,6 +190,7 @@ function Field({ fieldName, fieldValue, onChange, isEditable }) {
 const CallLog = () => {
   const { sessionId } = useParams();
   const history = useHistory();
+  
   const [fieldsData, setFieldsData] = useState({
     'Session': '',
     'First Name': '',
@@ -195,6 +207,7 @@ const CallLog = () => {
     'Agent': '',
   });
   const [selectedQueries, setSelectedQueries] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleInputChange = (fieldName, value) => {
     setFieldsData(prevState => ({
@@ -203,39 +216,30 @@ const CallLog = () => {
     }));
   };
 
-  const onCheckQuery = (checkedKeys) => {
-    setSelectedQueries(checkedKeys);  // Update the selected queries immediately
-    setFieldsData(prevState => ({
-      ...prevState,
-      'Query': checkedKeys.join(', '), // Update the Query field with selected queries
-    }));
-};
-  const showQueryTreePopup = () => {
-    Swal.fire({
-      title: 'Select Query',
-      html: `<div id="query-tree-container"></div>`,
-      showCancelButton: true,
-      focusConfirm: false,
-      confirmButtonText: 'Select',
-      didOpen: () => {
-        const treeContainer = Swal.getPopup().querySelector('#query-tree-container');
-        if (treeContainer) {
-          ReactDOM.render(
-            <Tree
-              className="rc-tree"
-              treeData={queryTreeData}
-              checkable
-              checkedKeys={selectedQueries}
-              onCheck={onCheckQuery} // Immediately reflect changes when a checkbox is clicked
-              defaultExpandAll
-            />,
-            treeContainer
-          );
-        }
-      },
+  const onCheckQuery = (key) => {
+    setSelectedQueries(prev => {
+      const newQueries = prev.includes(key) ? prev.filter(q => q !== key) : [...prev, key];
+      setFieldsData(prevState => ({
+        ...prevState,
+        'Query': newQueries.join(', '),
+      }));
+      return newQueries;
     });
   };
-  
+
+  const showQueryTreeModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
+
+  const handleRemoveQuery = (queryToRemove) => {
+    setSelectedQueries(selectedQueries.filter(query => query !== queryToRemove));
+  };
+
 
   useEffect(() => {
     const fetchCallData = async () => {
@@ -365,7 +369,7 @@ const CallLog = () => {
           <h2 style={{ color: '#29417D', fontWeight: 'bold', fontSize: '24px' }}>Call Log</h2>
         </div>
   
-        <div style={{ display: 'flex', flexWrap: 'wrap', paddingBottom: '15px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', paddingBottom: '15px' , alignItems:'center' , justifyContent:'center', overflowY:'scroll', maxHeight:'393px' }}>
           <div style={{ flex: '1 0 50%' }}>
             {leftColumnFields.map(field => (
               <Field
@@ -379,76 +383,93 @@ const CallLog = () => {
           </div>
   
           <div style={{ flex: '1 0 50%' }}>
-            {rightColumnFields.map(field => (
-              field === 'Query' ? (
-                <div style={{ flex: '1 0 50%', padding: '8px' , display:'flex'}}>
-          <label style={fieldLabelStyle}>Query</label>
-          <div
-            style={{
-              ...inputStyle,
-              minHeight: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '5px',
-              border: '1px solid #ccc',
-              cursor: 'pointer',
-              backgroundColor: '#fff',
-            }}
-            onClick={showQueryTreePopup}
-          >
-            {selectedQueries.length === 0 ? (
-              <span style={{ color: '#888' }}>Click to select a query</span>
-            ) : (
-              selectedQueries.map((query) => (
-                <div
-                  key={query}
-                  style={{
-                    background: '#E6E7E8',
-                    color: '#000',
-                    padding: '5px 10px',
-                    borderRadius: '15px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    boxShadow:'0px 0px 4px 0px',
-                    margin:'2px 0px 0px 2px;'
-                  }}
-                >
-                  {query}
-                  <span
-                    style={{ cursor: 'pointer' }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedQueries(selectedQueries.filter((q) => q !== query));
-                    }}
-                  >
-                    &times;
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
+              {rightColumnFields.map(field => (
+                field === 'Query' ? (
+                  <div style={{ flex: '1 0 50%', padding: '8px', display: 'flex', flexDirection: 'row' }}>
+                    <label style={fieldLabelStyle}>Query</label>
 
-              ) : (
-                <Field
-                  key={field}
-                  fieldName={field}
-                  fieldValue={fieldsData[field]}
-                  onChange={handleInputChange}
-                  isEditable={field !== 'Query'} 
-                />
-              )
-            ))}
-          </div>
+                    {/* Input-like container to display pills inside */}
+                    <div
+                      style={{
+                        ...inputStyle,
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        padding: '5px',
+                        minHeight: '40px',
+                        backgroundColor:'#fff',
+                        overflowX: 'auto',
+                        cursor: 'pointer',
+                      }}
+                      onClick={showQueryTreeModal} // Show modal on click
+                    >
+                      {selectedQueries.map((query, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            background: '#E6E7E8',
+                            color: '#000',
+                            padding: '5px 10px',
+                            borderRadius: '20px',
+                            display: 'flex',
+                            margin:'2px',
+                            boxShadow:'0px 0px 3px 0px',
+                            alignItems: 'center',
+                            marginRight: '5px',
+                          }}
+                        >
+                          {query}
+                          <button
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              color: '#000',
+                              marginLeft: '8px',
+                              cursor: 'pointer',
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent modal from opening when removing a query
+                              handleRemoveQuery(query);
+                            }}
+                          >
+                            &times;
+                          </button>
+                        </div>
+                      ))}
+                      {/* Invisible input to ensure the text cursor is still visible */}
+                      <input
+                        style={{ border: 'none', outline: 'none', flex: 1, background: 'transparent' }}
+                        type="text"
+                        readOnly
+                        placeholder={selectedQueries.length === 0 ? 'Select Query' : ''}
+                        onClick={showQueryTreeModal} // Trigger modal on click
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <Field
+                    key={field}
+                    fieldName={field}
+                    fieldValue={fieldsData[field]}
+                    onChange={handleInputChange}
+                    isEditable={field !== 'Query'}
+                  />
+                )
+              ))}
+            </div>
+        <div style={{ textAlign: 'center', paddingBottom: '20px' , marginTop:'10px' }}>
+                  <button onClick={handleSubmit} style={buttonStyle}>
+                    Submit
+                  </button>
+            </div>
         </div>
-  
-        <div style={{ textAlign: 'center', paddingBottom: '20px' }}>
-          <button onClick={handleSubmit} style={buttonStyle}>
-            Submit
-          </button>
-        </div>
+        <QueryTreeModal
+        isVisible={isModalVisible}
+        onClose={handleCloseModal}
+        queryTreeData={queryTreeData}
+        onCheckQuery={onCheckQuery}
+        selectedQueries={selectedQueries}
+      />
       </div>
     </div>
   );
